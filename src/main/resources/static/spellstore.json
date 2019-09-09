@@ -1,0 +1,47 @@
+[
+  {
+    "level": 0,
+    "ritualCasting": false,
+    "range": "30 feet",
+    "description": "Basically party tricks",
+    "materialComponents": "None",
+    "source": "Player's Handbook",
+    "somaticComponent": false,
+    "duration": "1 Minute",
+    "castingTime": "1 action",
+    "verbalComponent": true,
+    "school": "Transmutation",
+    "name": "Thaumaturgy",
+    "_class": "org.nerdcore.spellbookmanager.models.Spell"
+  },
+  {
+    "level": 0,
+    "ritualCasting": false,
+    "range": "30 feet",
+    "description": "Slap with vines",
+    "materialComponents": "the stem of a plant with thorns",
+    "source": "Player's Handbook",
+    "somaticComponent": true,
+    "duration": "Instantaneous",
+    "castingTime": "1 action",
+    "verbalComponent": true,
+    "school": "Transmutation",
+    "name": "Thorn Whip",
+    "_class": "org.nerdcore.spellbookmanager.models.Spell"
+  },
+  {
+    "level": 3,
+    "ritualCasting": false,
+    "range": "120 feet",
+    "description": "Blow Shit up",
+    "materialComponents": "Sulpher",
+    "source": "Player's Handbook",
+    "somaticComponent": false,
+    "duration": "Instantaneous",
+    "castingTime": "1 action",
+    "verbalComponent": true,
+    "school": "Evocation",
+    "name": "Fire Ball",
+    "_class": "org.nerdcore.spellbookmanager.models.Spell"
+  }
+]

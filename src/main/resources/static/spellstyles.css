@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css?family=Courgette&display=swap');
+
+h2{
+    color:green;
+}
+body{
+    font-family: Courgette, sans-serif;
+    background: lightgray;
+}
+
+p.spell-description-wrapper{
+    max-width: fit-content;
+}
+
+#directory-wrapper {
+    border-style: solid;
+    border-width: 4px;
+    border-color: black;
+    margin: 5em;
+    padding: 1em;
+
+}
+
+
+.Evocation {
+    background: lightsalmon;
+    color:darkred;
+}
+
+.Conjuration {
+    background: darkmagenta;
+    color:lightpink;
+}
+
+.Abjuration {
+    background: lightskyblue;
+    color: darkblue;
+}
+
+.Divination {
+    background: darkblue;
+    color: lightseagreen;
+}
+
+.Enchantment {
+    background: lightgreen;
+    color: darkolivegreen;
+}
+
+.Illusion {
+    background: lightgray;
+    color:black;
+}
+
+.Necromancy {
+    background: black;
+    color: lightgray;
+}
+
+.Transmutation{
+    background: aquamarine;
+    color: darkgreen;
+}
+
+
+
