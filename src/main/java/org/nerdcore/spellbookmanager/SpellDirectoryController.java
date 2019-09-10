@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -45,36 +46,20 @@ public class SpellDirectoryController {
         return model;
     }
 
-
-
-
-
-    //TODO: Commit added spells to JSON database on save
-
-
-
-
     //after new spell data is posted, redirect to directory again.
     @PostMapping("/add-spell")
     @Transactional
-    public ModelAndView addSpellThenDirectory(@ModelAttribute Spell newSpell){
+    public String addSpellThenDirectory(@ModelAttribute Spell newSpell){
 
         SpellJSONProcesser.writeNewSpellToJSON(newSpell);
-
-        ModelAndView model = new ModelAndView("spelldirectory");
-
-        model.addObject("spells", SpellJSONProcesser.getAllSpellsAsList());
-        return model;
+        return "redirect:";
     }
 
     @PostMapping("/edit-spell")
     @Transactional
-    public ModelAndView editSpellThenDirectory(@ModelAttribute Spell spellToEdit){
+    public String editSpellThenDirectory(@ModelAttribute Spell spellToEdit){
 
-        System.out.println("Editing a Spell!" + spellToEdit);
-        ModelAndView model = new ModelAndView("spelldirectory");
-
-        return model;
+        return "redirect:";
     }
 
 
@@ -97,8 +82,10 @@ public class SpellDirectoryController {
         ModelAndView model = new ModelAndView("addspell");
         Spell spell = SpellJSONProcesser.getSingleSpellByName(spellname);
 
+        model.addObject("schoolList", schoolList);
         model.addObject("spell", spell);
         model.addObject("action","edit-spell");
+        model.addObject("title", "Edit Spell: "+ spellname);
         return model;
     }
 
@@ -116,6 +103,7 @@ public class SpellDirectoryController {
         model.addObject("spell", spellToPass);
         model.addObject("schoolList", schoolList);
         model.addObject("action","add-spell");
+        model.addObject("title", "Add a Spell to the Spell Directory");
 
         return model;
     }

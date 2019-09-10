@@ -22,48 +22,71 @@ body{
     border-color: black;
     margin: 5em;
     padding: 1em;
-
 }
 
 
 .Evocation {
     background: lightsalmon;
     color:darkred;
+    float:left;
+    padding-right: 5em;
+
 }
 
 .Conjuration {
     background: darkmagenta;
     color:lightpink;
+    float:left;
+    padding-right: 5em;
+
 }
 
 .Abjuration {
     background: lightskyblue;
     color: darkblue;
+    float:left;
+    padding-right: 5em;
+
 }
 
 .Divination {
     background: darkblue;
     color: lightseagreen;
+    float:left;
+    padding-right: 5em;
+
 }
 
 .Enchantment {
     background: lightgreen;
     color: darkolivegreen;
+    float:left;
+    padding-right: 5em;
+
 }
 
 .Illusion {
     background: lightgray;
     color:black;
+    float:left;
+    padding-right: 5em;
+
 }
 
 .Necromancy {
     background: black;
     color: lightgray;
+    float:left;
+    padding-right: 5em;
+
 }
 
 .Transmutation{
     background: aquamarine;
     color: darkgreen;
+    float:left;
+    padding-right: 5em;
+
 }
 
 

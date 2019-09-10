@@ -28,6 +28,16 @@ public class Spell {
     private String duration;
     private String source;
     private boolean ritualCasting;
+    private boolean concentration;
+
+
+    public boolean isConcentration() {
+        return concentration;
+    }
+
+    public void setConcentration(boolean concentration) {
+        this.concentration = concentration;
+    }
 
     public String getName() {
         return name;

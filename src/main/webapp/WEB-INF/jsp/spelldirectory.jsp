@@ -13,11 +13,11 @@
         <div th:text="${spell.name}" th:class="${spell.school}">Spell Name</div>
         </a>
 
-        &emsp;&emsp;
+
 
         <a th:href="@{/edit-spell(spellname=${spell.name})}">
             <div th:class="${spell.school}">Edit...</div>
-        </a>
+        </a><br>
     </th:block>
 </div>
 <br>

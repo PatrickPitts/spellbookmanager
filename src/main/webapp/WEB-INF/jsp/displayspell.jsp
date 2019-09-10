@@ -22,7 +22,9 @@
     <th:block th:if="${spell.materialComponents} != 'None'">
         M ([[${spell.materialComponents}]])
     </th:block><br>
-    <b>Duration: </b>[[${spell.duration}]]<br>
+    <b>Duration: </b>
+    <th:block th:if="${spell.concentration}">Concentration, up to </th:block>
+    [[${spell.duration}]]<br>
     <b>Casters: </b><!--#TODO Incorporate Casters List-->
     <p th:utext="${spell.description}">Txt</p><br>
 </div>
