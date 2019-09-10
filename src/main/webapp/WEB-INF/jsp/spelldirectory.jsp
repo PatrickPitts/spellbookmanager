@@ -17,7 +17,13 @@
 
         <a th:href="@{/edit-spell(spellname=${spell.name})}">
             <div th:class="${spell.school}">Edit...</div>
+        </a>
+
+        <a th:href="@{/delete-spell(spellname=${spell.name})}">
+            <div th:class="${spell.school}">[X]</div>
         </a><br>
+
+
     </th:block>
 </div>
 <br>

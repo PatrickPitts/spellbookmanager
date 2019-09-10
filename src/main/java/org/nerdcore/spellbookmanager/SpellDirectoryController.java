@@ -58,7 +58,7 @@ public class SpellDirectoryController {
     @PostMapping("/edit-spell")
     @Transactional
     public String editSpellThenDirectory(@ModelAttribute Spell spellToEdit){
-
+        SpellJSONProcesser.editSpell(spellToEdit);
         return "redirect:";
     }
 
@@ -106,6 +106,13 @@ public class SpellDirectoryController {
         model.addObject("title", "Add a Spell to the Spell Directory");
 
         return model;
+    }
+
+    @RequestMapping("/delete-spell")
+    public String deleteSpell(@RequestParam("spellname")String spellToDelete){
+        System.out.println(spellToDelete);
+        SpellJSONProcesser.deleteSpell(spellToDelete);
+        return "redirect:";
     }
 
 }

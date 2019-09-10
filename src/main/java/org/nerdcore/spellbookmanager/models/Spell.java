@@ -178,6 +178,7 @@ public class Spell {
         obj.put("description", this.description);
         obj.put("source", this.source);
         obj.put("ritualCasting", this.ritualCasting);
+        obj.put("concentration", this.concentration);
         return obj;
     }
 
@@ -185,7 +186,7 @@ public class Spell {
         this.name = (String) obj.get("name");
         this.school = (String) obj.get("school");
         this.range = (String) obj.get("range");
-        this.level = ((Long) obj.get("level")).intValue();
+        this.level =  ((Long) obj.get("level")).intValue();
         this.castingTime = (String) obj.get("castingTime");
         this.verbalComponent = (Boolean) obj.get("verbalComponent");
         this.somaticComponent = (Boolean) obj.get("somaticComponent");
@@ -194,7 +195,7 @@ public class Spell {
         this.description = (String) obj.get("description");
         this.source = (String) obj.get("source");
         this.ritualCasting = (Boolean) obj.get("ritualCasting");
-
+        this.concentration = (Boolean) obj.get("concentration");
 
     }
 
