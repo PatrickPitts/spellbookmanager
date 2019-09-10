@@ -8,8 +8,12 @@ body{
     background: lightgray;
 }
 
-p.spell-description-wrapper{
-    max-width: fit-content;
+.spell-description-wrapper{
+
+    width: 60%;
+    border-style: solid;
+    border-radius: 1em;
+    padding: 1em;
 }
 
 #directory-wrapper {

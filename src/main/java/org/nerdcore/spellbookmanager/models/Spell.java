@@ -145,6 +145,15 @@ public class Spell {
         return ret;
     }
 
+    public boolean equals(Spell spellToCheck){
+
+        if(this.name.equals(spellToCheck.getName())){
+            return true;
+        }
+        return false;
+
+    }
+
     public JSONObject getJSONObject(){
         JSONObject obj = new JSONObject();
         obj.put("name", this.name);

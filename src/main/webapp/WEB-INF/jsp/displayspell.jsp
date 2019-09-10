@@ -13,8 +13,19 @@
     <p th:case="*">Level [[${spell.level}]] [[${spell.school}]]</p>
 
 </div>
-
-<p class="spell-description-wrapper" th:text="${spell.description}">Spell Description Text</p><br><br>
+<div class="spell-description-wrapper">
+    <b>Casting Time: </b>[[${spell.castingTime}]]<br>
+    <b>Range: </b>[[${spell.range}]]<br>
+    <b>Components: </b>
+    <th:block th:if="${spell.verbalComponent}">V</th:block>
+    <th:block th:if="${spell.somaticComponent}">S</th:block>
+    <th:block th:if="${spell.materialComponents} != 'None'">
+        M ([[${spell.materialComponents}]])
+    </th:block><br>
+    <b>Duration: </b>[[${spell.duration}]]<br>
+    <b>Casters: </b><!--#TODO Incorporate Casters List-->
+    <p th:utext="${spell.description}">Txt</p><br>
+</div>
 <a href="/">Back to Directory</a>
 </body>
 </html>

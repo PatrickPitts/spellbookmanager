@@ -15,7 +15,17 @@ import java.util.List;
 
 public class SpellJSONProcesser {
 
-    private static JSONParser parser = new JSONParser();
+
+    public static void writeJSON(JSONArray jArray){
+        try{
+            FileWriter file = new FileWriter("src/main/resources/static/spellstore.json");
+            file.write(jArray.toJSONString());
+            file.flush();
+            file.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public static List<Spell> getAllSpellsAsList(){
         List<Spell> spellList = new ArrayList<>();
@@ -36,6 +46,10 @@ public class SpellJSONProcesser {
         return spellList;
     }
 
+    //TODO Incorporate editing a spell
+
+    private static JSONParser parser = new JSONParser();
+
     public static void writeNewSpellToJSON(Spell spell){
         List<Spell> allSpellList = getAllSpellsAsList();
         allSpellList.add(spell);
@@ -45,14 +59,7 @@ public class SpellJSONProcesser {
             jsonSpell.put("_class", "org.nerdcore.spellbookmanager.models.Spell");
             jArray.add(jsonSpell);
         }
-        try{
-            FileWriter file = new FileWriter("src/main/resources/static/spellstore.json");
-            file.write(jArray.toJSONString());
-            file.flush();
-            file.close();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+        writeJSON(jArray);
 
 
     }
@@ -72,6 +79,11 @@ public class SpellJSONProcesser {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void deleteSpell(String spellName){
+
+
     }
 
 }

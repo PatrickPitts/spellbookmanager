@@ -12,11 +12,17 @@
         <a th:href="@{/spell(spellname=${spell.name})}">
         <div th:text="${spell.name}" th:class="${spell.school}">Spell Name</div>
         </a>
+
+        &emsp;&emsp;
+
+        <a th:href="@{/edit-spell(spellname=${spell.name})}">
+            <div th:class="${spell.school}">Edit...</div>
+        </a>
     </th:block>
 </div>
 <br>
 <br><br><br>
-<a href="/add-spell">Add another spell to the list</a><br>
+<a th:href="@{/add-spell}">Add another spell to the list</a><br>
 </body>
 </html>
 
