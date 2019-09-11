@@ -1,6 +1,7 @@
 package org.nerdcore.spellbookmanager;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.nerdcore.spellbookmanager.models.SearchParams;
 import org.nerdcore.spellbookmanager.models.Spell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,13 +37,21 @@ public class SpellDirectoryController {
         }};
 
 
+    @PostMapping("/search")
+    public String directoryWithSearch(@ModelAttribute("searchParams")SearchParams searchParams){
+        System.out.print(searchParams);
+        return "redirect:";
+
+    }
+
 
     @RequestMapping("/")
     public ModelAndView showDirectory(){
-        //TODO: update from repository to JSON data store
-
         ModelAndView model = new ModelAndView("spelldirectory");
+
+        model.addObject("schoolList", schoolList);
         model.addObject("spells", SpellJSONProcesser.getAllSpellsAsList());
+        model.addObject("searchParams", new SearchParams());
         return model;
     }
 

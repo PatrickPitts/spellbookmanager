@@ -19,24 +19,24 @@ public class SpellJSONProcesser {
 
     private static JSONParser parser = new JSONParser();
 
-    public static void writeJSON(JSONArray jArray){
-        try{
+    public static void writeJSON(JSONArray jArray) {
+        try {
             FileWriter file = new FileWriter("src/main/resources/static/spellstore.json");
             file.write(jArray.toJSONString());
             file.flush();
             file.close();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static JSONArray sortBySpellName(JSONArray spellArray){
+    public static JSONArray sortBySpellName(JSONArray spellArray) {
         Collections.sort(spellArray, new Comparator<JSONObject>() {
 
             @Override
-            public int compare(JSONObject jObjA, JSONObject jObjB){
+            public int compare(JSONObject jObjA, JSONObject jObjB) {
                 int compare = 0;
-                compare = ((String)jObjA.get("name")).compareTo((String) jObjB.get("name"));
+                compare = ((String) jObjA.get("name")).compareTo((String) jObjB.get("name"));
                 return compare;
             }
         });
@@ -44,46 +44,46 @@ public class SpellJSONProcesser {
 
     }
 
-    public static List<JSONObject> getAllSpellsAsJSONObjects(){
+    public static List<JSONObject> getAllSpellsAsJSONObjects() {
         List<JSONObject> spellJSONList = new ArrayList<>();
-        try{
+        try {
             FileReader fileReader = new FileReader("src/main/resources/static/spellstore.json");
             Object obj = parser.parse(fileReader);
             JSONArray spellArray = (JSONArray) obj;
 
             return spellArray;
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static List<Spell> getAllSpellsAsList(){
+    public static List<Spell> getAllSpellsAsList() {
         List<Spell> spellList = new ArrayList<>();
 
-        try{
+        try {
             FileReader fileReader = new FileReader("src/main/resources/static/spellstore.json");
             Object obj = parser.parse(fileReader);
             JSONArray spellArray = (JSONArray) obj;
 
-            for(int i = 0; i < spellArray.size();i++){
+            for (int i = 0; i < spellArray.size(); i++) {
                 JSONObject spellObj = (JSONObject) spellArray.get(i);
                 spellList.add(new Spell(spellObj));
             }
 
             fileReader.close();
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return spellList;
     }
 
-    public static void writeNewSpellToJSON(Spell spell){
+    public static void writeNewSpellToJSON(Spell spell) {
         List<Spell> allSpellList = getAllSpellsAsList();
         allSpellList.add(spell);
         JSONArray jArray = new JSONArray();
-        for(Spell sp : allSpellList){
+        for (Spell sp : allSpellList) {
             JSONObject jsonSpell = sp.getJSONObject();
             jsonSpell.put("_class", "org.nerdcore.spellbookmanager.models.Spell");
             jArray.add(jsonSpell);
@@ -93,56 +93,60 @@ public class SpellJSONProcesser {
 
     }
 
-    public static Spell getSingleSpellByName(String spellName){
-        try{
+    public static Spell getSingleSpellByName(String spellName) {
+        try {
             FileReader fileReader = new FileReader("src/main/resources/static/spellstore.json");
             Object obj = parser.parse(fileReader);
             JSONArray spellArray = (JSONArray) obj;
-            for(int i =0; i < spellArray.size(); i++){
+            for (int i = 0; i < spellArray.size(); i++) {
                 Spell spell = new Spell((JSONObject) spellArray.get(i));
-                if(spell.getName().equals(spellName)){
+                if (spell.getName().equals(spellName)) {
                     return spell;
                 }
             }
 
             fileReader.close();
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static void deleteSpell(String spellName){
+    public static void deleteSpell(String spellName) {
 
         List<JSONObject> spellJSONObjList = getAllSpellsAsJSONObjects();
         JSONArray spellListToWrite = new JSONArray();
-        for(int i = 0; i < spellJSONObjList.size(); i++){
-            if(!spellName.equals(spellJSONObjList.get(i).get("name"))){
+        for (int i = 0; i < spellJSONObjList.size(); i++) {
+            if (!spellName.equals(spellJSONObjList.get(i).get("name"))) {
                 spellListToWrite.add(spellJSONObjList.get(i));
             }
         }
         writeJSON(spellListToWrite);
     }
 
-    public static void editSpell(Spell editedSpell){
+    public static void editSpell(Spell editedSpell) {
         deleteSpell(editedSpell.getName());
         writeNewSpellToJSON(editedSpell);
     }
 
-    public static List<Spell> sortJSONObjectListOnSpellName(List<JSONObject> listToSort){
+    public static List<Spell> sortJSONObjectListOnSpellName(List<JSONObject> listToSort) {
 
         List<Spell> sortedSpellList = new ArrayList<>();
         List<String> spellNamesToSort = new ArrayList<>();
-        for(JSONObject obj : listToSort){
+        for (JSONObject obj : listToSort) {
             spellNamesToSort.add((String) obj.get("name"));
         }
 
         Collections.sort(spellNamesToSort);
-        for(String spellName : spellNamesToSort){
+        for (String spellName : spellNamesToSort) {
             sortedSpellList.add(getSingleSpellByName(spellName));
         }
         return sortedSpellList;
     }
+
+
+
+
 
 }
