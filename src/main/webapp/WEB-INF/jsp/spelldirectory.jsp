@@ -7,6 +7,7 @@
 </head>
 <body>
 <h2>Spell Directory</h2>
+<a th:href="@{/add-spell}">Add another spell to the list</a><br>
 <div id="directory-wrapper">
     <th:block th:each="spell : ${spells}" >
         <a th:href="@{/spell(spellname=${spell.name})}">
@@ -28,7 +29,7 @@
 </div>
 <br>
 <br><br><br>
-<a th:href="@{/add-spell}">Add another spell to the list</a><br>
+
 </body>
 </html>
 

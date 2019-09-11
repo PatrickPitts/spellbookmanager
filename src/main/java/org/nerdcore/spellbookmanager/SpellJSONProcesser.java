@@ -17,6 +17,7 @@ import java.util.List;
 
 public class SpellJSONProcesser {
 
+    private static JSONParser parser = new JSONParser();
 
     public static void writeJSON(JSONArray jArray){
         try{
@@ -78,10 +79,6 @@ public class SpellJSONProcesser {
         return spellList;
     }
 
-    //TODO Incorporate editing a spell
-
-    private static JSONParser parser = new JSONParser();
-
     public static void writeNewSpellToJSON(Spell spell){
         List<Spell> allSpellList = getAllSpellsAsList();
         allSpellList.add(spell);
@@ -131,6 +128,21 @@ public class SpellJSONProcesser {
     public static void editSpell(Spell editedSpell){
         deleteSpell(editedSpell.getName());
         writeNewSpellToJSON(editedSpell);
+    }
+
+    public static List<Spell> sortJSONObjectListOnSpellName(List<JSONObject> listToSort){
+
+        List<Spell> sortedSpellList = new ArrayList<>();
+        List<String> spellNamesToSort = new ArrayList<>();
+        for(JSONObject obj : listToSort){
+            spellNamesToSort.add((String) obj.get("name"));
+        }
+
+        Collections.sort(spellNamesToSort);
+        for(String spellName : spellNamesToSort){
+            sortedSpellList.add(getSingleSpellByName(spellName));
+        }
+        return sortedSpellList;
     }
 
 }
