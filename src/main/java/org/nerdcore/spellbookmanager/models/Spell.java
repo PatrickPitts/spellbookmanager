@@ -7,6 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.xml.transform.Result;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @Entity
 public class Spell {
@@ -201,5 +204,25 @@ public class Spell {
 
 
     public Spell() {
+    }
+
+    public Spell(ResultSet rs){
+        try {
+            this.name = rs.getString("spellName");
+            this.school = rs.getString("school");
+            this.range = rs.getString("range");
+            this.level = rs.getInt("spellLevel");
+            this.castingTime = rs.getString("castingTime");
+            this.verbalComponent = rs.getBoolean("verbalComponent");
+            this.somaticComponent = rs.getBoolean("somaticComponent");
+            this.materialComponents = rs.getString("materialComponents");
+            this.duration = rs.getString("duration");
+            this.description = rs.getString("description");
+            this.source = rs.getString("source");
+            this.ritualCasting = rs.getBoolean("ritualCasting");
+            this.concentration =  rs.getBoolean("concentration");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

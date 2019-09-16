@@ -14,6 +14,27 @@ public class SpellFilter {
         List<Spell> temp = new ArrayList<>();
         List<Spell> sorted = SpellJSONProcesser.getAllSpellsAsList();
 
+        if(!params.getSpellName().equals("")){
+            for(Spell spell : sorted){
+                if(spell.getName().contains(params.getSpellName())){
+                    temp.add(spell);
+                }
+            }
+            sorted=new ArrayList<>(temp);
+            temp.clear();
+        }
+
+        if(!params.getSchool().equals("")){
+            for(Spell spell : sorted){
+                if(spell.getSchool().equals(params.getSchool())){
+                    temp.add(spell);
+                }
+            }
+            sorted = new ArrayList<>(temp);
+            temp.clear();
+        }
+
+
 
 
         return sorted;

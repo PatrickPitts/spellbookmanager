@@ -31,14 +31,16 @@ body{
     padding: 1em;
     width: 75%;
     float:right;
+    display: inline-block;
 }
 
 .spell-directory-actions{
     margin: 2em;
     padding: 1em;
     width:20%;
-    position: fixed;
+    /*position: fixed;*/
     float:left;
+    display: inline-block;
 }
 
 
@@ -84,8 +86,8 @@ body{
 }
 
 .Illusion {
-    background: lightgray;
-    color:black;
+    background: blueviolet;
+    color:darkred;
     float:left;
     padding-right: 5em;
 

@@ -4,7 +4,7 @@ public class SearchParams {
 
     private String spellName;
     private String school;
-    private int spellLevel;
+    private String spellLevel;
     private String caster;
     private boolean ritualCasting;
     private boolean concentration;
@@ -44,11 +44,11 @@ public class SearchParams {
         this.school = school;
     }
 
-    public int getSpellLevel() {
+    public String getSpellLevel() {
         return spellLevel;
     }
 
-    public void setSpellLevel(int spellLevel) {
+    public void setSpellLevel(String spellLevel) {
         this.spellLevel = spellLevel;
     }
 
@@ -58,6 +58,25 @@ public class SearchParams {
 
     public void setCaster(String caster) {
         this.caster = caster;
+    }
+
+    public boolean isEmpty(){
+        if(!this.spellName.equals("")){
+            return false;
+        }
+        if(!this.spellLevel.equals("")){
+            return false;
+        }
+        if(!this.school.equals("")){
+            return false;
+        }
+        if(!this.caster.equals("")){
+            return false;
+        }
+        if(this.concentration || this.ritualCasting){
+            return false;
+        }
+        return true;
     }
 
     @Override

@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.transaction.Transactional;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,9 +39,15 @@ public class SpellDirectoryController {
 
 
     @PostMapping("/search")
-    public String directoryWithSearch(@ModelAttribute("searchParams")SearchParams searchParams){
-        System.out.print(searchParams);
-        return "redirect:";
+    public ModelAndView directoryWithSearch(@ModelAttribute("searchParams")SearchParams searchParams) throws SQLException {
+
+        ModelAndView model = new ModelAndView("spelldirectory");
+        //model.addObject("executedSearchParameters", searchParams);
+        model.addObject("schoolList", schoolList);
+        model.addObject("spells", SpellDatabaseManager.searchForSpells(searchParams));
+        model.addObject("searchParams", searchParams);
+        //new SearchParams()
+        return model;
 
     }
 
@@ -50,7 +57,7 @@ public class SpellDirectoryController {
         ModelAndView model = new ModelAndView("spelldirectory");
 
         model.addObject("schoolList", schoolList);
-        model.addObject("spells", SpellJSONProcesser.getAllSpellsAsList());
+        model.addObject("spells", SpellDatabaseManager.getAllSpellsAsList());
         model.addObject("searchParams", new SearchParams());
         return model;
     }
@@ -59,15 +66,15 @@ public class SpellDirectoryController {
     @PostMapping("/add-spell")
     @Transactional
     public String addSpellThenDirectory(@ModelAttribute Spell newSpell){
-
-        SpellJSONProcesser.writeNewSpellToJSON(newSpell);
+        SpellDatabaseManager.addSingleSpellToDatabase(newSpell);
+        //SpellJSONProcesser.writeNewSpellToJSON(newSpell);
         return "redirect:";
     }
 
     @PostMapping("/edit-spell")
     @Transactional
-    public String editSpellThenDirectory(@ModelAttribute Spell spellToEdit){
-        SpellJSONProcesser.editSpell(spellToEdit);
+    public String editSpellThenDirectory(@ModelAttribute Spell spellToEdit) throws SQLException{
+        SpellDatabaseManager.editSpell(spellToEdit);
         return "redirect:";
     }
 
@@ -75,7 +82,8 @@ public class SpellDirectoryController {
     @RequestMapping(value = "/spell", method = RequestMethod.GET)
     public ModelAndView displaySpell(@RequestParam("spellname") String spellname) {
 
-        Spell spell = SpellJSONProcesser.getSingleSpellByName(spellname);
+        Spell spell = SpellDatabaseManager.getSingleSpellBySpellName(spellname);
+        //Spell spell = SpellJSONProcesser.getSingleSpellByName(spellname);
 
         if(spell==null){
             return new ModelAndView("spellsearcherror");
@@ -89,7 +97,8 @@ public class SpellDirectoryController {
     @RequestMapping("/edit-spell")
     public ModelAndView editSpell(@RequestParam("spellname")String spellname){
         ModelAndView model = new ModelAndView("addspell");
-        Spell spell = SpellJSONProcesser.getSingleSpellByName(spellname);
+        Spell spell = SpellDatabaseManager.getSingleSpellBySpellName(spellname);
+        //Spell spell = SpellJSONProcesser.getSingleSpellByName(spellname);
 
         model.addObject("schoolList", schoolList);
         model.addObject("spell", spell);
@@ -118,9 +127,9 @@ public class SpellDirectoryController {
     }
 
     @RequestMapping("/delete-spell")
-    public String deleteSpell(@RequestParam("spellname")String spellToDelete){
-        System.out.println(spellToDelete);
-        SpellJSONProcesser.deleteSpell(spellToDelete);
+    public String deleteSpell(@RequestParam("spellname")String spellToDelete) throws SQLException{
+        //System.out.println(spellToDelete);
+        SpellDatabaseManager.deleteSpellByName(spellToDelete);
         return "redirect:";
     }
 
