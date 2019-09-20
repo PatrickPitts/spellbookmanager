@@ -2,6 +2,7 @@ package org.nerdcore.spellbookmanager;
 
 import org.nerdcore.spellbookmanager.models.SearchParams;
 import org.nerdcore.spellbookmanager.models.Spell;
+import org.nerdcore.spellbookmanager.models.SpellBook;
 
 import javax.swing.plaf.nimbus.State;
 import java.sql.*;
@@ -170,5 +171,17 @@ public class SpellDatabaseManager {
         deleteSpellByName(spellToEdit.getName());
         addSingleSpellToDatabase(spellToEdit);
 
+    }
+
+    public static void addSpellbook(SpellBook spellbook) throws SQLException{
+        Connection conn = connect();
+        Statement st = conn.createStatement();
+
+        String sql = "INSERT INTO spellBooks (spellbookName) VALUES(?);";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, spellbook.getSpellbookName());
+
+        ps.execute();
+        conn.close();
     }
 }

@@ -40,6 +40,48 @@ public class BuildDBTables {
         }
     }
 
+    public static void createSpellBookTableAndConnector(String dbFilename){
+
+        Connection conn = null;
+        String url="jdbc:sqlite:src/main/resources/static/"+dbFilename;
+        try{
+            conn = DriverManager.getConnection(url);
+
+            String sql;
+            Statement st = conn.createStatement();
+
+            sql = "DROP TABLE spellBooks";
+            st.execute(sql);
+
+            sql = "DROP TABLE spellBookStorage";
+            st.execute(sql);
+
+            sql = "CREATE TABLE IF NOT EXISTS spellBooks(\n" +
+                    "spellbookID INTEGER PRIMARY KEY,\n" +
+                    "spellbookName VARCHAR(128)\n" +
+                    ");";
+
+            st.execute(sql);
+
+            sql = "CREATE TABLE IF NOT EXISTS spellBookStorage(\n" +
+                    "spellbookID INTEGER,\n" +
+                    "spellName VARCHAR(128),\n" +
+                    "PRIMARY KEY (spellbookID, spellName),\n" +
+                    "FOREIGN KEY(spellbookID) REFERENCES spellBooks(spellbookID));";
+
+            st = conn.createStatement();
+            st.execute(sql);
+
+
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+
+
     public static void main(String[] args){
 
         createSpellTable("spellbookDatabase.db");

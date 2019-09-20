@@ -9,14 +9,15 @@ import java.sql.*;
 
 public class PollDB {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws SQLException{
         //checkSpellTableColumns();
         //addTestSpell();
         //checkTestSpell();
-
+        getTablesAndColumns();
+        //genericSQLCheck();
         //testSpellList();
         //SpellDatabaseManager.getSingleSpellFromSpellName("Aid");
-
+        //BuildDBTables.createSpellBookTableAndConnector("spellbookDatabase.db");
 
 
 /*
@@ -30,6 +31,32 @@ public class PollDB {
         for(Spell spell : SpellDatabaseManager.getAllSpellsAsList()){
             System.out.println(spell.getName());
         }
+    }
+
+    public static void getTablesAndColumns() throws SQLException{
+        Connection conn = connect();
+        Statement st = conn.createStatement();
+        ResultSet rs =  conn.getMetaData().getTables(null,null,null,null );
+        while(rs.next()){
+            String tableName = rs.getString("TABLE_NAME");
+
+//            PreparedStatement ps = conn.prepareStatement("SELECT * from ");
+//            ps.setString(1, tableName);
+//            ResultSet tableResults = ps.executeQuery();
+            ResultSet tableResults = conn.createStatement().executeQuery("Select * FROM "+tableName+";");
+
+            ResultSetMetaData rsmd = tableResults.getMetaData();
+            System.out.print("Table: ");
+
+            System.out.println(tableName);
+            //System.out.println("Columns: ");
+            for(int i = 1; i <= rsmd.getColumnCount(); i++){
+                System.out.println("- " + rsmd.getColumnName(i));
+            }
+            System.out.println("-------------");
+        }
+
+        conn.close();
     }
 
     public static void testSingleSpell(){
@@ -72,17 +99,16 @@ public class PollDB {
     }
 
 
-    public static void checkSpellTableColumns(){
+    public static void genericSQLCheck(){
         Connection conn = connect();
-        String sql = "PRAGMA table_info(spells)";
+        //String sql = "PRAGMA table_info(spells)";
+        String sql = "SELECT rowid, spellName from spells where spellName is 'Divine Favor';";
         try {
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            ResultSetMetaData rm = rs.getMetaData();
-            String[] nameArray = new String[rm.getColumnCount()];
-            for(int i = 1; i <= nameArray.length; i++){
-                nameArray[i-1] = rm.getColumnName(i);
-                System.out.println(rm.getColumnName(i));
+            while(rs.next()){
+                System.out.println(rs.getInt(1));
+                System.out.println(rs.getString(2));
             }
         } catch (SQLException e) {
             e.printStackTrace();
