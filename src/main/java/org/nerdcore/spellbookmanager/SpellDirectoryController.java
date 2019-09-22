@@ -3,19 +3,16 @@ package org.nerdcore.spellbookmanager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.nerdcore.spellbookmanager.models.SearchParams;
 import org.nerdcore.spellbookmanager.models.Spell;
+import org.nerdcore.spellbookmanager.models.SpellBook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.transaction.Transactional;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class SpellDirectoryController {
@@ -36,6 +33,44 @@ public class SpellDirectoryController {
             add("Necromancy");
             add("Transmutation");
         }};
+
+    //Without URL mapping, this displays a list of all saved spellbooks
+    @RequestMapping("/manage-spellbooks")
+    public ModelAndView spellbookManager(){
+        ModelAndView model = new ModelAndView("spellbooks");
+        return model;
+    }
+
+    //With the appropriate URL mapping, this method redirects the view to display content
+    //associated with the named spellbook
+    @RequestMapping("/view-spellbook")
+    public ModelAndView displayAllSpellBooks(@RequestParam("spellbookName")String spellbookName){
+
+        ModelAndView model = new ModelAndView("displayspellbook");
+        //model.addObject()
+
+
+        return model;
+    }
+
+    @RequestMapping("/add-spellbook")
+    public ModelAndView addNewSpellBook() throws SQLException{
+        ModelAndView model = new ModelAndView("addspellbook");
+        model.addObject("casterList", SpellDatabaseManager.getAllCastersAsList());
+        model.addObject("spellBook", new SpellBook());
+        return model;
+    }
+
+    @PostMapping("/add-spellbook")
+    public ModelAndView addSpellbookAndDisplay(@ModelAttribute("spellbookToAdd")SpellBook spellBook){
+
+        System.out.println(spellBook.getSpellbookName());
+        System.out.println(spellBook.getCasterClass());
+        ModelAndView model = new ModelAndView("spellbooks");
+
+
+        return model;
+    }
 
 
     @PostMapping("/search")

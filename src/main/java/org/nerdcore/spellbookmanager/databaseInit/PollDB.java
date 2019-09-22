@@ -10,10 +10,11 @@ import java.sql.*;
 public class PollDB {
 
     public static void main(String[] args) throws SQLException{
+        //getCasters();
         //checkSpellTableColumns();
         //addTestSpell();
         //checkTestSpell();
-        getTablesAndColumns();
+        //getTablesAndColumns();
         //genericSQLCheck();
         //testSpellList();
         //SpellDatabaseManager.getSingleSpellFromSpellName("Aid");
@@ -25,6 +26,16 @@ public class PollDB {
         BuildDBTables.createSpellTable("spellbookDatabase.db");
         JSONStorageToDatabase();
 */
+    }
+
+    public static void getCasters() throws SQLException{
+        Connection conn = connect();
+        Statement st = conn.createStatement();
+        String sql = "SELECT * FROM casterClasses;";
+        ResultSet rs = st.executeQuery(sql);
+        while(rs.next()){
+            System.out.println(rs.getString("casterClass"));
+        }
     }
 
     public static void testSpellList(){
@@ -97,7 +108,6 @@ public class PollDB {
             e.printStackTrace();
         }
     }
-
 
     public static void genericSQLCheck(){
         Connection conn = connect();

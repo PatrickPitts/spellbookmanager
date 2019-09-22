@@ -1,7 +1,9 @@
 package org.nerdcore.spellbookmanager.databaseInit;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class BuildDBTables {
@@ -58,7 +60,8 @@ public class BuildDBTables {
 
             sql = "CREATE TABLE IF NOT EXISTS spellBooks(\n" +
                     "spellbookID INTEGER PRIMARY KEY,\n" +
-                    "spellbookName VARCHAR(128)\n" +
+                    "spellbookName VARCHAR(128),\n" +
+                    "casterClass VARCHAR(64)" +
                     ");";
 
             st.execute(sql);
@@ -79,14 +82,38 @@ public class BuildDBTables {
         }
     }
 
+    public static void createCasterTable() throws SQLException {
+        Connection conn = connect();
+        Statement st = conn.createStatement();
+        String sql = "CREATE TABLE IF NOT EXISTS casterClasses (casterClass VARCHAR(64));";
 
+        st.execute(sql);
 
+        sql = "INSERT INTO casterClasses (casterClass) VALUES" +
+                "('Bard'), ('Cleric'), ('Druid'), ('Paladin'), ('Ranger')," +
+                "('Sorcerer'), ('Warlock'),('Wizard')";
 
-    public static void main(String[] args){
-
-        createSpellTable("spellbookDatabase.db");
-
+        st.execute(sql);
+        conn.close();
     }
 
+
+    public static void main(String[] args)throws SQLException{
+
+        //createSpellTable("spellbookDatabase.db");
+        //createCasterTable();
+        createSpellBookTableAndConnector("spellbookDatabase.db");
+    }
+
+    private static Connection connect(){
+        String url = "jdbc:sqlite:src/main/resources/static/spellbookDatabase.db";
+        try{
+            Connection conn = DriverManager.getConnection(url);
+            return conn;
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

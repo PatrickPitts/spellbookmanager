@@ -10,7 +10,7 @@
     <div name="spell-directory-actions" class="spell-directory-actions">
         <h2><a th:href="@{/}">Spell Directory</a></h2>
         Sorting options<br>
-        Spellbook Management<br>
+        <a th:href="@{/manage-spellbooks}">Spellbook Management</a><br>
         <a th:href="@{/add-spell}">Add another spell to the list</a><br>
 
         Search Options:<br>

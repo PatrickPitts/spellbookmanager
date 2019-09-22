@@ -184,4 +184,43 @@ public class SpellDatabaseManager {
         ps.execute();
         conn.close();
     }
+
+    public static List<String> getAllCastersAsList() throws SQLException{
+        List<String> casterList = new ArrayList<>();
+        Connection conn = connect();
+        Statement st = conn.createStatement();
+        String sql = "SELECT * FROM casterClasses;";
+        ResultSet rs = st.executeQuery(sql);
+        while(rs.next()){
+            casterList.add(rs.getString("casterClass"));
+        }
+        return casterList;
+    }
+
+    public static List<SpellBook> getAllSpellbooksAsList()throws SQLException{
+        List<SpellBook> spellBooks = new ArrayList<>();
+
+        Connection conn = connect();
+        String sql = "SELECT * FROM spellBooks;";
+
+        return spellBooks;
+    }
+
+    public static List<String> getSpellbookNames()throws SQLException{
+        //TODO: Finish spellbook search
+        List<String> spellbookNameList = new ArrayList<>();
+
+        Connection conn = connect();
+        String sql = "SELECT spellbookName from spellBooks;";
+
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        while(rs.next()){
+            spellbookNameList.add(rs.getString("spellbookName"));
+        }
+
+        conn.close();
+        return spellbookNameList;
+
+    }
 }
