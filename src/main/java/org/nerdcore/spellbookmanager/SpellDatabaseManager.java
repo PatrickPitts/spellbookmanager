@@ -1,10 +1,9 @@
 package org.nerdcore.spellbookmanager;
 
-import org.nerdcore.spellbookmanager.models.SearchParams;
+import org.nerdcore.spellbookmanager.models.SpellSearchParams;
 import org.nerdcore.spellbookmanager.models.Spell;
 import org.nerdcore.spellbookmanager.models.SpellBook;
 
-import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -118,7 +117,7 @@ public class SpellDatabaseManager {
         return spellList;
     }
 
-    public static List<Spell> searchForSpells(SearchParams params) throws SQLException{
+    public static List<Spell> searchForSpells(SpellSearchParams params) throws SQLException{
 
         //TODO implement casters
 
@@ -173,7 +172,10 @@ public class SpellDatabaseManager {
 
     }
 
-    public static void addSpellbook(SpellBook spellbook) throws SQLException{
+    public static void addSpellbookToDatabase(SpellBook spellbook) throws SQLException{
+
+        //TODO: Name sanitization; this should fail if the name is already present in the spellBooks table
+
         Connection conn = connect();
         Statement st = conn.createStatement();
 
@@ -201,9 +203,32 @@ public class SpellDatabaseManager {
         List<SpellBook> spellBooks = new ArrayList<>();
 
         Connection conn = connect();
+        Statement st = conn.createStatement();
         String sql = "SELECT * FROM spellBooks;";
 
+        ResultSet rs = st.executeQuery(sql);
+
+        while(rs.next()){
+            spellBooks.add(new SpellBook(rs));
+
+        }
+
         return spellBooks;
+    }
+
+    public static SpellBook getSingleSpellbookBySpellbookName(String spellbookName) throws SQLException{
+
+        //TODO:
+        Connection conn = connect();
+        Statement st = conn.createStatement();
+
+        String sql = "SELECT * FROm spellBooks WHERE spellbookName IS " + spellbookName + ";";
+        ResultSet rs = st.executeQuery(sql);
+
+        return new SpellBook(rs);
+
+
+
     }
 
     public static List<String> getSpellbookNames()throws SQLException{

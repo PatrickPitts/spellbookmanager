@@ -19,19 +19,4 @@ public class SpellbookManagerApplication extends SpringBootServletInitializer {
     public static void main(String[] args) throws Exception {
         SpringApplication.run(SpellbookManagerApplication.class, args);
     }
-
-
-//    @Bean
-//    CommandLineRunner initDatabase(SpellRepository repository){
-//        return args -> {
-//            repository.save(new Spell("Fireball", "Blows up everything","Evocation", 3));
-//            repository.save(new Spell("Teleport", "Get the hell out of there", "Conjuration", 7));
-//            repository.save(new Spell("Magic Missile", "Bad damage, but guaranteed to hit.", "Evocation", 0));
-//            repository.save(new Spell("Goodberry", "Delicious berries","Transmutation",1));
-//            repository.save(new Spell("Fire Bolt", "Wizards auto-attack", "Evocation", 0));
-//        };
-//    }
-
-
-
 }

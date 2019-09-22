@@ -1,12 +1,12 @@
 package org.nerdcore.spellbookmanager;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.nerdcore.spellbookmanager.models.SearchParams;
+import org.nerdcore.spellbookmanager.models.SpellBookSearchParams;
+import org.nerdcore.spellbookmanager.models.SpellSearchParams;
 import org.nerdcore.spellbookmanager.models.Spell;
 import org.nerdcore.spellbookmanager.models.SpellBook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -36,16 +36,20 @@ public class SpellDirectoryController {
 
     //Without URL mapping, this displays a list of all saved spellbooks
     @RequestMapping("/manage-spellbooks")
-    public ModelAndView spellbookManager(){
+    public ModelAndView viewSpellbookManager() throws SQLException{
         ModelAndView model = new ModelAndView("spellbooks");
+
+        model.addObject("spellbookList", SpellDatabaseManager.getAllSpellbooksAsList());
+        model.addObject("spellBookSearchParams", new SpellBookSearchParams());
         return model;
     }
 
     //With the appropriate URL mapping, this method redirects the view to display content
     //associated with the named spellbook
     @RequestMapping("/view-spellbook")
-    public ModelAndView displayAllSpellBooks(@RequestParam("spellbookName")String spellbookName){
+    public ModelAndView displaySingleSpellbook(@RequestParam("spellbookName")String spellbookName){
 
+        System.out.println(spellbookName);
         ModelAndView model = new ModelAndView("displayspellbook");
         //model.addObject()
 
@@ -62,10 +66,9 @@ public class SpellDirectoryController {
     }
 
     @PostMapping("/add-spellbook")
-    public ModelAndView addSpellbookAndDisplay(@ModelAttribute("spellbookToAdd")SpellBook spellBook){
+    public ModelAndView addSpellbookAndDisplay(@ModelAttribute("spellbookToAdd")SpellBook spellBook) throws SQLException{
 
-        System.out.println(spellBook.getSpellbookName());
-        System.out.println(spellBook.getCasterClass());
+        SpellDatabaseManager.addSpellbookToDatabase(spellBook);
         ModelAndView model = new ModelAndView("spellbooks");
 
 
@@ -74,14 +77,12 @@ public class SpellDirectoryController {
 
 
     @PostMapping("/search")
-    public ModelAndView directoryWithSearch(@ModelAttribute("searchParams")SearchParams searchParams) throws SQLException {
+    public ModelAndView directoryWithSearch(@ModelAttribute("spellSearchParams") SpellSearchParams spellSearchParams) throws SQLException {
 
         ModelAndView model = new ModelAndView("spelldirectory");
-        //model.addObject("executedSearchParameters", searchParams);
         model.addObject("schoolList", schoolList);
-        model.addObject("spells", SpellDatabaseManager.searchForSpells(searchParams));
-        model.addObject("searchParams", searchParams);
-        //new SearchParams()
+        model.addObject("spells", SpellDatabaseManager.searchForSpells(spellSearchParams));
+        model.addObject("spellSearchParams", spellSearchParams);
         return model;
 
     }
@@ -93,7 +94,7 @@ public class SpellDirectoryController {
 
         model.addObject("schoolList", schoolList);
         model.addObject("spells", SpellDatabaseManager.getAllSpellsAsList());
-        model.addObject("searchParams", new SearchParams());
+        model.addObject("spellSearchParams", new SpellSearchParams());
         return model;
     }
 

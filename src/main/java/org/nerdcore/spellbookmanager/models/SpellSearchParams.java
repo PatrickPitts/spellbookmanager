@@ -1,6 +1,6 @@
 package org.nerdcore.spellbookmanager.models;
 
-public class SearchParams {
+public class SpellSearchParams {
 
     private String spellName;
     private String school;
@@ -9,7 +9,7 @@ public class SearchParams {
     private boolean ritualCasting;
     private boolean concentration;
 
-    public SearchParams(){}
+    public SpellSearchParams(){}
 
 
     public boolean isRitualCasting() {

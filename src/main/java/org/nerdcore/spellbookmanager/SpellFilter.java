@@ -1,6 +1,6 @@
 package org.nerdcore.spellbookmanager;
 
-import org.nerdcore.spellbookmanager.models.SearchParams;
+import org.nerdcore.spellbookmanager.models.SpellSearchParams;
 import org.nerdcore.spellbookmanager.models.Spell;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class SpellFilter {
 
-    public static List<Spell> getFilteredSpellList(SearchParams params){
+    public static List<Spell> getFilteredSpellList(SpellSearchParams params){
         List<Spell> temp = new ArrayList<>();
         List<Spell> sorted = SpellJSONProcesser.getAllSpellsAsList();
 

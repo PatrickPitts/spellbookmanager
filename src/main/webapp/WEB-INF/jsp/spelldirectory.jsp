@@ -14,7 +14,7 @@
         <a th:href="@{/add-spell}">Add another spell to the list</a><br>
 
         Search Options:<br>
-        <form th:action="@{/search}" th:object="${searchParams}" method="post">
+        <form th:action="@{/search}" th:object="${spellSearchParams}" method="post">
             <label th:for="name">Name:</label>
             <input type="text" id="name" name="name" th:field="*{spellName}"/><br>
             <label th:for="level">Spell Level: </label>
