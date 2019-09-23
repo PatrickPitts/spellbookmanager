@@ -37,19 +37,26 @@
     <div name="spell-list-display" class="spell-display-list">
 
         <th:block th:each="spell : ${spells}">
-
-            <a th:href="@{/spell(spellname=${spell.name})}">
-                <div th:text="${spell.name}" th:class="${spell.school}">Spell Name</div>
+            <div class="directory-row-wrapper" th:classappend="${spell.school} ">
+            <a th:href="@{/spell(spellname=${spell.name})}" class="directory-row-element">
+                <div th:text="${spell.name}" >Spell Name</div>
             </a>
 
 
-            <a th:href="@{/edit-spell(spellname=${spell.name})}">
-                <div th:class="${spell.school}">Edit...</div>
+            <a th:href="@{/edit-spell(spellname=${spell.name})}" class="directory-row-element">
+                <div>Edit...</div>
             </a>
 
-            <a th:href="@{/delete-spell(spellname=${spell.name})}">
-                <div th:class="${spell.school}">[X]</div>
-            </a><br>
+                <form action="@{/delete-spell(spellname=${spell.name})}">
+                    <input type="submit" value="X" style="vertical-align: center">
+                </form>
+            <!--
+            <a th:href="@{/delete-spell(spellname=${spell.name})}" class="directory-row-element">
+                <div>[X]</div>
+            </a>
+            -->
+            </div>
+            <br>
 
 
         </th:block>

@@ -1,4 +1,3 @@
-<%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,15 +6,14 @@
 <body>
 <h2>Display all Spell Books</h2>
 
-<form th:action="@{/view-spellbook/">
-    <select name="spellbookListDisplay" th:field="*{spellbookName}" MULTIPLE>
-        <option th:each="val : ${spellbookList}" th:value="${val.spellbookName}" th:text="${val.spellbookName}"></option>
-    </select>
+<th:block th:each="spellbook : ${spellbookList}">
+<a th:href="@{/view-spellbook(spellbookName=${spellbook.spellbookName})}">
+    <div th:text="${spellbook.spellbookName}" class="spellbook-selector">SpellbookName</div>
+</a>
+</th:block>
+<a th:href="@{/add-spellbook}">
+    <div class="spellbook-selector"> + New Spell Book</div>
+</a>
 
-</form>
-
-<form th:action="@{/add-spellbook}">
-    <input type="submit" value="Create a New Spellbook">
-</form>
 </body>
 </html>

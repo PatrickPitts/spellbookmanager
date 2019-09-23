@@ -220,12 +220,16 @@ public class SpellDatabaseManager {
 
         //TODO:
         Connection conn = connect();
-        Statement st = conn.createStatement();
+        //Statement st = conn.createStatement();
 
-        String sql = "SELECT * FROm spellBooks WHERE spellbookName IS " + spellbookName + ";";
-        ResultSet rs = st.executeQuery(sql);
+        String sql = "SELECT * FROm spellBooks WHERE spellbookName IS ?;";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, spellbookName);
 
-        return new SpellBook(rs);
+        ResultSet rs = ps.executeQuery();
+        SpellBook bookToReturn = new SpellBook(rs);
+        conn.close();
+        return bookToReturn;
 
 
 

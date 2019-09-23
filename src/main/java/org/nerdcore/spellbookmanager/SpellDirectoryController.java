@@ -37,6 +37,7 @@ public class SpellDirectoryController {
     //Without URL mapping, this displays a list of all saved spellbooks
     @RequestMapping("/manage-spellbooks")
     public ModelAndView viewSpellbookManager() throws SQLException{
+
         ModelAndView model = new ModelAndView("spellbooks");
 
         model.addObject("spellbookList", SpellDatabaseManager.getAllSpellbooksAsList());
@@ -47,11 +48,12 @@ public class SpellDirectoryController {
     //With the appropriate URL mapping, this method redirects the view to display content
     //associated with the named spellbook
     @RequestMapping("/view-spellbook")
-    public ModelAndView displaySingleSpellbook(@RequestParam("spellbookName")String spellbookName){
+    public ModelAndView displaySingleSpellbook(@RequestParam("spellbookName")String spellbookName)throws SQLException{
 
-        System.out.println(spellbookName);
+        //TODO: Handle when too many parameters are passed through URL
+
         ModelAndView model = new ModelAndView("displayspellbook");
-        //model.addObject()
+        model.addObject("spellbook", SpellDatabaseManager.getSingleSpellbookBySpellbookName(spellbookName));
 
 
         return model;
