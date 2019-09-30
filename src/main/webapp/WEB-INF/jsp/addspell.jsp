@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 
 
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link href="spellstyles.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <h2>[[${title}]]</h2><br>
 
+<th:block th:if="${action}=='edit-spell'">
+    [[${spell.id}]]
+</th:block>
+
 <form th:action="@{/{action}(action=${action})}" th:object="${spell}" method="post">
+    <input type="hidden" th:field="*{id}" th:value="${spell.id}">
     <label th:for="name">Spell Name:  </label>
     <input type="text" id="name" name="name" th:field="*{name}"/>
     <label th:for="school">School:  </label>

@@ -28,18 +28,61 @@ public class SpellDatabaseManager {
     Used and intended to help convert the outdated JSON persistence structure to the SQL friendly
     Database structure.
          */
-    public static void addSpellListToDatabase(List<Spell> spellList){
-
+    public static void addSpellListToDatabase(List<Spell> spellList) throws SQLException{
+        //TODO: Implement single sql update, rather than iterating
         for(Spell spell: spellList) {
-            addSingleSpellToDatabase(spell);
+            addSingleSpellToSpellCollection(spell);
         }
     }
 
+    public static void addSingleSpellToSpellCollection(Spell spell) throws SQLException{
+        Connection conn = connect();
+        String preparedString = "INSERT INTO spellCollection " +
+                "(spellName, " +
+                "description, " +
+                "spellLevel, " +
+                "school, " +
+                "castingTime," +
+                "range, " +
+                "verbalComponent, " +
+                "somaticComponent, " +
+                "ritualCasting," +
+                "concentration, " +
+                "materialComponents, " +
+                "duration, " +
+                "source)" +
+                "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?);";
+
+        PreparedStatement ps = conn.prepareStatement(preparedString);
+
+        ps.setString(1, spell.getName());
+        ps.setString(2, spell.getDescription());
+        ps.setInt(3, spell.getLevel());
+        ps.setString(4, spell.getSchool());
+        ps.setString(5, spell.getCastingTime());
+        ps.setString(6, spell.getRange());
+        ps.setBoolean(7, spell.isVerbalComponent());
+        ps.setBoolean(8, spell.isSomaticComponent());
+        ps.setBoolean(9, spell.isRitualCasting());
+        ps.setBoolean(10, spell.isConcentration());
+        ps.setString(11, spell.getMaterialComponents());
+        ps.setString(12, spell.getDuration());
+        ps.setString(13, spell.getSource());
+
+        ps.executeUpdate();
+
+        conn.close();
+
+    }
+
+
     //Takes a Spell object, prepares an SQL Query String to add the Spell object data to the database,
     //the attempts to connect to the database, and execute the SQL Query.
+/*
     public static void addSingleSpellToDatabase(Spell spell){
+        //TODO: Phase this method out
         Connection conn = connect();
-        String preparedString = "INSERT INTO spells" +
+        String preparedString = "INSERT INTO spells " +
                 "(spellName, " +
                 "description, " +
                 "spellLevel, " +
@@ -78,41 +121,38 @@ public class SpellDatabaseManager {
         }
 
     }
+*/
 
-    public static Spell getSingleSpellBySpellName(String spellName){
+    public static Spell getSingleSpellBySpellName(String spellName) throws SQLException{
         Connection conn = connect();
-        String prepString = "SELECT * FROM spells WHERE spellName IS ?;";
-        try {
-            Statement st = conn.createStatement();
-            PreparedStatement sql = conn.prepareStatement(prepString);
-            sql.setString(1, spellName);
-            ResultSet rs = sql.executeQuery();
-            Spell spell = new Spell(rs);
+        String prepString = "SELECT * FROM spellCollection WHERE spellName IS ?;";
 
-            conn.close();
-            return spell;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        PreparedStatement sql = conn.prepareStatement(prepString);
+        sql.setString(1, spellName);
+        ResultSet rs = sql.executeQuery();
+        Spell spell = new Spell(rs);
 
-        return new Spell();
+        conn.close();
+        return spell;
+
 
     }
 
-    public static List<Spell> getAllSpellsAsList(){
+    public static List<Spell> getAllSpellsAsListAlphabatized() throws SQLException{
 
         Connection conn = connect();
-        String sql = "SELECT * FROM spells";
+        Statement st = conn.createStatement();
         List<Spell> spellList = new ArrayList<>();
-        try (Statement st = conn.createStatement()) {
-            ResultSet rs = st.executeQuery(sql);
-            while(rs.next()){
-                spellList.add(new Spell(rs));
-            }
-            conn.close();
-        } catch (Exception e){
-            e.printStackTrace();
+        String sql;
+        //String sql = "SELECT *, rowid FROM spells";
+
+        sql = "SELECT * from spellCollection ORDER BY spellName;";
+        ResultSet rs = st.executeQuery(sql);
+
+        while(rs.next()){
+            spellList.add(new Spell(rs));
         }
+        conn.close();
 
         return spellList;
     }
@@ -126,9 +166,8 @@ public class SpellDatabaseManager {
         List<Spell> spellsToReturn = new ArrayList<>();
 
 
-        String sql = "SELECT * FROM spells";
+        String sql = "SELECT * FROM spellCollection";
         if(params.isEmpty()){
-            System.out.println("Empty Params");
             sql += ";";
         } else {
             sql+=" WHERE ";
@@ -159,7 +198,7 @@ public class SpellDatabaseManager {
     }
 
     public static void deleteSpellByName(String spellName) throws SQLException{
-        String sql = "DELETE from spells WHERE spellName IS '" + spellName +"';";
+        String sql = "DELETE from spellCollection WHERE spellName IS '" + spellName +"';";
         Connection conn = connect();
         Statement st = conn.createStatement();
         st.execute(sql);
@@ -167,9 +206,40 @@ public class SpellDatabaseManager {
     }
 
     public static void editSpell(Spell spellToEdit) throws SQLException{
-        deleteSpellByName(spellToEdit.getName());
-        addSingleSpellToDatabase(spellToEdit);
 
+        Connection conn = connect();
+        String sql = "UPDATE spellCollection SET " +
+                "spellName = ?, " +
+                "description = ?, " +
+                "spellLevel = ?, " +
+                "school = ?, " +
+                "castingTime = ?, " +
+                "range = ?, " +
+                "verbalComponent = ?, " +
+                "somaticComponent = ?, " +
+                "ritualCasting = ?, " +
+                "concentration = ?, " +
+                "materialComponents = ?, " +
+                "source = ? " +
+                "WHERE spellID = ?;";
+        PreparedStatement ps = conn.prepareStatement(sql);
+
+        ps.setString(1, spellToEdit.getName());
+        ps.setString(2,spellToEdit.getDescription());
+        ps.setInt(3, spellToEdit.getLevel());
+        ps.setString(4,spellToEdit.getSchool());
+        ps.setString(5, spellToEdit.getCastingTime());
+        ps.setString(6, spellToEdit.getRange());
+        ps.setBoolean(7, spellToEdit.isVerbalComponent());
+        ps.setBoolean(8,spellToEdit.isSomaticComponent());
+        ps.setBoolean(9, spellToEdit.isRitualCasting() );
+        ps.setBoolean(10, spellToEdit.isConcentration());
+        ps.setString(11, spellToEdit.getMaterialComponents());
+        ps.setString(12, spellToEdit.getSource());
+        ps.setInt(13, spellToEdit.getId());
+
+        ps.executeUpdate();
+        conn.close();
     }
 
     public static void addSpellbookToDatabase(SpellBook spellbook) throws SQLException{
@@ -252,4 +322,27 @@ public class SpellDatabaseManager {
         return spellbookNameList;
 
     }
+
+    public static List<Spell> getAllSpellsInSpellbookBySpellbookID(int spellbookID)throws SQLException{
+
+        List<Spell> spellbookSpellList = new ArrayList<>();
+        Connection conn = connect();
+
+        PreparedStatement ps = conn.prepareStatement(String.format(
+                "SELECT * FROM spellCollection WHERE spellName IN " +
+                        "(SELECT spellName FROM spellBookStorage WHERE spellbookID IS ?); "
+        ));
+
+        ps.setInt(1,spellbookID);
+        ResultSet rs = ps.executeQuery();
+
+        while(rs.next()){
+            Spell spell = new Spell(rs);
+            System.out.println(spell.getName());
+            spellbookSpellList.add(spell);
+        }
+
+        return spellbookSpellList;
+    }
+
 }

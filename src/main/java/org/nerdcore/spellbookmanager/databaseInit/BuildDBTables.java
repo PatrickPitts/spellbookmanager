@@ -1,10 +1,7 @@
 package org.nerdcore.spellbookmanager.databaseInit;
 
 import javax.swing.plaf.nimbus.State;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class BuildDBTables {
 
@@ -97,12 +94,80 @@ public class BuildDBTables {
         conn.close();
     }
 
+    public static void createSpellCollectionTable() throws SQLException{
+        Connection conn = connect();
+        Statement st = conn.createStatement();
+        String sql;
+
+        /*sql = sql = "CREATE TABLE IF NOT EXISTS spellCollection(\n"
+                + "spellID integer PRIMARY KEY,\n"
+                + "spellName VARCHAR(128) NOT NULL,\n"
+                + "description text,\n"
+                + "spellLevel integer,\n"
+                + "school varchar(16),\n"
+                + "castingTime varchar(32),\n"
+                + "range varchar(32),\n"
+                + "verbalComponent BOOLEAN,\n"
+                + "somaticComponent BOOLEAN,\n"
+                + "ritualCasting BOOLEAN,\n"
+                + "concentration BOOLEAN,\n"
+                + "materialComponents text,\n"
+                + "duration varchar(32),\n"
+                + "source varchar(32));";
+
+
+        st.execute(sql);
+
+        sql = "INSERT INTO spellCollection " +
+                "(spellName, description, source) VALUES" +
+                "('test spell', 'This is a testing spell', 'test');";
+
+        st.execute(sql);*/
+
+        sql = "INSERT INTO spellCollection " +
+                "(spellName, description, source) VALUES" +
+                "('2nd test spell', 'This is another testing spell', 'test');";
+
+        st.execute(sql);
+
+        sql = "SELECT * FROM spellCollection;";
+        ResultSet rs = st.executeQuery(sql);
+
+        while(rs.next()){
+            System.out.print(rs.getInt("spellID"));
+            System.out.println(rs.getString("spellName"));
+        }
+    }
+
+
+    public static void createTestTable() throws SQLException {
+        Connection conn = connect();
+        Statement st = conn.createStatement();
+        String sql;
+               /* sql= "CREATE TABLE test IF NOT EXISTS (" +
+                "testID INTEGER PRIMARY KEY," +
+                "textValue VARCHAR(64));";
+        st.execute(sql);*/
+        sql = "INSERT INTO test(textValue) VALUES " +
+                "('text_1'), ('text_2'), ('text_3'); ";
+
+        st.execute(sql);
+
+        sql="SELECT * FROM test;";
+        ResultSet rs = st.executeQuery(sql);
+        while(rs.next()){
+            System.out.println(rs.getInt("testID")+"  "+rs.getString("textValue"));
+        }
+    }
+
 
     public static void main(String[] args)throws SQLException{
 
         //createSpellTable("spellbookDatabase.db");
         //createCasterTable();
-        createSpellBookTableAndConnector("spellbookDatabase.db");
+        //createSpellBookTableAndConnector("spellbookDatabase.db");
+        //createTestTable();
+        createSpellCollectionTable();
     }
 
     private static Connection connect(){

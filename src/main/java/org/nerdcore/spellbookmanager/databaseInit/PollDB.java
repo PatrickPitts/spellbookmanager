@@ -1,31 +1,94 @@
 package org.nerdcore.spellbookmanager.databaseInit;
 
 import org.nerdcore.spellbookmanager.SpellDatabaseManager;
-import org.nerdcore.spellbookmanager.SpellJSONProcesser;
 import org.nerdcore.spellbookmanager.models.Spell;
 
-import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 
+@SuppressWarnings("SqlDialectInspection")
 public class PollDB {
 
     public static void main(String[] args) throws SQLException{
+        //genericSQLCheck();
+        //getTablesAndColumns();
+
+
         //getCasters();
         //checkSpellTableColumns();
         //addTestSpell();
         //checkTestSpell();
-        //getTablesAndColumns();
-        //genericSQLCheck();
+        //printAllRowsOfSpellbookStorage();
+        //addTestSpellsToSpellBooks();
         //testSpellList();
         //SpellDatabaseManager.getSingleSpellFromSpellName("Aid");
         //BuildDBTables.createSpellBookTableAndConnector("spellbookDatabase.db");
+        // SpellDatabaseManager.getAllSpellsInSpellbookBySpellbookID(2);
+        //migrateFromSpellsToSpellCollection();
+        testSpellCollection();
+        /*for(Spell spell: SpellDatabaseManager.getAllSpellsInSpellbookBySpellbookID(1)){
+            System.out.println(spell);
+        }*/
+
+    }
+
+    public static void genericSQLCheck() throws SQLException{
+        Connection conn = connect();
+
+        String sql;
+        sql = "SELECT * from spellCollection;";
+
+        assert conn != null;
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        while(rs.next()){
+            Spell spell = new Spell(rs);
+            System.out.println(spell.getId());
+            System.out.println(spell.getName());
+        }
+
+    }
 
 
-/*
-        dropSpellTable();
-        BuildDBTables.createSpellTable("spellbookDatabase.db");
-        JSONStorageToDatabase();
-*/
+    public static void testSpellCollection() throws SQLException{
+        Connection conn = connect();
+        assert conn != null;
+        Statement st = conn.createStatement();
+        ResultSet rs;
+        String sql;
+        sql = "SELECT * FROM spellCollection ORDER BY spellName;";
+        rs = st.executeQuery(sql);
+        while(rs.next()){
+            System.out.print(rs.getInt("spellID"));
+            System.out.println(rs.getString("spellName"));
+        }
+        System.out.println("_____________________");
+
+        sql = "SELECT * FROM spellCollection ORDER BY school;";
+        rs = st.executeQuery(sql);
+        while(rs.next()){
+            System.out.print(rs.getInt("spellID"));
+            System.out.println(rs.getString("spellName"));
+        }
+    }
+
+    public static void migrateFromSpellsToSpellCollection()throws SQLException{
+
+        Connection conn = connect();
+        Statement st = conn.createStatement();
+        String sql;
+
+        sql = "INSERT INTO spellCollection SELECT * FROM spells;";
+
+        st.execute(sql);
+
+
+
+        /*List<Spell> spellTableList = SpellDatabaseManager.getAllSpellsAsListAlphabatized();
+        System.out.println(spellTableList.get(1).getName());
+        for(Spell spell : spellTableList){
+            SpellDatabaseManager.addSingleSpellToSpellCollection(spell);
+        }*/
+
     }
 
     public static void getCasters() throws SQLException{
@@ -38,8 +101,8 @@ public class PollDB {
         }
     }
 
-    public static void testSpellList(){
-        for(Spell spell : SpellDatabaseManager.getAllSpellsAsList()){
+    public static void testSpellList() throws SQLException{
+        for(Spell spell : SpellDatabaseManager.getAllSpellsAsListAlphabatized()){
             System.out.println(spell.getName());
         }
     }
@@ -51,16 +114,12 @@ public class PollDB {
         while(rs.next()){
             String tableName = rs.getString("TABLE_NAME");
 
-//            PreparedStatement ps = conn.prepareStatement("SELECT * from ");
-//            ps.setString(1, tableName);
-//            ResultSet tableResults = ps.executeQuery();
             ResultSet tableResults = conn.createStatement().executeQuery("Select * FROM "+tableName+";");
 
             ResultSetMetaData rsmd = tableResults.getMetaData();
             System.out.print("Table: ");
 
             System.out.println(tableName);
-            //System.out.println("Columns: ");
             for(int i = 1; i <= rsmd.getColumnCount(); i++){
                 System.out.println("- " + rsmd.getColumnName(i));
             }
@@ -70,13 +129,13 @@ public class PollDB {
         conn.close();
     }
 
-    public static void testSingleSpell(){
+    public static void testSingleSpell() throws SQLException{
         Spell testSpell = SpellDatabaseManager.getSingleSpellBySpellName("Aid");
         System.out.println(testSpell);
     }
 
     public static void JSONStorageToDatabase(){
-        SpellDatabaseManager.addSpellListToDatabase(SpellJSONProcesser.getAllSpellsAsList());
+        //SpellDatabaseManager.addSpellListToDatabase(SpellJSONProcesser.getAllSpellsAsListAlphabatized());
     }
 
     public static void checkTestSpell(){
@@ -109,21 +168,6 @@ public class PollDB {
         }
     }
 
-    public static void genericSQLCheck(){
-        Connection conn = connect();
-        //String sql = "PRAGMA table_info(spells)";
-        String sql = "SELECT rowid, spellName from spells where spellName is 'Divine Favor';";
-        try {
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            while(rs.next()){
-                System.out.println(rs.getInt(1));
-                System.out.println(rs.getString(2));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public static void addTestSpell(){
         Connection conn = connect();
@@ -144,6 +188,7 @@ public class PollDB {
                 "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
         try {
+            assert conn != null;
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setString(1,"Test Spell Name 55");
             preparedStatement.setString(2, "Test Spell Description");
@@ -170,12 +215,35 @@ public class PollDB {
 
     }
 
+    public static void addTestSpellsToSpellBooks() throws SQLException{
+        Connection conn = connect();
+        assert conn != null;
+        Statement st = conn.createStatement();
+        String sql = "INSERT INTO spellBookStorage(spellbookID, spellName) VALUES " +
+                "(1, 'Acid Splash'),(1,'Alter Self'), (2,'Delayed Blast Fireball'), (2,'Darkness');";
+        st.execute(sql);
+        conn.close();
+
+    }
+
+    public static void printAllRowsOfSpellbookStorage() throws SQLException{
+        Connection conn = connect();
+        assert conn != null;
+        Statement st = conn.createStatement();
+        String sql = "SELECT * FROM spellBookStorage";
+
+        ResultSet rs = st.executeQuery(sql);
+        while(rs.next()){
+            System.out.print(rs.getInt("spellbookID"));
+            System.out.println(rs.getString("spellName"));
+        }
+
+    }
 
     private static Connection connect(){
         String url = "jdbc:sqlite:src/main/resources/static/spellbookDatabase.db";
         try{
-            Connection conn = DriverManager.getConnection(url);
-            return conn;
+            return DriverManager.getConnection(url);
         } catch (Exception e){
             e.printStackTrace();
         }

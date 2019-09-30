@@ -14,9 +14,11 @@ import java.sql.SQLException;
 @Entity
 public class Spell {
 
+
+
     @Id
     @GeneratedValue
-    private Long id;
+    private int id;
     @Column(unique = true)
     private String name;
     @Column(length=5000)
@@ -32,6 +34,10 @@ public class Spell {
     private String source;
     private boolean ritualCasting;
     private boolean concentration;
+
+    public int getId() {return id;}
+
+    public void setId(int id) {this.id = id;}
 
 
     public boolean isConcentration() {
@@ -153,7 +159,8 @@ public class Spell {
         ret += "duration: " + this.duration + "\n";
         ret += "description: " + this.description + "\n";
         ret += "source: " + this.source + "\n";
-        ret += "ritualCasting: " + this.ritualCasting;
+        ret += "ritualCasting: " + this.ritualCasting + "\n";
+        ret += "spellID: " + this.id;
 
         return ret;
     }
@@ -208,6 +215,7 @@ public class Spell {
 
     public Spell(ResultSet rs){
         try {
+            this.id = rs.getInt("spellID");
             this.name = rs.getString("spellName");
             this.school = rs.getString("school");
             this.range = rs.getString("range");

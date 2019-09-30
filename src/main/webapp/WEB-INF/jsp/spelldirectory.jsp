@@ -46,25 +46,25 @@
             <a th:href="@{/edit-spell(spellname=${spell.name})}" class="directory-row-element">
                 <div>Edit...</div>
             </a>
-
-                <form action="@{/delete-spell(spellname=${spell.name})}">
+            <!--
+                <form action="#" th:action="@{/delete-spell(spellname=${spell.name})}">
                     <input type="submit" value="X" style="vertical-align: center">
                 </form>
-            <!--
-            <a th:href="@{/delete-spell(spellname=${spell.name})}" class="directory-row-element">
-                <div>[X]</div>
-            </a>
             -->
-            </div>
-            <br>
+
+                    <a th:href="@{/delete-spell(spellname=${spell.name})}" class="directory-row-element">
+                    <div>[X]</div>
+                    </a>
+                </div>
+                <br>
 
 
-        </th:block>
+            </th:block>
+        </div>
     </div>
-</div>
-<br>
-<br><br><br>
+    <br>
+    <br><br><br>
 
-</body>
-</html>
+    </body>
+    </html>
 
