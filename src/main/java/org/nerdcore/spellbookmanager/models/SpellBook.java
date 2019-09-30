@@ -8,15 +8,24 @@ public class SpellBook {
 
     private String spellbookName;
     private String casterClass = "";
-    private List<String> listOfSpells;
+    private int spellbookID;
+    private List<Spell> listOfSpells;
 
     public SpellBook(ResultSet rs) throws SQLException {
         this.spellbookName = rs.getString("spellBookName");
         this.casterClass = rs.getString("casterClass");
+        this.spellbookID = rs.getInt("spellbookID");
         //TODO: implement spell list
     }
 
     public SpellBook(){}
+    public int getSpellbookID() {
+        return spellbookID;
+    }
+
+    public void setSpellbookID(int spellbookID) {
+        this.spellbookID = spellbookID;
+    }
     public String getSpellbookName() {
         return spellbookName;
     }
@@ -33,11 +42,11 @@ public class SpellBook {
         this.casterClass = casterClass;
     }
 
-    public List<String> getListOfSpells() {
+    public List<Spell> getListOfSpells() {
         return listOfSpells;
     }
 
-    public void setListOfSpells(List<String> listOfSpells) {
+    public void setListOfSpells(List<Spell> listOfSpells) {
         this.listOfSpells = listOfSpells;
     }
 

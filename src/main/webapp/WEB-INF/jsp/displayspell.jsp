@@ -8,9 +8,9 @@
 
 <h2 th:text="${spell.name}">Spell Name</h2>
 
-<div th:switch="${spell.level}">
+<div th:switch="${spell.spellLevel}">
     <p  th:case="0">[[${spell.school}]] Cantrip</p>
-    <p th:case="*">Level [[${spell.level}]] [[${spell.school}]]</p>
+    <p th:case="*">Level [[${spell.spellLevel}]] [[${spell.school}]]</p>
 
 </div>
 <div class="spell-description-wrapper">

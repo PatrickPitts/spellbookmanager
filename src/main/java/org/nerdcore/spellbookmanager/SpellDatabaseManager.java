@@ -57,7 +57,7 @@ public class SpellDatabaseManager {
 
         ps.setString(1, spell.getName());
         ps.setString(2, spell.getDescription());
-        ps.setInt(3, spell.getLevel());
+        ps.setInt(3, spell.getSpellLevel());
         ps.setString(4, spell.getSchool());
         ps.setString(5, spell.getCastingTime());
         ps.setString(6, spell.getRange());
@@ -100,7 +100,7 @@ public class SpellDatabaseManager {
         try (PreparedStatement ps = conn.prepareStatement(preparedString)) {
             ps.setString(1, spell.getName());
             ps.setString(2, spell.getDescription());
-            ps.setInt(3, spell.getLevel());
+            ps.setInt(3, spell.getSpellLevel());
             ps.setString(4, spell.getSchool());
             ps.setString(5, spell.getCastingTime());
             ps.setString(6, spell.getRange());
@@ -226,7 +226,7 @@ public class SpellDatabaseManager {
 
         ps.setString(1, spellToEdit.getName());
         ps.setString(2,spellToEdit.getDescription());
-        ps.setInt(3, spellToEdit.getLevel());
+        ps.setInt(3, spellToEdit.getSpellLevel());
         ps.setString(4,spellToEdit.getSchool());
         ps.setString(5, spellToEdit.getCastingTime());
         ps.setString(6, spellToEdit.getRange());
@@ -323,14 +323,32 @@ public class SpellDatabaseManager {
 
     }
 
+    public static SpellBook getSpellbookBySpellbookID(int spellbookID) throws SQLException{
+        Connection conn = connect();
+        PreparedStatement ps = conn.prepareStatement(String.format(
+                "SELECT * FROM spellBooks WHERE spellbookID IS ?"
+        ));
+        ps.setInt(1, spellbookID);
+
+        SpellBook spellbook = new SpellBook(ps.executeQuery());
+
+        spellbook.setListOfSpells(getAllSpellsInSpellbookBySpellbookID(spellbookID));
+
+        return spellbook;
+
+    }
+
     public static List<Spell> getAllSpellsInSpellbookBySpellbookID(int spellbookID)throws SQLException{
+
+
 
         List<Spell> spellbookSpellList = new ArrayList<>();
         Connection conn = connect();
 
         PreparedStatement ps = conn.prepareStatement(String.format(
                 "SELECT * FROM spellCollection WHERE spellName IN " +
-                        "(SELECT spellName FROM spellBookStorage WHERE spellbookID IS ?); "
+                        "(SELECT spellName FROM spellBookStorage WHERE spellbookID IS ?)" +
+                        "ORDER BY spellLevel; "
         ));
 
         ps.setInt(1,spellbookID);
@@ -338,7 +356,6 @@ public class SpellDatabaseManager {
 
         while(rs.next()){
             Spell spell = new Spell(rs);
-            System.out.println(spell.getName());
             spellbookSpellList.add(spell);
         }
 

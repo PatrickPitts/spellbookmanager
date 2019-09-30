@@ -10,7 +10,7 @@ public class PollDB {
 
     public static void main(String[] args) throws SQLException{
         //genericSQLCheck();
-        //getTablesAndColumns();
+        getTablesAndColumns();
 
 
         //getCasters();
@@ -22,9 +22,9 @@ public class PollDB {
         //testSpellList();
         //SpellDatabaseManager.getSingleSpellFromSpellName("Aid");
         //BuildDBTables.createSpellBookTableAndConnector("spellbookDatabase.db");
-        // SpellDatabaseManager.getAllSpellsInSpellbookBySpellbookID(2);
+        //SpellDatabaseManager.getAllSpellsInSpellbookBySpellbookID(2);
         //migrateFromSpellsToSpellCollection();
-        testSpellCollection();
+        //testSpellCollection();
         /*for(Spell spell: SpellDatabaseManager.getAllSpellsInSpellbookBySpellbookID(1)){
             System.out.println(spell);
         }*/

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 
@@ -21,8 +22,8 @@
         <option th:each="val : ${schoolList}" th:value="${val}" th:text="${val}"></option>
     </select>
 
-    <label th:for="level">Spell Level:  </label>
-    <select name="level" id="level" th:field="*{level}">
+    <label th:for="spellLevel">Spell Level:  </label>
+    <select name="spellLevel" id="spellLevel" th:field="*{spellLevel}">
         <option th:each="val : ${#numbers.sequence(0,9)}" th:value="${val}" th:text="${val}"></option>
     </select>
 

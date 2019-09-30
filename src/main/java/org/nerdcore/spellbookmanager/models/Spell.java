@@ -1,13 +1,11 @@
 package org.nerdcore.spellbookmanager.models;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.json.simple.JSONObject;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.xml.transform.Result;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -23,7 +21,7 @@ public class Spell {
     private String name;
     @Column(length=5000)
     private String description;
-    private int level;
+    private int spellLevel;
     private String school;
     private String castingTime;
     private String range;
@@ -64,12 +62,12 @@ public class Spell {
         this.description = description;
     }
 
-    public int getLevel() {
-        return level;
+    public int getSpellLevel() {
+        return spellLevel;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    public void setSpellLevel(int spellLevel) {
+        this.spellLevel = spellLevel;
     }
 
     public String getSchool() {
@@ -151,7 +149,7 @@ public class Spell {
         ret += "Name: " + this.name + "\n";
         ret += "School: " + this.school + "\n";
         ret += "Range: " + this.range + "\n";
-        ret += "Level: " + this.level + "\n";
+        ret += "Level: " + this.spellLevel + "\n";
         ret += "castingTime: " + this.castingTime + "\n";
         ret += "verbalComponent: " + this.verbalComponent + "\n";
         ret += "somaticComponent: " + this.somaticComponent + "\n";
@@ -179,7 +177,7 @@ public class Spell {
         obj.put("name", this.name);
         obj.put("school", this.school);
         obj.put("range", this.range);
-        obj.put("level", this.level);
+        obj.put("spellLevel", this.spellLevel);
         obj.put("castingTime", this.castingTime);
         obj.put("verbalComponent", this.verbalComponent);
         obj.put("somaticComponent", this.somaticComponent);
@@ -196,7 +194,7 @@ public class Spell {
         this.name = (String) obj.get("name");
         this.school = (String) obj.get("school");
         this.range = (String) obj.get("range");
-        this.level =  ((Long) obj.get("level")).intValue();
+        this.spellLevel =  ((Long) obj.get("spellLevel")).intValue();
         this.castingTime = (String) obj.get("castingTime");
         this.verbalComponent = (Boolean) obj.get("verbalComponent");
         this.somaticComponent = (Boolean) obj.get("somaticComponent");
@@ -219,7 +217,7 @@ public class Spell {
             this.name = rs.getString("spellName");
             this.school = rs.getString("school");
             this.range = rs.getString("range");
-            this.level = rs.getInt("spellLevel");
+            this.spellLevel = rs.getInt("spellLevel");
             this.castingTime = rs.getString("castingTime");
             this.verbalComponent = rs.getBoolean("verbalComponent");
             this.somaticComponent = rs.getBoolean("somaticComponent");

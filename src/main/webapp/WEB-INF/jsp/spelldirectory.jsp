@@ -10,15 +10,15 @@
     <div name="spell-directory-actions" class="spell-directory-actions">
         <h2><a th:href="@{/}">Spell Directory</a></h2>
         Sorting options<br>
-        <a th:href="@{/manage-spellbooks}">Spellbook Management</a><br>
+        <a th:href="@{/spellbook-directory}">Spellbook Management</a><br>
         <a th:href="@{/add-spell}">Add another spell to the list</a><br>
 
         Search Options:<br>
         <form th:action="@{/search}" th:object="${spellSearchParams}" method="post">
             <label th:for="name">Name:</label>
             <input type="text" id="name" name="name" th:field="*{spellName}"/><br>
-            <label th:for="level">Spell Level: </label>
-            <select name="level" id="level" th:field="*{spellLevel}">
+            <label th:for="spellLevel">Spell Level: </label>
+            <select name="spellLevel" id="spellLevel" th:field="*{spellLevel}">
                 <option th:value="N"></option>
                 <option th:each="val : ${#numbers.sequence(0,9)}" th:value="${val}" th:text="${val}"></option>
             </select><br>

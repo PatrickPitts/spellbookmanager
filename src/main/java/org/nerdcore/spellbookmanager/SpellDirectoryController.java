@@ -35,10 +35,10 @@ public class SpellDirectoryController {
         }};
 
     //Without URL mapping, this displays a list of all saved spellbooks
-    @RequestMapping("/manage-spellbooks")
+    @RequestMapping("/spellbook-directory")
     public ModelAndView viewSpellbookManager() throws SQLException{
 
-        ModelAndView model = new ModelAndView("spellbooks");
+        ModelAndView model = new ModelAndView("spellbookdirectory");
 
         model.addObject("spellbookList", SpellDatabaseManager.getAllSpellbooksAsList());
         model.addObject("spellBookSearchParams", new SpellBookSearchParams());
@@ -48,12 +48,12 @@ public class SpellDirectoryController {
     //With the appropriate URL mapping, this method redirects the view to display content
     //associated with the named spellbook
     @RequestMapping("/view-spellbook")
-    public ModelAndView displaySingleSpellbook(@RequestParam("spellbookName")String spellbookName)throws SQLException{
+    public ModelAndView displaySingleSpellbook(@RequestParam("spellbookID")int spellbookID)throws SQLException{
 
         //TODO: Handle when too many parameters are passed through URL
 
         ModelAndView model = new ModelAndView("displayspellbook");
-        model.addObject("spellbook", SpellDatabaseManager.getSingleSpellbookBySpellbookName(spellbookName));
+        model.addObject("spellbook", SpellDatabaseManager.getSpellbookBySpellbookID(spellbookID));
 
 
         return model;
@@ -111,7 +111,6 @@ public class SpellDirectoryController {
     @PostMapping("/edit-spell")
     @Transactional
     public String editSpellThenDirectory(@ModelAttribute("spell") Spell spellToEdit) throws SQLException{
-        System.out.print(spellToEdit);
         SpellDatabaseManager.editSpell(spellToEdit);
         return "redirect:";
     }
@@ -134,9 +133,6 @@ public class SpellDirectoryController {
     public ModelAndView editSpell(@RequestParam("spellname")String spellname) throws SQLException{
         ModelAndView model = new ModelAndView("addspell");
         Spell spell = SpellDatabaseManager.getSingleSpellBySpellName(spellname);
-
-        System.out.println(spell);
-
         model.addObject("schoolList", schoolList);
         model.addObject("spell", spell);
         model.addObject("action","edit-spell");

@@ -7,9 +7,9 @@
 <h2>Display all Spell Books</h2>
 
 <th:block th:each="spellbook : ${spellbookList}">
-<a th:href="@{/view-spellbook(spellbookName=${spellbook.spellbookName})}">
-    <div th:text="${spellbook.spellbookName}" class="spellbook-selector">SpellbookName</div>
-</a>
+    <a th:href="@{/view-spellbook(spellbookID=${spellbook.spellbookID})}">
+        <div th:text="${spellbook.spellbookName}" class="spellbook-selector">SpellbookName</div>
+    </a>
 </th:block>
 <a th:href="@{/add-spellbook}">
     <div class="spellbook-selector"> + New Spell Book</div>
