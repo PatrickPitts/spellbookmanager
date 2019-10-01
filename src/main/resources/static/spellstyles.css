@@ -79,7 +79,7 @@ body{
 .directory-row-element{
     flex:1;
     padding:0.5em;
-    font-size:1.25em;
+    font-size:1.1em;
     text-align: center;
     border: 0.5em inherit;
 }

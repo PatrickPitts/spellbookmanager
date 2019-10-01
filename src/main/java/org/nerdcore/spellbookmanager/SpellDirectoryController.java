@@ -7,6 +7,8 @@ import org.nerdcore.spellbookmanager.models.Spell;
 import org.nerdcore.spellbookmanager.models.SpellBook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,7 +36,13 @@ public class SpellDirectoryController {
             add("Transmutation");
         }};
 
-    //Without URL mapping, this displays a list of all saved spellbooks
+    @RequestMapping("/add-spell-to-spellbook")
+    public String addSpellToSpellbook(ModelMap model) throws SQLException{
+        System.out.println(model.get("greeting"));
+        return "redirect:";
+    }
+
+
     @RequestMapping("/spellbook-directory")
     public ModelAndView viewSpellbookManager() throws SQLException{
 
@@ -45,8 +53,6 @@ public class SpellDirectoryController {
         return model;
     }
 
-    //With the appropriate URL mapping, this method redirects the view to display content
-    //associated with the named spellbook
     @RequestMapping("/view-spellbook")
     public ModelAndView displaySingleSpellbook(@RequestParam("spellbookID")int spellbookID)throws SQLException{
 
@@ -54,7 +60,7 @@ public class SpellDirectoryController {
 
         ModelAndView model = new ModelAndView("displayspellbook");
         model.addObject("spellbook", SpellDatabaseManager.getSpellbookBySpellbookID(spellbookID));
-
+        model.addObject("greeting", "Hello!");
 
         return model;
     }
@@ -71,7 +77,7 @@ public class SpellDirectoryController {
     public ModelAndView addSpellbookAndDisplay(@ModelAttribute("spellbookToAdd")SpellBook spellBook) throws SQLException{
 
         SpellDatabaseManager.addSpellbookToDatabase(spellBook);
-        ModelAndView model = new ModelAndView("spellbooks");
+        ModelAndView model = new ModelAndView("spellbookdirectory");
 
 
         return model;
