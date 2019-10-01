@@ -36,10 +36,23 @@ public class SpellDirectoryController {
             add("Transmutation");
         }};
 
-    @RequestMapping("/add-spell-to-spellbook")
-    public String addSpellToSpellbook(ModelMap model) throws SQLException{
-        System.out.println(model.get("greeting"));
-        return "redirect:";
+    @RequestMapping("/add-to-spellbook")
+    public String addSpellToSpellbookThenSpellbookDisplay(@RequestParam("spellname")String spellname,
+                                                                @RequestParam("spellbookID")int spellbookID) throws SQLException{
+
+        return "redirect:view-spellbook?spellbookID="+spellbookID;
+    }
+
+    @RequestMapping("/search-spells-for-spellbook")
+    public ModelAndView addSpellToSpellbook(@RequestParam("spellbookID")int spellbookID) throws SQLException{
+        ModelAndView model = new ModelAndView("spelldirectory");
+
+        model.addObject("spellbookID", spellbookID);
+        model.addObject("schoolList", schoolList);
+        model.addObject("spells", SpellDatabaseManager.getAllSpellsAsListAlphabatized());
+        model.addObject("spellSearchParams", new SpellSearchParams());
+
+        return model;
     }
 
 
@@ -60,7 +73,6 @@ public class SpellDirectoryController {
 
         ModelAndView model = new ModelAndView("displayspellbook");
         model.addObject("spellbook", SpellDatabaseManager.getSpellbookBySpellbookID(spellbookID));
-        model.addObject("greeting", "Hello!");
 
         return model;
     }

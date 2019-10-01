@@ -75,6 +75,18 @@ public class SpellDatabaseManager {
 
     }
 
+    public static void addSingleSpellToSpellBook(String spellName, int spellbookID) throws SQLException{
+
+        Connection conn = connect();
+        String sql;
+
+        sql="INSERT INTO";
+
+
+
+        conn.close();
+    }
+
 
     //Takes a Spell object, prepares an SQL Query String to add the Spell object data to the database,
     //the attempts to connect to the database, and execute the SQL Query.

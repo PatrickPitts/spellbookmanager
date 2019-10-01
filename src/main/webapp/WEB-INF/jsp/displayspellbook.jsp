@@ -7,7 +7,7 @@
 <h2>[[${spellbook.spellbookName}]]</h2>
 
 <div class="spellbook-selector">
-    <a th:href="@{/add-spell-to-spellbook(spellbookID=${spellbook.spellbookID})}">+ Add Spell</a>
+    <a th:href="@{/search-spells-for-spellbook(spellbookID=${spellbook.spellbookID})}">+ Add Spell</a>
 </div>
 <th:block th:each="spellLevel : ${#numbers.sequence(0,9)}">
     <div style="text-decoration: underline">
