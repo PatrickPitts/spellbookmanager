@@ -10,12 +10,12 @@ public class SpellBook {
     private String casterClass = "";
     private int spellbookID;
     private List<Spell> listOfSpells;
+    private List<String> listOfSpellNames;
 
     public SpellBook(ResultSet rs) throws SQLException {
         this.spellbookName = rs.getString("spellBookName");
         this.casterClass = rs.getString("casterClass");
         this.spellbookID = rs.getInt("spellbookID");
-        //TODO: implement spell list
     }
 
     public SpellBook(){}
@@ -47,6 +47,7 @@ public class SpellBook {
     }
 
     public void setListOfSpells(List<Spell> listOfSpells) {
+
         this.listOfSpells = listOfSpells;
     }
 

@@ -39,7 +39,7 @@ public class SpellDirectoryController {
     @RequestMapping("/add-to-spellbook")
     public String addSpellToSpellbookThenSpellbookDisplay(@RequestParam("spellname")String spellname,
                                                                 @RequestParam("spellbookID")int spellbookID) throws SQLException{
-
+        SpellDatabaseManager.addSingleSpellToSpellBook(spellname, spellbookID);
         return "redirect:view-spellbook?spellbookID="+spellbookID;
     }
 
@@ -47,7 +47,8 @@ public class SpellDirectoryController {
     public ModelAndView addSpellToSpellbook(@RequestParam("spellbookID")int spellbookID) throws SQLException{
         ModelAndView model = new ModelAndView("spelldirectory");
 
-        model.addObject("spellbookID", spellbookID);
+        //model.addObject("spellbookID", spellbookID);
+        model.addObject("spellbook", SpellDatabaseManager.getSpellbookBySpellbookID(spellbookID));
         model.addObject("schoolList", schoolList);
         model.addObject("spells", SpellDatabaseManager.getAllSpellsAsListAlphabatized());
         model.addObject("spellSearchParams", new SpellSearchParams());

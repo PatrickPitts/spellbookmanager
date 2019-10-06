@@ -80,9 +80,14 @@ public class SpellDatabaseManager {
         Connection conn = connect();
         String sql;
 
-        sql="INSERT INTO";
+        sql="INSERT INTO spellBookStorage (spellbookID, spellName) VALUES" +
+                "(?, ?);";
 
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, spellbookID);
+        ps.setString(2, spellName);
 
+        ps.executeUpdate();
 
         conn.close();
     }
@@ -146,8 +151,6 @@ public class SpellDatabaseManager {
 
         conn.close();
         return spell;
-
-
     }
 
     public static List<Spell> getAllSpellsAsListAlphabatized() throws SQLException{
@@ -278,6 +281,7 @@ public class SpellDatabaseManager {
         while(rs.next()){
             casterList.add(rs.getString("casterClass"));
         }
+        conn.close();
         return casterList;
     }
 
@@ -294,7 +298,7 @@ public class SpellDatabaseManager {
             spellBooks.add(new SpellBook(rs));
 
         }
-
+        conn.close();
         return spellBooks;
     }
 
@@ -345,16 +349,15 @@ public class SpellDatabaseManager {
         SpellBook spellbook = new SpellBook(ps.executeQuery());
 
         spellbook.setListOfSpells(getAllSpellsInSpellbookBySpellbookID(spellbookID));
-
+        conn.close();
         return spellbook;
 
     }
 
     public static List<Spell> getAllSpellsInSpellbookBySpellbookID(int spellbookID)throws SQLException{
 
-
-
         List<Spell> spellbookSpellList = new ArrayList<>();
+        List<String> spellbookSpellNameList = new ArrayList<>();
         Connection conn = connect();
 
         PreparedStatement ps = conn.prepareStatement(String.format(
@@ -368,9 +371,10 @@ public class SpellDatabaseManager {
 
         while(rs.next()){
             Spell spell = new Spell(rs);
+            spellbookSpellNameList.add(spell.getName());
             spellbookSpellList.add(spell);
         }
-
+        conn.close();
         return spellbookSpellList;
     }
 

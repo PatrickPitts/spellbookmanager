@@ -50,10 +50,18 @@
                 <a th:href="@{/delete-spell(spellname=${spell.name})}" class="directory-row-element">
                     <div>[X]</div>
                 </a>
-                <th:block th:if="${spellbookID != null}">
-                    <a th:href="@{/add-to-spellbook(spellname=${spell.name},spellbookID=${spellbookID})}" class="directory-row-element" method="post">
-                        <div> (+) </div>
-                    </a>
+                <th:block th:if="${spellbook != null}">
+
+                    <th:block th:if="${#lists.contains(spellbook.listOfSpells, spell)}">
+                        <div>&#10004;</div>
+                    </th:block>
+
+                    <th:block th:unless="${#lists.contains(spellbook.listOfSpells, spell)}">
+                        <a th:href="@{/add-to-spellbook(spellname=${spell.name},spellbookID=${spellbook.spellbookID})}" class="directory-row-element" method="post">
+                            <div> (+) </div>
+                        </a>
+                    </th:block>
+
                 </th:block>
 
 
