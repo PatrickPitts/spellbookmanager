@@ -71,25 +71,6 @@ public class PollDB {
         }
     }
 
-    public static void migrateFromSpellsToSpellCollection()throws SQLException{
-
-        Connection conn = connect();
-        Statement st = conn.createStatement();
-        String sql;
-
-        sql = "INSERT INTO spellCollection SELECT * FROM spells;";
-
-        st.execute(sql);
-
-
-
-        /*List<Spell> spellTableList = SpellDatabaseManager.getAllSpellsAsListAlphabatized();
-        System.out.println(spellTableList.get(1).getName());
-        for(Spell spell : spellTableList){
-            SpellDatabaseManager.addSingleSpellToSpellCollection(spell);
-        }*/
-
-    }
 
     public static void getCasters() throws SQLException{
         Connection conn = connect();
@@ -101,11 +82,6 @@ public class PollDB {
         }
     }
 
-    public static void testSpellList() throws SQLException{
-        for(Spell spell : SpellDatabaseManager.getAllSpellsAsListAlphabatized()){
-            System.out.println(spell.getName());
-        }
-    }
 
     public static void getTablesAndColumns() throws SQLException{
         Connection conn = connect();
@@ -129,31 +105,11 @@ public class PollDB {
         conn.close();
     }
 
-    public static void testSingleSpell() throws SQLException{
-        Spell testSpell = SpellDatabaseManager.getSingleSpellBySpellName("Aid");
-        System.out.println(testSpell);
-    }
 
     public static void JSONStorageToDatabase(){
         //SpellDatabaseManager.addSpellListToDatabase(SpellJSONProcesser.getAllSpellsAsListAlphabatized());
     }
 
-    public static void checkTestSpell(){
-        Connection conn = connect();
-
-        try (Statement st = conn.createStatement()) {
-            String sql = "SELECT * FROM spells";
-            ResultSet rs = st.executeQuery(sql);
-            while(rs.next()){
-                System.out.print(rs.getString("spellName"));
-                System.out.print("  ");
-                System.out.println(rs.getInt("spellID"));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public static void dropSpellTable(){
         Connection conn = connect();
@@ -169,51 +125,7 @@ public class PollDB {
     }
 
 
-    public static void addTestSpell(){
-        Connection conn = connect();
-        String sql = "INSERT INTO spells" +
-                "(spellName, " +
-                "description, " +
-                "spellLevel, " +
-                "school, " +
-                "castingTime," +
-                "range, " +
-                "verbalComponent, " +
-                "somaticComponent, " +
-                "ritualCasting," +
-                "concentration, " +
-                "materialComponents, " +
-                "duration, " +
-                "source)" +
-                "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
-        try {
-            assert conn != null;
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1,"Test Spell Name 55");
-            preparedStatement.setString(2, "Test Spell Description");
-            preparedStatement.setInt(3,1);
-            preparedStatement.setString(4,"Abjuration");
-            preparedStatement.setString(5, "1 action");
-            preparedStatement.setString(6,"Self");
-            preparedStatement.setBoolean(7, true);
-            preparedStatement.setBoolean(8, true);
-            preparedStatement.setBoolean(9,true);
-            preparedStatement.setBoolean(10, true);
-            preparedStatement.setString(11, "None");
-            preparedStatement.setString(12, "1 hour");
-            preparedStatement.setString(13, "Player's Handbook");
-
-            System.out.println("Prepared Statement Done");
-            preparedStatement.executeUpdate();
-
-            System.out.println("Update Executed");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     public static void addTestSpellsToSpellBooks() throws SQLException{
         Connection conn = connect();
