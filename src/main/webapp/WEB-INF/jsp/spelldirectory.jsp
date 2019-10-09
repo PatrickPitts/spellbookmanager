@@ -35,7 +35,57 @@
         </form>
     </div>
     <div name="spell-list-display" class="spell-display-list">
+        <table style="width:75%">
+            <tr style="font-size: larger;">
+                <th>Spell Name</th>
+                <th>Lvl.</th>
+                <th>School</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr th:each="spell : ${spells}">
+                <td th:class="${spell.school}">
+                    <a th:href="@{/spell(spellname=${spell.name})}" class="directory-row-element">
+                        <div th:text="${spell.name}">Spell Name</div>
+                    </a>
+                </td>
+                <td th:class="${spell.school}">
+                    <div th:text="${spell.spellLevel}">Lvl</div>
+                </td>
+                <td th:class="${spell.school}">
+                    <div th:text="${spell.school}">School</div>
+                </td>
+                <td th:class="${spell.school}">
+                    <a th:href="@{/edit-spell(spellname=${spell.name})}" class="directory-row-element">
+                        <div>Edit...</div>
+                    </a>
+                </td>
+                <td th:class="${spell.school}">
+                    <a th:href="@{/delete-spell(spellname=${spell.name})}" class="directory-row-element">
+                        <div>[X]</div>
+                    </a>
+                </td>
+                <th:block th:if="${spellbook != null}">
+                    <!--TODO: Properly implement check against spells already in spellbooks-->
+                    <td th:class="${spell.school}">
+                        <th:block th:if="${#lists.contains(spellbook.listOfSpells, spell)}">
+                            <div>&#10004;</div>
+                        </th:block>
 
+                        <th:block th:unless="${#lists.contains(spellbook.listOfSpells, spell)}">
+                            <a th:href="@{/add-to-spellbook(spellname=${spell.name},spellbookID=${spellbook.spellbookID})}"
+                               class="directory-row-element" method="post">
+                                <div> (+)</div>
+                            </a>
+                        </th:block>
+                    </td>
+                </th:block>
+            </tr>
+
+
+        </table>
+
+        <!--
         <th:block th:each="spell : ${spells}">
             <div class="directory-row-wrapper" th:classappend="${spell.school} ">
 
@@ -70,6 +120,7 @@
 
 
         </th:block>
+        -->
     </div>
 </div>
 <br>

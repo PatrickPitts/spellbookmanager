@@ -1,16 +1,20 @@
 package org.nerdcore.spellbookmanager.databaseInit;
 
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 import org.nerdcore.spellbookmanager.SpellDatabaseManager;
 import org.nerdcore.spellbookmanager.models.Spell;
 
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings("SqlDialectInspection")
 public class PollDB {
 
     public static void main(String[] args) throws SQLException{
-        //genericSQLCheck();
-        getTablesAndColumns();
+        genericSQLCheck();
+        //getTablesAndColumns();
 
 
         //getCasters();
@@ -33,19 +37,18 @@ public class PollDB {
 
     public static void genericSQLCheck() throws SQLException{
         Connection conn = connect();
-
-        String sql;
-        sql = "SELECT * from spellCollection;";
-
-        assert conn != null;
         Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery(sql);
-        while(rs.next()){
-            Spell spell = new Spell(rs);
-            System.out.println(spell.getId());
-            System.out.println(spell.getName());
-        }
+        String sql;
 
+        Map<String, String> map = new HashMap<>();
+        map.put("one", "One");
+        map.put("one", "Two");
+
+        System.out.println(map.get("one"));
+
+
+
+        conn.close();
     }
 
 
@@ -107,7 +110,7 @@ public class PollDB {
 
 
     public static void JSONStorageToDatabase(){
-        //SpellDatabaseManager.addSpellListToDatabase(SpellJSONProcesser.getAllSpellsAsListAlphabatized());
+        //SpellDatabaseManager.addSpellListToDatabase(SpellJSONProcesser.getAllSpellsAsListAlphabetized());
     }
 
 

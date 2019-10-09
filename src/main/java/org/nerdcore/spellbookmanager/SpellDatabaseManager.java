@@ -92,7 +92,6 @@ public class SpellDatabaseManager {
         conn.close();
     }
 
-
     //Takes a Spell object, prepares an SQL Query String to add the Spell object data to the database,
     //the attempts to connect to the database, and execute the SQL Query.
 /*
@@ -153,7 +152,7 @@ public class SpellDatabaseManager {
         return spell;
     }
 
-    public static List<Spell> getAllSpellsAsListAlphabatized() throws SQLException{
+    public static List<Spell> getAllSpellsAsListAlphabetized() throws SQLException{
 
         Connection conn = connect();
         Statement st = conn.createStatement();
