@@ -51,7 +51,7 @@ public class SpellDirectoryController {
 
 
 
-    @RequestMapping("/search-spells-for-spellbook")
+    @RequestMapping("/spells-for-spellbook")
     public String addSpellToSpellbook(@RequestParam("spellbookID") int spellbookID,HttpServletRequest request, ModelMap model) throws SQLException {
         //ModelAndView model = new ModelAndView("spelldirectory");
 
@@ -61,6 +61,19 @@ public class SpellDirectoryController {
         model.addAttribute("spellbook", SpellDatabaseManager.getSpellbookBySpellbookID(spellbookID));
         model.addAttribute("spells", SpellDatabaseManager.getAllSpellsAsListAlphabetized());
         model.addAttribute("spellSearchParams", new SpellSearchParams());
+
+        return "spelldirectory";
+    }
+
+    @PostMapping("/spells-for-spellbook")
+    public String addSpellToSpellbookWithSearch(@ModelAttribute("spellSearchParams") SpellSearchParams spellSearchParams,
+                                                @RequestParam("spellbookID") int spellbookID,
+                                                HttpServletRequest request, ModelMap model) throws SQLException{
+        model.addAttribute("schoolList", schoolList);
+
+        model.addAttribute("spellbook", SpellDatabaseManager.getSpellbookBySpellbookID(spellbookID));
+        model.addAttribute("spells", SpellDatabaseManager.searchForSpells(spellSearchParams));
+        model.addAttribute("spellSearchParams", spellSearchParams);
 
         return "spelldirectory";
     }
@@ -117,6 +130,9 @@ public class SpellDirectoryController {
         model.addAttribute("schoolList", schoolList);
         model.addAttribute("spells", SpellDatabaseManager.searchForSpells(spellSearchParams));
         model.addAttribute("spellSearchParams", spellSearchParams);
+        if(request.getAttribute("spellbook") != null){
+            System.out.println("Not Null!!!");
+        }
         return "spelldirectory";
 
     }

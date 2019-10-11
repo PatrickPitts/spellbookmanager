@@ -18,28 +18,36 @@
         </div>
         <div style="border:solid black;">
             <strong>Search Options:</strong><br>
-            <form th:action="${spellbook} ? @{/search} : @{/search}"
-            <!--
-            <form th:action="@{/search}" th:object="${spellSearchParams}" method="post">
-            -->
-                <label th:for="name">Name:</label>
-                <input type="text" id="name" name="name" th:field="*{spellName}"/><br>
-                <label th:for="spellLevel">Spell Level: </label>
-                <select name="spellLevel" id="spellLevel" th:field="*{spellLevel}">
-                    <option th:value="N"></option>
-                    <option th:each="val : ${#numbers.sequence(0,9)}" th:value="${val}" th:text="${val}"></option>
-                </select><br>
-                <label for="school">School:</label>
-                <select name="school" id="school" th:field="*{school}">
-                    <option value=""></option>
-                    <option th:each="val : ${schoolList}" th:value="${val}" th:text="${val}"></option>
-                </select><br>
-                <label for="ritual">Ritual Casting?</label>
-                <input type="checkbox" name="ritual" id="ritual" th:field="*{ritualCasting}"/><br>
-                <label for="concentration">Concentration?</label>
-                <input type="checkbox" name="concentration" id="concentration" th:field="*{concentration}"/><br>
-                <input type="submit" value="Search!">
-            </form>
+            <%--<th:block th:if="${spellbook != null}">
+            <form th:action="@{/spells-for-spellbook(spellbookID=${spellbook.spellbookID})}"
+                  th:object="${spellSearchParams}" method="post">
+                Searching for Spells for [[${spellbook.spellbookName}]]
+
+            </th:block>
+            <th:block th:unless="${spellbook != null}">
+                <form th:action="@{/search}" th:object="${spellSearchParams}" method="post">
+
+            </th:block>--%>
+            <form th:action="@{spellbook!=null ? '/spells-for-spellbook(spellbookID=${spellbook.spellbookID})' : '/search'}"
+                  th:object="${spellSearchParams}" method="post">
+                    <label th:for="name">Name:</label>
+                    <input type="text" id="name" name="name" th:field="*{spellName}"/><br>
+                    <label th:for="spellLevel">Spell Level: </label>
+                    <select name="spellLevel" id="spellLevel" th:field="*{spellLevel}">
+                        <option th:value="N"></option>
+                        <option th:each="val : ${#numbers.sequence(0,9)}" th:value="${val}" th:text="${val}"></option>
+                    </select><br>
+                    <label for="school">School:</label>
+                    <select name="school" id="school" th:field="*{school}">
+                        <option value=""></option>
+                        <option th:each="val : ${schoolList}" th:value="${val}" th:text="${val}"></option>
+                    </select><br>
+                    <label for="ritual">Ritual Casting?</label>
+                    <input type="checkbox" name="ritual" id="ritual" th:field="*{ritualCasting}"/><br>
+                    <label for="concentration">Concentration?</label>
+                    <input type="checkbox" name="concentration" id="concentration" th:field="*{concentration}"/><br>
+                    <input type="submit" value="Search!">
+                </form>
         </div>
     </div>
     <div name="spell-list-display" class="spell-display-list">
@@ -53,7 +61,7 @@
                     </strong></h3>
                     <h5>
                         Level [[${spell.spellLevel}]] [[${spell.school}]]<br>
-                        [[${#strings.substring(spell.description, 0, 100)}]]...<br>
+                        [[${spell.abbreviatedDescription}]]<br>
                         <a th:href="@{/edit-spell(spellname=${spell.name})}" class="directory-row-element">
                             Edit...
                         </a>

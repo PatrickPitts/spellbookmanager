@@ -32,6 +32,16 @@ public class Spell {
     private String source;
     private boolean ritualCasting;
     private boolean concentration;
+    private String abbreviatedDescription;
+
+
+    public String getAbbreviatedDescription() {
+        return abbreviatedDescription;
+    }
+
+    public void setAbbreviatedDescription(String abbreviatedDescription) {
+        this.abbreviatedDescription = abbreviatedDescription;
+    }
 
     public int getId() {return id;}
 
@@ -142,7 +152,6 @@ public class Spell {
         this.ritualCasting = ritualCasting;
     }
 
-
     @Override
     public String toString() {
         String ret = "";
@@ -227,6 +236,13 @@ public class Spell {
             this.source = rs.getString("source");
             this.ritualCasting = rs.getBoolean("ritualCasting");
             this.concentration =  rs.getBoolean("concentration");
+
+            if(this.description.length()<100){
+                this.abbreviatedDescription =this.description;
+            } else {
+                this.abbreviatedDescription =this.description.substring(0,100)+"...";
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

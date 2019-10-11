@@ -92,52 +92,6 @@ public class SpellDatabaseManager {
         conn.close();
     }
 
-    //Takes a Spell object, prepares an SQL Query String to add the Spell object data to the database,
-    //the attempts to connect to the database, and execute the SQL Query.
-/*
-    public static void addSingleSpellToDatabase(Spell spell){
-        //TODO: Phase this method out
-        Connection conn = connect();
-        String preparedString = "INSERT INTO spells " +
-                "(spellName, " +
-                "description, " +
-                "spellLevel, " +
-                "school, " +
-                "castingTime," +
-                "range, " +
-                "verbalComponent, " +
-                "somaticComponent, " +
-                "ritualCasting," +
-                "concentration, " +
-                "materialComponents, " +
-                "duration, " +
-                "source)" +
-                "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?);";
-        try (PreparedStatement ps = conn.prepareStatement(preparedString)) {
-            ps.setString(1, spell.getName());
-            ps.setString(2, spell.getDescription());
-            ps.setInt(3, spell.getSpellLevel());
-            ps.setString(4, spell.getSchool());
-            ps.setString(5, spell.getCastingTime());
-            ps.setString(6, spell.getRange());
-            ps.setBoolean(7, spell.isVerbalComponent());
-            ps.setBoolean(8, spell.isSomaticComponent());
-            ps.setBoolean(9, spell.isRitualCasting());
-            ps.setBoolean(10, spell.isConcentration());
-            ps.setString(11, spell.getMaterialComponents());
-            ps.setString(12, spell.getDuration());
-            ps.setString(13, spell.getSource());
-
-            ps.executeUpdate();
-            conn.close();
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-*/
 
     public static Spell getSingleSpellBySpellName(String spellName) throws SQLException{
         Connection conn = connect();
