@@ -10,7 +10,7 @@
     <a th:href="@{/search-spells-for-spellbook(spellbookID=${spellbook.spellbookID})}">+ Add Spell</a>
 </div>
 <th:block th:each="spellLevel : ${#numbers.sequence(0,9)}">
-    <div style="text-decoration: underline">
+    <div style="text-decoration: underline;font-size: small; color: darkgray">
     <th:block th:if="${spellLevel == 0}">
         Cantrips:<br>
     </th:block>

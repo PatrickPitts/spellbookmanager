@@ -49,6 +49,8 @@ public class SpellDirectoryController {
         return "redirect:view-spellbook?spellbookID=" + spellbookID;
     }
 
+
+
     @RequestMapping("/search-spells-for-spellbook")
     public String addSpellToSpellbook(@RequestParam("spellbookID") int spellbookID,HttpServletRequest request, ModelMap model) throws SQLException {
         //ModelAndView model = new ModelAndView("spelldirectory");

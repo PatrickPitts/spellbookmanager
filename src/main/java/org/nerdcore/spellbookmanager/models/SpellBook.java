@@ -2,6 +2,7 @@ package org.nerdcore.spellbookmanager.models;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SpellBook {
@@ -11,6 +12,15 @@ public class SpellBook {
     private int spellbookID;
     private List<Spell> listOfSpells;
     private List<String> listOfSpellNames;
+
+
+    public List<String> getListOfSpellNames() {
+        return listOfSpellNames;
+    }
+
+    public void setListOfSpellNames(List<String> listOfSpellNames) {
+        this.listOfSpellNames = listOfSpellNames;
+    }
 
     public SpellBook(ResultSet rs) throws SQLException {
         this.spellbookName = rs.getString("spellBookName");
@@ -49,6 +59,11 @@ public class SpellBook {
     public void setListOfSpells(List<Spell> listOfSpells) {
 
         this.listOfSpells = listOfSpells;
+        this.listOfSpellNames = new ArrayList<>();
+
+        for(Spell spell : this.listOfSpells){
+            this.listOfSpellNames.add(spell.getName());
+        }
     }
 
 

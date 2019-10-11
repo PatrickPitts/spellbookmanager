@@ -1,11 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Courgette&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:700i&display=swap');
 
-h2{
-    color:green;
-}
 body{
-    font-family: Courgette, sans-serif;
-    background: lightgray;
+    font-family: Alegreya, sans-serif;
+    background: #FBE28A;
 }
 
 a{
@@ -18,21 +16,19 @@ a:visited{
 
 table, th, td{
     text-align: center;
+    table-layout: auto;
 }
 
-
-
-
-.spellbook-selector{
+.selector{
     background: darkred;
     color:lightpink;
-    font-size: 1.25em;
+    font-size: 1.15em;
     padding:0.5em;
     margin:0.25em;
-    width:30%;
+    /*width:30%;*/
 }
 
-.spellbook-selector a{
+.selector a{
     color:inherit;
     text-decoration: inherit;
     display:inline-block;
@@ -47,28 +43,19 @@ table, th, td{
 }
 
 #directory-wrapper {
-    /*
-    display:grid;
-    grid-template-columns: 1fr 4fr;
-
-     */
+    border: solid black 4px;
 }
 .spell-display-list{
-    border-style: solid;
-    border-width: 4px;
-    border-color: black;
-    margin: 2em;
-    padding: 1em;
-    /*width: 75%;
-    display: inline-block;*/
+    width:75%;
+    float: right;
 }
 
 
 .spell-directory-actions{
     margin: 2em;
     padding: 1em;
-    width:20%;
-    /*position: fixed;*/
+    width:15%;
+    position: fixed;
     float:left;
     display: inline-block;
 }
@@ -100,7 +87,7 @@ table, th, td{
 .Evocation {
     background: lightsalmon;
     color:darkred;
-    padding-right: 5em;
+    padding: 5px;
     border:  solid darkred;
 
 }
@@ -108,7 +95,7 @@ table, th, td{
 .Conjuration {
     background: darkmagenta;
     color:lightpink;
-    padding-right: 5em;
+    padding: 5px;
     border:  solid lightpink;
 
 }
@@ -116,7 +103,7 @@ table, th, td{
 .Abjuration {
     background: lightskyblue;
     color: darkblue;
-    padding-right: 5em;
+    padding: 5px;
     border:  solid darkblue;
 
 }
@@ -124,28 +111,28 @@ table, th, td{
 .Divination {
     background: darkblue;
     color: lightseagreen;
-    padding-right: 5em;
+    padding: 5px;
     border: solid lightseagreen;
 }
 
 .Enchantment {
     background: lightgreen;
     color: darkolivegreen;
-    padding-right: 5em;
+    padding: 5px;
     border:  solid darkolivegreen;
 }
 
 .Illusion {
     background: lightsteelblue;
     color:darkred;
-    padding-right: 5em;
+    padding: 5px;
     border:  solid darkred;
 }
 
 .Necromancy {
     background: black;
     color: lightgray;
-    padding-right: 5em;
+    padding: 5px;
     border:  solid lightgray;
 
 }
@@ -153,7 +140,7 @@ table, th, td{
 .Transmutation{
     background: aquamarine;
     color: darkgreen;
-    padding-right: 5em;
+    padding: 5px;
     border:  solid darkgreen;
 }
 
