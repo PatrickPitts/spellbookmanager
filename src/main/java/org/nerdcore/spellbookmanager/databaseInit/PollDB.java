@@ -13,7 +13,8 @@ import java.util.Map;
 public class PollDB {
 
     public static void main(String[] args) throws SQLException{
-        genericSQLCheck();
+        //genericSQLCheck();
+
         //getTablesAndColumns();
 
 
@@ -40,11 +41,9 @@ public class PollDB {
         Statement st = conn.createStatement();
         String sql;
 
-        Map<String, String> map = new HashMap<>();
-        map.put("one", "One");
-        map.put("one", "Two");
-
-        System.out.println(map.get("one"));
+        sql= "DROP TABLE test";
+        //st.execute("DROP TABLE test");
+        //st.execute("DROP TABLE spells");
 
 
 
