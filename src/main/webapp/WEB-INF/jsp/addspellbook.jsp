@@ -2,9 +2,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="spellstyles.css" rel="stylesheet" type="text/css">
+    <link href="css/spellstyles.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<nav>
+    <a href="/spellbook-directory">Back to Spell Books</a>
+    <a href="/spell-directory">Back to Spell Directory</a>
+</nav>
+<div class="main">
+
 <h2>Create a New Spellbook</h2>
 <form th:action="@{/add-spellbook}" th:object="${spellBook}" method="post">
     <label th:for="spellbookName">Spellbook Name: </label>
@@ -16,5 +22,6 @@
     </select>
     <input type="submit" value="Add This Spellbook"/>
 </form>
+</div>
 </body>
 </html>

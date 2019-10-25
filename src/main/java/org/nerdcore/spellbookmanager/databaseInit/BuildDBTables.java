@@ -5,11 +5,21 @@ import java.sql.*;
 
 public class BuildDBTables {
 
-    public static void createSpellTable(String dbFilename){
+    public static void createSpellsToCasterTable() throws SQLException {
+        Connection conn = connect();
+        Statement st = conn.createStatement();
+        String sql;
+        sql = "CREATE TABLE spellCasterAssignment (casterClass VARCHAR(64), spellID int);";
+        st.execute(sql);
+        conn.close();
+        //TODO: create spellID and casterClass table
+    }
+
+    public static void createSpellTable(String dbFilename) {
 
         Connection conn = null;
-        String url="jdbc:sqlite:src/main/resources/static/"+dbFilename;
-        try{
+        String url = "jdbc:sqlite:src/main/resources/static/" + dbFilename;
+        try {
             conn = DriverManager.getConnection(url);
 
             String sql = "CREATE TABLE IF NOT EXISTS spells(\n"
@@ -34,16 +44,16 @@ public class BuildDBTables {
             System.out.println("spells Table Created");
 
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void createSpellBookTableAndConnector(String dbFilename){
+    public static void createSpellBookTableAndConnector(String dbFilename) {
 
         Connection conn = null;
-        String url="jdbc:sqlite:src/main/resources/static/"+dbFilename;
-        try{
+        String url = "jdbc:sqlite:src/main/resources/static/" + dbFilename;
+        try {
             conn = DriverManager.getConnection(url);
 
             String sql;
@@ -73,8 +83,7 @@ public class BuildDBTables {
             st.execute(sql);
 
 
-
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -94,7 +103,7 @@ public class BuildDBTables {
         conn.close();
     }
 
-    public static void createSpellCollectionTable() throws SQLException{
+    public static void createSpellCollectionTable() throws SQLException {
         Connection conn = connect();
         Statement st = conn.createStatement();
         String sql;
@@ -133,7 +142,7 @@ public class BuildDBTables {
         sql = "SELECT * FROM spellCollection;";
         ResultSet rs = st.executeQuery(sql);
 
-        while(rs.next()){
+        while (rs.next()) {
             System.out.print(rs.getInt("spellID"));
             System.out.println(rs.getString("spellName"));
         }
@@ -153,29 +162,30 @@ public class BuildDBTables {
 
         st.execute(sql);
 
-        sql="SELECT * FROM test;";
+        sql = "SELECT * FROM test;";
         ResultSet rs = st.executeQuery(sql);
-        while(rs.next()){
-            System.out.println(rs.getInt("testID")+"  "+rs.getString("textValue"));
+        while (rs.next()) {
+            System.out.println(rs.getInt("testID") + "  " + rs.getString("textValue"));
         }
     }
 
 
-    public static void main(String[] args)throws SQLException{
+    public static void main(String[] args) throws SQLException {
 
         //createSpellTable("spellbookDatabase.db");
         //createCasterTable();
         //createSpellBookTableAndConnector("spellbookDatabase.db");
         //createTestTable();
-        createSpellCollectionTable();
+        //createSpellCollectionTable();
+        //createSpellsToCasterTable();
     }
 
-    private static Connection connect(){
+    private static Connection connect() {
         String url = "jdbc:sqlite:src/main/resources/static/spellbookDatabase.db";
-        try{
+        try {
             Connection conn = DriverManager.getConnection(url);
             return conn;
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

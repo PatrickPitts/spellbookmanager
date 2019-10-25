@@ -13,7 +13,7 @@ import java.util.Map;
 public class PollDB {
 
     public static void main(String[] args) throws SQLException{
-        //genericSQLCheck();
+        genericSQLCheck();
 
         //getTablesAndColumns();
 
@@ -41,10 +41,11 @@ public class PollDB {
         Statement st = conn.createStatement();
         String sql;
 
-        sql= "DROP TABLE test";
-        //st.execute("DROP TABLE test");
-        //st.execute("DROP TABLE spells");
-
+        sql= "SELECT DISTINCT casterClass FROM spellCasterAssignment;";
+        ResultSet rs = st.executeQuery(sql);
+        while(rs.next()){
+            System.out.println(rs.getString(1));
+        }
 
 
         conn.close();

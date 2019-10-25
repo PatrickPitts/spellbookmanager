@@ -1,5 +1,6 @@
 package org.nerdcore.spellbookmanager;
 
+import org.nerdcore.spellbookmanager.models.CasterSpellList;
 import org.nerdcore.spellbookmanager.models.SpellSearchParams;
 import org.nerdcore.spellbookmanager.models.Spell;
 import org.nerdcore.spellbookmanager.models.SpellBook;
@@ -10,6 +11,12 @@ import java.util.List;
 
 public class SpellDatabaseManager {
 
+    /**
+     *  Attempts to connect to the spellbookDatabase.db file using java.sql.DriverManager
+     *  this connection to the spellbookDatabase.db is used for all spell focused operations for the spellbookmanager project
+     *
+     * @return Connection object, connecting to the spellbookDatabase.db file
+     */
     private static Connection connect(){
         String url = "jdbc:sqlite:src/main/resources/static/spellbookDatabase.db";
         try{
@@ -20,21 +27,16 @@ public class SpellDatabaseManager {
         }
         return null;
     }
-    /*
-    Takes in a List<Spell> called spellList
-    For each Spell in spellList, creates a PreparedStatement object with the SQL
-    query populated by that spell, then attempts to update the 'spells' table in the
-    spellbookDatabase.db file.
-    Used and intended to help convert the outdated JSON persistence structure to the SQL friendly
-    Database structure.
-         */
-    public static void addSpellListToDatabase(List<Spell> spellList) throws SQLException{
-        //TODO: Implement single sql update, rather than iterating
-        for(Spell spell: spellList) {
-            addSingleSpellToSpellCollection(spell);
-        }
-    }
 
+    /**
+     * Inserts all relevant data for a Spell object into the spellbookDatabase.db file
+     *
+     * Creates a connection to the spellbookDatabase.db file. Prepares a String that is a valid SQL Insert query,
+     * in the format necessary for an Sqlite PreparedStatement Object. The PreparedStatement is populated by the spell
+     * data, the SQL query is executed, and the connection to the spellbookDatabase.db file is closed.
+     * @param spell , the Spell object containing all relevant data for a spell to be stored in the database
+     * @throws SQLException, if the connection to the database cannot be executed.
+     */
     public static void addSingleSpellToSpellCollection(Spell spell) throws SQLException{
         Connection conn = connect();
         String preparedString = "INSERT INTO spellCollection " +
@@ -75,6 +77,18 @@ public class SpellDatabaseManager {
 
     }
 
+    /**
+     * Inserts a spellName into the spellBookStorage table
+     *
+     * Creates a connection to the spellbookDatabase.db file. Creates a String appropriate for an Sqlite PreparedStatement
+     * object to insert data into the spellbookDatabase.db Databased, then creates the PreparedStatement object directly.
+     * Populates the PreparedStatement with the appropriate field data, executes the PreparedStatement query,
+     * then closes the spellbookDatabase.db connection.
+     *
+     * @param spellName
+     * @param spellbookID
+     * @throws SQLException
+     */
     public static void addSingleSpellToSpellBook(String spellName, int spellbookID) throws SQLException{
 
         Connection conn = connect();
@@ -92,7 +106,18 @@ public class SpellDatabaseManager {
         conn.close();
     }
 
-
+    /**
+     * Returns a Spell object populated with data appropriate for the spell with the @param spellName
+     *
+     * Creates a connection to the spellbookDatabase.db file. Creates a String appropriate for an Sqlite PreparedStatement
+     * object to insert data into the spellbookDatabase.db Databased, then creates the PreparedStatement object directly.
+     * Populates the PreparedStatement with the appropriate field data, executes the PreparedStatement query,
+     * then closes the spellbookDatabase.db connection.
+     *
+     * @param spellName
+     * @return Spell object populated with data appropriate for the spell with the @param spellName
+     * @throws SQLException
+     */
     public static Spell getSingleSpellBySpellName(String spellName) throws SQLException{
         Connection conn = connect();
         String prepString = "SELECT * FROM spellCollection WHERE spellName IS ?;";
@@ -106,15 +131,24 @@ public class SpellDatabaseManager {
         return spell;
     }
 
+    /**
+     * Returns a list of all rows found in the spellbookDatabase.db spellCollection table, ordered by ascending spellName
+     *
+     * Creates a connection to the spellbookDatabase.db file. Creates an String that is the appropriate SQL query to
+     * get all data from the spellCollection table. Gets the ResultSet Object from executing the query, then iterates
+     * through the result set and populates a List of Spell Objects based on the ResultSet. Closes the connection, then
+     * returns the populated List of Spell Objects.
+     * @return List of Spell Objects, ordered by ascending spellName
+     * @throws SQLException
+     */
     public static List<Spell> getAllSpellsAsListAlphabetized() throws SQLException{
 
         Connection conn = connect();
         Statement st = conn.createStatement();
         List<Spell> spellList = new ArrayList<>();
         String sql;
-        //String sql = "SELECT *, rowid FROM spells";
 
-        sql = "SELECT * from spellCollection ORDER BY spellName;";
+        sql = "SELECT * from spellCollection ORDER BY spellLevel, spellName;";
         ResultSet rs = st.executeQuery(sql);
 
         while(rs.next()){
@@ -125,9 +159,20 @@ public class SpellDatabaseManager {
         return spellList;
     }
 
-    public static List<Spell> searchForSpells(SpellSearchParams params) throws SQLException{
-
-        //TODO implement casters
+    /**
+     * Returns a List of Spell Objects based on the SpellSearchParams field data. This contains all the user input search
+     * parameters from the spelldirectory.jsp View. Fields with data are incorporated into a String that builds a valid
+     * SQL Query, while empty fields are ignored. The SQL Query is executed, creating a ResultSet object, which is iterated
+     * over to create the List of Spell objects. The connection to spellbookDatabase.db is closed, and the List
+     * of Spell objects is returned.
+     *
+     * TODO: As of this todo, does not properly implement the restriction of the type of character class that can cast this spell.
+     *
+     * @param spellSearchParams
+     * @return List of Spell objects matching the specified parameters in spellSearchParams
+     * @throws SQLException
+     */
+    public static List<Spell> searchForSpells(SpellSearchParams spellSearchParams) throws SQLException{
 
         Connection conn = connect();
         Statement st = conn.createStatement();
@@ -135,27 +180,35 @@ public class SpellDatabaseManager {
 
 
         String sql = "SELECT * FROM spellCollection";
-        if(params.isEmpty()){
+
+        String casterSql = "(SELECT * FROM spellCollection WHERE (SELECT ))";
+
+        if(spellSearchParams.isEmpty()){
             sql += ";";
         } else {
             sql+=" WHERE ";
-            if(!params.getSpellName().equals("")){
-                sql += "spellName LIKE '%" + params.getSpellName() + "%' AND ";
+            if(!spellSearchParams.getCaster().equals("")){
+                sql += "spellID IN (SELECT spellID FROM spellCasterAssignment WHERE casterClass IS '"+ spellSearchParams.getCaster()+ "' ) AND ";
             }
-            if(!params.getSchool().equals("")){
-                sql += "school IS '" + params.getSchool() + "' AND ";
+            if(!spellSearchParams.getSpellName().equals("")){
+                sql += "spellName LIKE '%" + spellSearchParams.getSpellName() + "%' AND ";
             }
-            if(!params.getSpellLevel().equals("N")){
-                sql += "spellLevel IS " + params.getSpellLevel() + " AND ";
+            if(!spellSearchParams.getSchool().equals("")){
+                sql += "school IS '" + spellSearchParams.getSchool() + "' AND ";
             }
-            if(params.isConcentration()){
+            if(!spellSearchParams.getSpellLevel().equals("N")){
+                sql += "spellLevel IS " + spellSearchParams.getSpellLevel() + " AND ";
+            }
+            if(spellSearchParams.isConcentration()){
                 sql += "concentration IS TRUE AND ";
             }
-            if(params.isRitualCasting()){
+            if(spellSearchParams.isRitualCasting()){
                 sql += "ritualCasting IS TRUE AND ";
             }
+            //Truncates extra ' AND ' characters automatically added to each possible parameter.
             sql = sql.substring(0, sql.length()-5);
-            sql += ";";
+            //TODO: Needs 'ORDER BY spellName' incorporated, works as is.
+            sql += " ORDER BY spellLevel, spellName;";
         }
         ResultSet rs = st.executeQuery(sql);
         while(rs.next()){
@@ -165,11 +218,24 @@ public class SpellDatabaseManager {
         return spellsToReturn;
     }
 
+    /**
+     * Removes all data associated with the spellName field
+     *
+     * @param spellName
+     * @throws SQLException
+     */
     public static void deleteSpellByName(String spellName) throws SQLException{
-        String sql = "DELETE from spellCollection WHERE spellName IS '" + spellName +"';";
         Connection conn = connect();
-        Statement st = conn.createStatement();
-        st.execute(sql);
+        String sql;
+
+        //sql = "DELETE from spellCollection WHERE spellName IS '" + spellName +"';";
+        //Statement st = conn.createStatement();
+        //st.execute(sql);
+
+        sql="DELETE FROM spellCollection WHERE spellName IS ?;";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, spellName);
+        ps.executeUpdate();
         conn.close();
     }
 
@@ -329,6 +395,31 @@ public class SpellDatabaseManager {
         }
         conn.close();
         return spellbookSpellList;
+    }
+
+    public static void addSpellsToCasterTable(CasterSpellList casterSpellList) throws SQLException{
+
+        Connection conn = connect();
+        String sql;
+        ResultSet rs;
+        PreparedStatement ps;
+        String casterName = casterSpellList.getCasterClassName();
+        List<String> spellNames = casterSpellList.getListOfSpellNames();
+
+        for(String spellName: spellNames){
+            sql = "SELECT spellID FROM spellCollection where spellName IS ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, spellName);
+            rs = ps.executeQuery();
+
+            sql = "INSERT INTO spellCasterAssignment VALUES (?, ?);";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, casterName);
+            ps.setInt(2,rs.getInt("spellID"));
+            ps.executeUpdate();
+        }
+
+        conn.close();
     }
 
 }

@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css?family=Courgette&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:700i&display=swap');
+
+body{
+    font-family: Alegreya, sans-serif;
+    background: #FBE28A;
+}
+
+a{
+    color:inherit;
+}
+
+a:visited{
+    color:inherit;
+}
+
+.tooltip{
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    background-color: #555555;
+    color: #ffffff;
+    width: 15em;
+    text-align: left;
+    border-radius: 6px;
+    padding:5px;
+    position:absolute;
+    z-index: 1;
+    margin-left:-60px;
+    opacity: 0;
+    -webkit-transition: opacity 0.3s;
+    -moz-transition: opacity 0.3s;
+    -ms-transition: opacity 0.3s;
+    -o-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext .smalltooltip{
+    width: 10%;
+
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position:absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}

@@ -3,10 +3,7 @@ package org.nerdcore.spellbookmanager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
-import org.nerdcore.spellbookmanager.models.SpellBookSearchParams;
-import org.nerdcore.spellbookmanager.models.SpellSearchParams;
-import org.nerdcore.spellbookmanager.models.Spell;
-import org.nerdcore.spellbookmanager.models.SpellBook;
+import org.nerdcore.spellbookmanager.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class SpellDirectoryController {
@@ -40,7 +38,6 @@ public class SpellDirectoryController {
         }
     };
 
-    //TODO: Implement ModelMap data transfer more completely between servlet methods
     @RequestMapping("/add-to-spellbook")
     public String addSpellToSpellbookThenSpellbookDisplay(@RequestParam("spellname") String spellname,
                                                           @RequestParam("spellbookID") int spellbookID,
@@ -49,14 +46,10 @@ public class SpellDirectoryController {
         return "redirect:view-spellbook?spellbookID=" + spellbookID;
     }
 
-
-
     @RequestMapping("/spells-for-spellbook")
-    public String addSpellToSpellbook(@RequestParam("spellbookID") int spellbookID,HttpServletRequest request, ModelMap model) throws SQLException {
-        //ModelAndView model = new ModelAndView("spelldirectory");
-
-        //model.addObject("spellbookID", spellbookID);
+    public String addSpellToSpellbook(@RequestParam("spellbookID") int spellbookID, HttpServletRequest request, ModelMap model) throws SQLException {
         model.addAttribute("schoolList", schoolList);
+        model.addAttribute("casterList", SpellDatabaseManager.getAllCastersAsList());
 
         model.addAttribute("spellbook", SpellDatabaseManager.getSpellbookBySpellbookID(spellbookID));
         model.addAttribute("spells", SpellDatabaseManager.getAllSpellsAsListAlphabetized());
@@ -68,8 +61,9 @@ public class SpellDirectoryController {
     @PostMapping("/spells-for-spellbook")
     public String addSpellToSpellbookWithSearch(@ModelAttribute("spellSearchParams") SpellSearchParams spellSearchParams,
                                                 @RequestParam("spellbookID") int spellbookID,
-                                                HttpServletRequest request, ModelMap model) throws SQLException{
+                                                HttpServletRequest request, ModelMap model) throws SQLException {
         model.addAttribute("schoolList", schoolList);
+        model.addAttribute("casterList", SpellDatabaseManager.getAllCastersAsList());
 
         model.addAttribute("spellbook", SpellDatabaseManager.getSpellbookBySpellbookID(spellbookID));
         model.addAttribute("spells", SpellDatabaseManager.searchForSpells(spellSearchParams));
@@ -91,8 +85,8 @@ public class SpellDirectoryController {
 
     @RequestMapping("/view-spellbook")
     public String displaySingleSpellbook(@RequestParam("spellbookID") int spellbookID,
-                                               HttpServletRequest request,
-                                               ModelMap model) throws SQLException {
+                                         HttpServletRequest request,
+                                         ModelMap model) throws SQLException {
 
         //TODO: Handle when too many parameters are passed through URL
 
@@ -123,25 +117,43 @@ public class SpellDirectoryController {
 
     @PostMapping("/search")
     public String directoryWithSearch(@ModelAttribute("spellSearchParams") SpellSearchParams spellSearchParams,
-                                            HttpServletRequest request,
-                                            ModelMap model) throws SQLException {
+                                      HttpServletRequest request,
+                                      ModelMap model) throws SQLException {
 
-        //ModelAndView model = new ModelAndView("spelldirectory");
+        model.addAttribute("casterList", SpellDatabaseManager.getAllCastersAsList());
         model.addAttribute("schoolList", schoolList);
         model.addAttribute("spells", SpellDatabaseManager.searchForSpells(spellSearchParams));
         model.addAttribute("spellSearchParams", spellSearchParams);
-        if(request.getAttribute("spellbook") != null){
+        if (request.getAttribute("spellbook") != null) {
             System.out.println("Not Null!!!");
         }
         return "spelldirectory";
 
     }
 
+    @RequestMapping("/spells-to-caster")
+    public String assignSpellsToCasters(HttpServletRequest request, ModelMap model) throws SQLException {
 
-    @RequestMapping("/")
+        model.addAttribute("spells", SpellDatabaseManager.getAllSpellsAsListAlphabetized());
+        model.addAttribute("casterSpellList", new CasterSpellList());
+
+        return "spelltocaster";
+    }
+
+    @PostMapping("/spells-to-caster")
+    public String addSpellsToCasterList(@ModelAttribute("casterSpellList") CasterSpellList spellNames,
+                                        HttpServletRequest request, ModelMap model) throws SQLException {
+
+        SpellDatabaseManager.addSpellsToCasterTable(spellNames);
+
+        return "redirect:spell-directory";
+    }
+
+
+    @RequestMapping("/spell-directory")
     public String showDirectory(HttpServletRequest request, ModelMap model) throws SQLException {
         //ModelAndView model = new ModelAndView("spelldirectory");
-
+        model.addAttribute("casterList", SpellDatabaseManager.getAllCastersAsList());
         model.addAttribute("schoolList", schoolList);
         model.addAttribute("spells", SpellDatabaseManager.getAllSpellsAsListAlphabetized());
         model.addAttribute("spellSearchParams", new SpellSearchParams());
@@ -162,7 +174,7 @@ public class SpellDirectoryController {
                 Jsoup.isValid(newSpell.getDuration(), Whitelist.relaxed())) {
 
             SpellDatabaseManager.addSingleSpellToSpellCollection(newSpell);
-            return "redirect:";
+            return "redirect:spell-directory";
         } else {
             //TODO: Update use of error message. Implement a single method to populate several error messages at once,
             //TODO: passing error boolean
@@ -176,7 +188,7 @@ public class SpellDirectoryController {
 
     @PostMapping("/edit-spell")
     @Transactional
-    public String editSpellThenDirectory(@ModelAttribute("spell") Spell spellToEdit,HttpServletRequest request, ModelMap model) throws SQLException {
+    public String editSpellThenDirectory(@ModelAttribute("spell") Spell spellToEdit, HttpServletRequest request, ModelMap model) throws SQLException {
         if (Jsoup.isValid(spellToEdit.getName(), Whitelist.relaxed()) &&
                 Jsoup.isValid(spellToEdit.getCastingTime(), Whitelist.relaxed()) &&
                 Jsoup.isValid(spellToEdit.getDescription(), Whitelist.relaxed()) &&
@@ -186,7 +198,7 @@ public class SpellDirectoryController {
                 Jsoup.isValid(spellToEdit.getDuration(), Whitelist.relaxed())) {
 
             SpellDatabaseManager.editSpell(spellToEdit);
-            return "redirect:";
+            return "redirect:spell-directory";
         } else {
             //TODO: Update use of error message. Implement a single method to populate several error messages at once,
             //TODO: passing error boolean
@@ -198,7 +210,7 @@ public class SpellDirectoryController {
 
 
     @RequestMapping(value = "/spell", method = RequestMethod.GET)
-    public String displaySpell(@RequestParam("spellname") String spellname,HttpServletRequest request, ModelMap model) throws SQLException {
+    public String displaySpell(@RequestParam("spellname") String spellname, HttpServletRequest request, ModelMap model) throws SQLException {
 
         Spell spell = SpellDatabaseManager.getSingleSpellBySpellName(spellname);
         if (spell == null) {
@@ -227,7 +239,7 @@ public class SpellDirectoryController {
         //ModelAndView model = new ModelAndView("addspell");
 
         Spell spellToPass = new Spell();
-        spellToPass.setSource("Player's Handbook");
+        spellToPass.setSource("Custom");
         spellToPass.setMaterialComponents("None");
         spellToPass.setDuration("Instantaneous");
 
@@ -241,9 +253,9 @@ public class SpellDirectoryController {
     }
 
     @RequestMapping("/delete-spell")
-    public String deleteSpell(@RequestParam("spellname") String spellToDelete,HttpServletRequest request, ModelMap model) throws SQLException {
+    public String deleteSpell(@RequestParam("spellname") String spellToDelete, HttpServletRequest request, ModelMap model) throws SQLException {
         SpellDatabaseManager.deleteSpellByName(spellToDelete);
-        return "redirect:";
+        return "redirect:spell-directory";
     }
 
 }

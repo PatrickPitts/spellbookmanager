@@ -1,6 +1,7 @@
 package org.nerdcore.spellbookmanager;
 
 import org.nerdcore.spellbookmanager.models.Spell;
+import org.nerdcore.spellbookmanager.models.StorageService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,4 +20,12 @@ public class SpellbookManagerApplication extends SpringBootServletInitializer {
     public static void main(String[] args) throws Exception {
         SpringApplication.run(SpellbookManagerApplication.class, args);
     }
+
+//    @Bean
+//    CommandLineRunner init(StorageService storageService){
+//        return args -> {
+//            storageService.deleteAll();
+//            storageService.init();
+//        };
+//    }
 }
