@@ -8,20 +8,25 @@
     <a href="/spell-directory">Spell Directory</a>
 </nav>
 <div class="main">
-    <h2>Display all Spell Books</h2>
-
-    <th:block th:each="spellbook : ${spellbookList}">
-        <div class="selector">
-            <a th:href="@{/view-spellbook(spellbookID=${spellbook.spellbookID})}"
-               th:text="${spellbook.spellbookName}">
-                SpellbookName
-            </a>
-            <button>Delete [[${spellbook.spellbookname}]]?</button>
-        </div>
-    </th:block>
-    <a th:href="@{/add-spellbook}">
-        <div class="spellbook-selector"> + New Spell Book</div>
-    </a>
+    <h2>Spell Books</h2>
+    <table>
+        <tr th:each="spellbook : ${spellbookList}">
+            <td>
+                <div class="selector">
+                    <a th:href="@{/view-spellbook(spellbookID=${spellbook.spellbookID})}"
+                       th:text="${spellbook.spellbookName}">
+                        SpellbookName
+                    </a></div>
+            </td>
+            <td>
+                <button>Delete [[${spellbook.spellbookName}]]?</button>
+            </td>
+</div>
+</tr>
+</table>
+<a th:href="@{/add-spellbook}">
+    <div class="spellbook-selector"> + New Spell Book</div>
+</a>
 </div>
 </body>
 </html>
