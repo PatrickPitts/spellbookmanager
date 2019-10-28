@@ -228,11 +228,24 @@ public class SpellDatabaseManager {
         Connection conn = connect();
         String sql;
 
-        //sql = "DELETE from spellCollection WHERE spellName IS '" + spellName +"';";
-        //Statement st = conn.createStatement();
-        //st.execute(sql);
-
         sql="DELETE FROM spellCollection WHERE spellName IS ?;";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, spellName);
+        ps.executeUpdate();
+
+        sql="DELETE FROM spellBookStorage where spellName is ?";
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, spellName);
+        ps.executeUpdate();
+
+        conn.close();
+    }
+
+    public static void removeSpellFromSpellbook(String spellName) throws SQLException{
+        Connection conn = connect();
+        String sql;
+
+        sql="DELETE FROM spellBookStorage where spellName is ?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, spellName);
         ps.executeUpdate();
@@ -323,9 +336,8 @@ public class SpellDatabaseManager {
 
     public static SpellBook getSingleSpellbookBySpellbookName(String spellbookName) throws SQLException{
 
-        //TODO:
         Connection conn = connect();
-        //Statement st = conn.createStatement();
+
 
         String sql = "SELECT * FROm spellBooks WHERE spellbookName IS ?;";
         PreparedStatement ps = conn.prepareStatement(sql);
@@ -335,9 +347,21 @@ public class SpellDatabaseManager {
         SpellBook bookToReturn = new SpellBook(rs);
         conn.close();
         return bookToReturn;
+    }
 
+    public static void deleteSpellbookBySpellbookID(int spellbookID) throws SQLException{
+        Connection conn = connect();
+        String sql = "DELETE FROM spellBooks where spellbookID IS ?;";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, spellbookID);
+        ps.executeUpdate();
 
+        sql = "DELETE FROM spellBookStorage where spellbookID IS ?;";
+        ps = conn.prepareStatement(sql);
+        ps.setInt(1, spellbookID);
+        ps.executeUpdate();
 
+        conn.close();
     }
 
     public static List<String> getSpellbookNames()throws SQLException{

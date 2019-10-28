@@ -4,7 +4,13 @@
     <link href="css/spellstyles.css" rel="stylesheet" type="text/css">
 
 </head>
-<body>
+<nav>
+    <a href="/spell-directory">Back to Directory</a>
+    <hr th:if="${spellbook != null}">
+    <a th:if="${spellbook != null}" th:href="@{/drop-spell-from-spellbook(spellname=${spell.name},spellbookID=${spellbook.spellbookID})}">Drop this spell from [[${spellbook.spellbookName}]]</a>
+    <a th:if="${spellbook != null}" th:href="@{/view-spellbook(spellbookID=${spellbook.spellbookID})}">Back to Spellbook [[${spellbook.spellbookName}]]</a>
+</nav>
+<body class="main">
 <div th:class="${spell.school}" th:classappend="spell-display-header">
     <h1 th:text="${spell.name}">Spell Name</h1>
 
@@ -29,6 +35,6 @@
     <b>Casters: </b><!--#TODO Incorporate Casters List-->
     <p th:utext="${spell.description}">Txt</p><br>
 </div>
-<a href="/spell-directory">Back to Directory</a>
+
 </body>
 </html>

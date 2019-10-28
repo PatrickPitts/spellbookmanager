@@ -72,6 +72,17 @@ public class SpellDirectoryController {
         return "spelldirectory";
     }
 
+    @RequestMapping("/delete-spellbook")
+    public String deleteSpellBookRedirectToSpellbookDirectory(@RequestParam("spellbookID") int spellbookID,
+                                                              HttpServletRequest request,
+                                                              ModelMap model) throws SQLException {
+
+        SpellDatabaseManager.deleteSpellbookBySpellbookID(spellbookID);
+
+        return "redirect:spellbook-directory";
+
+    }
+
 
     @RequestMapping("/spellbook-directory")
     public String viewSpellbookManager(HttpServletRequest request, ModelMap model) throws SQLException {
@@ -208,19 +219,36 @@ public class SpellDirectoryController {
         }
     }
 
+    @RequestMapping(value = "/spell", params = {"spellname", "spellbookID"})
+    public String displaySpellForSpellbook(@RequestParam("spellname") String spellname,
+                                           @RequestParam("spellbookID") int spellbookID,
+                                           HttpServletRequest request, ModelMap model) throws SQLException {
+        Spell spell = SpellDatabaseManager.getSingleSpellBySpellName(spellname);
+        SpellBook spellbook = SpellDatabaseManager.getSpellbookBySpellbookID(spellbookID);
+        if (spell == null) {
+            return "spellsearcherror";
+        }
+        model.addAttribute("spell", spell);
+        model.addAttribute("spellbook", spellbook);
+        return "displayspell";
 
-    @RequestMapping(value = "/spell", method = RequestMethod.GET)
-    public String displaySpell(@RequestParam("spellname") String spellname, HttpServletRequest request, ModelMap model) throws SQLException {
+    }
+
+    @RequestMapping(value = "/spell", params = "spellname", method = RequestMethod.GET)
+    public String displaySpell(@RequestParam("spellname") String spellname,
+                               HttpServletRequest request, ModelMap model) throws SQLException {
 
         Spell spell = SpellDatabaseManager.getSingleSpellBySpellName(spellname);
         if (spell == null) {
             return "spellsearcherror";
         }
-        //ModelAndView model = new ModelAndView("displayspell");
+
         model.addAttribute("spell", spell);
         return "displayspell";
 
     }
+
+
 
     @RequestMapping("/edit-spell")
     public ModelAndView editSpell(@RequestParam("spellname") String spellname) throws SQLException {
@@ -256,6 +284,17 @@ public class SpellDirectoryController {
     public String deleteSpell(@RequestParam("spellname") String spellToDelete, HttpServletRequest request, ModelMap model) throws SQLException {
         SpellDatabaseManager.deleteSpellByName(spellToDelete);
         return "redirect:spell-directory";
+    }
+
+    @RequestMapping(value="/drop-spell-from-spellbook", params={"spellname", "spellbookID"})
+    public String dropSpellFromSpellbook(@RequestParam("spellname")String spellname,
+                                         @RequestParam("spellbookID")int spellbookID,
+                                         HttpServletRequest request,
+                                         ModelMap model) throws SQLException{
+
+        SpellDatabaseManager.removeSpellFromSpellbook(spellname);
+        model.addAttribute("spellbook", SpellDatabaseManager.getSpellbookBySpellbookID(spellbookID));
+        return "redirect:view-spellbook?spellbookID=" + spellbookID;
     }
 
 }

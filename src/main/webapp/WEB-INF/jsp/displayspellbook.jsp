@@ -8,6 +8,10 @@
     <a href="/spellbook-directory">< Back to Spell Books</a>
 
     <a href="/spell-directory"><<< Back to Spell Directory</a>
+    <hr>
+    <a th:href="@{/delete-spellbook(spellbookID=${spellbook.spellbookID})}"
+       onclick="return confirm('Are you sure you want to delete this Spellbook? All your data will be lost (Not that you couldn\'t make it again, it\'s not that hard.)')">
+        Delete This Spellbook</a>
 
 </nav>
 <div class="main">
@@ -28,7 +32,7 @@
         </div>
         <th:block th:each="spell : ${spellbook.listOfSpells}">
             <th:block th:if="${spell.spellLevel == spellLevel}">
-                <a th:href="@{/spell(spellname=${spell.name})}" th:text="${spell.name}">
+                <a th:href="@{/spell(spellname=${spell.name},spellbookID=${spellbook.spellbookID})}" th:text="${spell.name}">
                     Spell Name
                 </a><br>
             </th:block>

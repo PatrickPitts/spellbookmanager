@@ -8,7 +8,7 @@
     <a href="/spell-directory">Spell Directory</a>
 </nav>
 <div class="main">
-    <h2>Spell Books</h2>
+    <h2>Your Spell Books</h2>
     <table>
         <tr th:each="spellbook : ${spellbookList}">
             <td>
@@ -18,16 +18,16 @@
                         SpellbookName
                     </a></div>
             </td>
+        </tr>
+        <tr>
             <td>
-                <button>Delete [[${spellbook.spellbookName}]]?</button>
+                <div class="selector">
+                    <a th:href="@{/add-spellbook}">+ New Spell Book</a>
+                </div>
             </td>
-
         </tr>
     </table>
 </div>
-<a th:href="@{/add-spellbook}">
-    <div class="spellbook-selector"> + New Spell Book</div>
-</a>
 </div>
 </body>
 </html>

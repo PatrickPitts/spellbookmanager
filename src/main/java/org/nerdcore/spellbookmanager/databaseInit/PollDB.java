@@ -13,9 +13,9 @@ import java.util.Map;
 public class PollDB {
 
     public static void main(String[] args) throws SQLException{
-        genericSQLCheck();
+        //genericSQLCheck();
 
-        //getTablesAndColumns();
+        getTablesAndColumns();
 
 
         //getCasters();

@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css?family=Courgette&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:700i&display=swap');
+
+body{
+    font-family: Alegreya, sans-serif;
+    background: #FBE28A;
+}
+
+a{
+    color:inherit;
+}
+
+a:visited{
+    color:inherit;
+}
+
+table, th, td{
+    text-align: center;
+    table-layout: auto;
+}
+
+.selector{
+    background: darkred;
+    color:lightpink;
+    font-size: 1.15em;
+    padding:0.5em;
+    margin:0.25em;
+    /*width:30%;*/
+}
+
+.selector a{
+    color:inherit;
+    text-decoration: inherit;
+    display:inline-block;
+}
+
+.spell-description-wrapper{
+
+    width: 60%;
+    border-style: solid;
+    border-radius: 1em;
+    padding: 1em;
+}
+
+#directory-wrapper {
+    border: solid black 4px;
+}
+.spell-display-list{
+    width:75%;
+    float: right;
+}
+
+
+.spell-directory-actions{
+    margin: 2em;
+    padding: 1em;
+    width:15%;
+    position: fixed;
+    float:left;
+    display: inline-block;
+}
+
+.directory-row-wrapper{
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display:flex;
+    justify-content: center;
+    width:inherit;
+}
+.directory-row-wrapper a{
+    color:inherit;
+    text-decoration: inherit;
+}
+
+.directory-row-element{
+    flex:1;
+    padding:0.5em;
+    font-size:1.1em;
+    text-align: center;
+    border: 0.5em inherit;
+}
+
+.Evocation {
+    background: lightsalmon;
+    color:darkred;
+    padding: 5px;
+    border:  solid darkred;
+
+}
+
+.Conjuration {
+    background: darkmagenta;
+    color:lightpink;
+    padding: 5px;
+    border:  solid lightpink;
+
+}
+
+.Abjuration {
+    background: lightskyblue;
+    color: darkblue;
+    padding: 5px;
+    border:  solid darkblue;
+
+}
+
+.Divination {
+    background: darkblue;
+    color: lightseagreen;
+    padding: 5px;
+    border: solid lightseagreen;
+}
+
+.Enchantment {
+    background: lightgreen;
+    color: darkolivegreen;
+    padding: 5px;
+    border:  solid darkolivegreen;
+}
+
+.Illusion {
+    background: lightsteelblue;
+    color:darkred;
+    padding: 5px;
+    border:  solid darkred;
+}
+
+.Necromancy {
+    background: black;
+    color: lightgray;
+    padding: 5px;
+    border:  solid lightgray;
+
+}
+
+.Transmutation{
+    background: aquamarine;
+    color: darkgreen;
+    padding: 5px;
+    border:  solid darkgreen;
+}
+
+
+
