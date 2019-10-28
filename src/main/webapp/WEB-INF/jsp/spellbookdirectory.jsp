@@ -21,9 +21,10 @@
             <td>
                 <button>Delete [[${spellbook.spellbookName}]]?</button>
             </td>
+
+        </tr>
+    </table>
 </div>
-</tr>
-</table>
 <a th:href="@{/add-spellbook}">
     <div class="spellbook-selector"> + New Spell Book</div>
 </a>
