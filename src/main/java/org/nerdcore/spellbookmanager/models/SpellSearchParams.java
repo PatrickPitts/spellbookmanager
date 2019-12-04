@@ -9,7 +9,8 @@ public class SpellSearchParams {
     private boolean ritualCasting;
     private boolean concentration;
 
-    public SpellSearchParams(){}
+    public SpellSearchParams() {
+    }
 
 
     public boolean isRitualCasting() {
@@ -60,31 +61,31 @@ public class SpellSearchParams {
         this.caster = caster;
     }
 
-    public boolean isEmpty(){
-        if(!this.spellName.equals("")){
+    public boolean isEmpty() {
+        if (!this.spellName.equals("")) {
             return false;
         }
-        if(!this.spellLevel.equals("")){
+        if (!this.spellLevel.equals("")) {
             return false;
         }
-        if(!this.school.equals("")){
+        if (!this.school.equals("")) {
             return false;
         }
-        if(!this.caster.equals("")){
+        if (!this.caster.equals("")) {
             return false;
         }
-        if(this.concentration || this.ritualCasting){
+        if (this.concentration || this.ritualCasting) {
             return false;
         }
         return true;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return String.format(
                 "Spell Name: " + this.spellName + " Spell Level: " + this.spellLevel
-                + " Caster: " + this.caster + " School: " + this.school
-                + " Concentration: " + this.concentration + " Ritual: " + this.ritualCasting
+                        + " Caster: " + this.caster + " School: " + this.school
+                        + " Concentration: " + this.concentration + " Ritual: " + this.ritualCasting
         );
     }
 

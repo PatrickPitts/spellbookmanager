@@ -28,7 +28,9 @@ public class SpellBook {
         this.spellbookID = rs.getInt("spellbookID");
     }
 
-    public SpellBook(){}
+    public SpellBook() {
+    }
+
     public int getSpellbookID() {
         return spellbookID;
     }
@@ -36,6 +38,7 @@ public class SpellBook {
     public void setSpellbookID(int spellbookID) {
         this.spellbookID = spellbookID;
     }
+
     public String getSpellbookName() {
         return spellbookName;
     }
@@ -61,11 +64,10 @@ public class SpellBook {
         this.listOfSpells = listOfSpells;
         this.listOfSpellNames = new ArrayList<>();
 
-        for(Spell spell : this.listOfSpells){
+        for (Spell spell : this.listOfSpells) {
             this.listOfSpellNames.add(spell.getName());
         }
     }
-
 
 
 }

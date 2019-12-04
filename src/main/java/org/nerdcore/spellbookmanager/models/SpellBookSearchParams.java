@@ -6,7 +6,8 @@ public class SpellBookSearchParams {
     private String casterClass;
     private int spellbookRowID;
 
-    public SpellBookSearchParams(){}
+    public SpellBookSearchParams() {
+    }
 
 
     public String getSpellbookName() {
