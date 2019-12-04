@@ -1,6 +1,5 @@
-<%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <link href="css/spellstyles.css" rel="stylesheet" type="text/css">
 </head>
@@ -13,6 +12,7 @@
 
 <h2>Create a New Spellbook</h2>
 <form th:action="@{/add-spellbook}" th:object="${spellBook}" method="post">
+    <div th:if="${spellbookNameAlreadyExists}">That name has already been taken, try a different one.</div>
     <label th:for="spellbookName">Spellbook Name: </label>
     <input type="text" id="spellbookName" name="spellbookName" th:field="*{spellbookName}"/><br>
     <label th:for="casterClass">Caster Class? :</label>

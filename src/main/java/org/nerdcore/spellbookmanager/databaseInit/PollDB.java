@@ -13,9 +13,9 @@ import java.util.Map;
 public class PollDB {
 
     public static void main(String[] args) throws SQLException{
-        //genericSQLCheck();
+        genericSQLCheck();
 
-        getTablesAndColumns();
+        //getTablesAndColumns();
 
 
         //getCasters();
@@ -41,10 +41,28 @@ public class PollDB {
         Statement st = conn.createStatement();
         String sql;
 
-        sql= "SELECT DISTINCT casterClass FROM spellCasterAssignment;";
+        sql= "SELECT * FROM users;";
+
+//        PreparedStatement ps = conn.prepareStatement(sql);
+//        ps.setString(1, "USER");
+//        ps.setString(2, "spugneemo");
+//        ps.executeUpdate();
+
         ResultSet rs = st.executeQuery(sql);
         while(rs.next()){
-            System.out.println(rs.getString(1));
+            System.out.print(rs.getString(1)+" ");
+            System.out.print(rs.getString(2)+ " ");
+            System.out.println(rs.getString(3));
+
+        }
+
+        sql = "SELECT * FROM spellbooks";
+        rs = st.executeQuery(sql);
+        while(rs.next()){
+            System.out.print(rs.getString(1)+" ");
+            System.out.print(rs.getString(2)+ " ");
+            System.out.print(rs.getString(3)+ " ");
+            System.out.println(rs.getString(4));
         }
 
 

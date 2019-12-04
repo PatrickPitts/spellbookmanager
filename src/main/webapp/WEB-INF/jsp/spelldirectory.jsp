@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 
 
-<html lang="en">
+<html lang="en" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+                xmlns:th="https://www.thymeleaf.org">
 <head>
     <link href="css/spellstyles.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <nav>
     <a th:href="@{/spellbook-directory}">Spellbook Management</a>
+    <a th:href="@{/logout}">Log out</a>
     <hr>
-    <div>Administrator Options:</div>
+    <div sec:authorize="hasRole('ADMIN')">
+        Administrator Options:
     <a th:href="@{/add-spell}">Add another spell to the list</a>
     <a th:href="@{/spells-to-caster}">Assign Spells to a Caster Class</a>
 
+        </div>
 </nav>
 <div class="main">
     <div name="spell-directory-actions" class="spell-directory-actions">
+        <h2>Welcome <span sec:authentication="name"></span></h2>
         <h2><a th:href="@{/spell-directory}">Spell Directory</a></h2>
         <div style="border:solid black;">
             <strong>Search Options:</strong><br>
@@ -76,14 +81,10 @@
                         <div th:text="${spell.abbreviatedDescription}">Spell Txt</div>
                         <br>
 
-                        <a th:href="@{/edit-spell(spellname=${spell.name})}" class="directory-row-element">
+                        <a th:href="@{/edit-spell(spellname=${spell.name})}" class="directory-row-element"
+                           sec:authorize="hasRole('ADMIN')">
                             Edit...
                         </a>
-
-                        <a th:href="@{/delete-spell(spellname=${spell.name})}" class="directory-row-element">
-                            [X]
-                        </a>
-
                         <th:block th:if="${spellbook != null}">
                             <th:block th:if="${#lists.contains(spellbook.listOfSpellNames, spell.name)}">
                                 <div style="text-align: center">&#10004;</div>

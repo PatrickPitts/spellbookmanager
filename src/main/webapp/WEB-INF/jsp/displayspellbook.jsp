@@ -16,7 +16,7 @@
 </nav>
 <div class="main">
 
-    <h2>[[${spellbook.spellbookName}]]</h2>
+    <h2 style="display: inline">[[${spellbook.spellbookName}]]</h2><h3 th:if="${spellbook.casterClass!=null}">[[${spellbook.casterClass}]]</h3>
 
     <div>
         <a th:href="@{/spells-for-spellbook(spellbookID=${spellbook.spellbookID})}">+ Add Spell</a>

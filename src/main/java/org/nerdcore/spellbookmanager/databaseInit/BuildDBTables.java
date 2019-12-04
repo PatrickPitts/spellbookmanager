@@ -169,6 +169,34 @@ public class BuildDBTables {
         }
     }
 
+    public static void createUserTable() throws SQLException {
+        Connection conn = connect();
+        String sql;
+        Statement st = conn.createStatement();
+
+//        sql = "CREATE TABLE users IF NOT EXISTS (username VARCHAR(64), password VARCHAR(64), role VARCHAR(64));";
+//        st.execute(sql);
+
+        sql="INSERT INTO users VALUES ('admin', 'adminadministrator', 'ADMIN'), " +
+                "('test','password','USER');";
+
+        st.execute(sql);
+        conn.close();
+    }
+
+    public static void addUsernameToSpellbook() throws SQLException{
+        Connection conn = connect();
+        String sql;
+        Statement st = conn.createStatement();
+
+        sql= "ALTER TABLE spellBooks ADD username VARCHAR(64);";
+        st.execute(sql);
+
+        sql="UPDATE spellBooks SET username = 'spugneemo';";
+        st.execute(sql);
+        conn.close();
+
+    }
 
     public static void main(String[] args) throws SQLException {
 
@@ -178,6 +206,8 @@ public class BuildDBTables {
         //createTestTable();
         //createSpellCollectionTable();
         //createSpellsToCasterTable();
+        //createUserTable();
+        //addUsernameToSpellbook();
     }
 
     private static Connection connect() {

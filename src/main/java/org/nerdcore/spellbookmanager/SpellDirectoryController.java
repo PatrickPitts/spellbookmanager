@@ -5,12 +5,15 @@ import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.nerdcore.spellbookmanager.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.sql.SQLException;
@@ -86,10 +89,9 @@ public class SpellDirectoryController {
 
     @RequestMapping("/spellbook-directory")
     public String viewSpellbookManager(HttpServletRequest request, ModelMap model) throws SQLException {
+        String username = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
 
-        //ModelAndView model = new ModelAndView("spellbookdirectory");
-
-        model.addAttribute("spellbookList", SpellDatabaseManager.getAllSpellbooksAsList());
+        model.addAttribute("spellbookList", SpellDatabaseManager.getSpellbookListByUsername(username));
         model.addAttribute("spellBookSearchParams", new SpellBookSearchParams());
         return "spellbookdirectory";
     }
@@ -120,9 +122,16 @@ public class SpellDirectoryController {
                                          HttpServletRequest request,
                                          ModelMap model) throws SQLException {
 
-        SpellDatabaseManager.addSpellbookToDatabase(spellBook);
-        //ModelAndView model = new ModelAndView("spellbookdirectory");
-        return "spellbookdirectory";
+        if(SpellDatabaseManager.addSpellbookToDatabase(spellBook, SecurityContextHolder.getContext().getAuthentication().getName())){
+
+            return "redirect:spellbook-directory";
+        }
+        System.out.println("Its all going wrong!");
+        model.addAttribute("spellbookNameAlreadyExists", true);
+        model.addAttribute("casterList", SpellDatabaseManager.getAllCastersAsList());
+        model.addAttribute("spellBook", new SpellBook());
+        return "addspellbook";
+
     }
 
 
