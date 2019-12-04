@@ -1,11 +1,9 @@
 package org.nerdcore.spellbookmanager;
 
 import org.nerdcore.spellbookmanager.models.BasicUser;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.UserDataHandler;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -39,7 +37,7 @@ public class LoginDatabaseManager {
         while (rs.next()) {
             userDetails.add(User.withDefaultPasswordEncoder()
                     .username(rs.getString(1))
-                    .password(rs.getString(2))
+                    .password("{noop}"+rs.getString(2))
                     .roles(rs.getString(3))
                     .build());
         }
@@ -67,7 +65,7 @@ public class LoginDatabaseManager {
             ps = conn.prepareStatement(sql);
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
-            ps.setString(3, user.getRole());
+            ps.setString(3, "USER");
 
             ps.executeUpdate();
 

@@ -3,6 +3,9 @@ package org.nerdcore.spellbookmanager;
 import org.nerdcore.spellbookmanager.models.BasicUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +20,12 @@ import java.sql.SQLException;
 @Controller
 public class LoginController {
 
+    private final InMemoryUserDetailsManager inMemoryUserDetailsManager;
+
+    public LoginController(InMemoryUserDetailsManager inMemoryUserDetailsManager){
+        this.inMemoryUserDetailsManager = inMemoryUserDetailsManager;
+    }
+
     @RequestMapping("/login")
     public String login() {
         return "login";
@@ -29,8 +38,14 @@ public class LoginController {
     }
 
     @PostMapping("/new-user")
-    public String updateUsers(@ModelAttribute("basicUser") BasicUser user, Model model) throws SQLException {
+    public String updateUsers(@ModelAttribute("basicUser") BasicUser user, Model model, HttpServletRequest request, HttpServletResponse response) throws SQLException {
         if (LoginDatabaseManager.addUser(user)) {
+
+            UserDetails userDetails = User.withDefaultPasswordEncoder()
+                    .username(user.getUsername())
+                    .password(user.getPassword())
+                    .roles("USER").build();
+            inMemoryUserDetailsManager.createUser(userDetails);
             return "login";
         }
         model.addAttribute("repeatUsername", true);
@@ -45,7 +60,7 @@ public class LoginController {
             new SecurityContextLogoutHandler().logout(request, response, auth);
 
         }
-        return "redirect:/spell-directory";
+        return "redirect:/";
     }
 
 }

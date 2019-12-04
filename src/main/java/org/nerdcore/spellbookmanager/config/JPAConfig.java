@@ -1,6 +1,5 @@
 package org.nerdcore.spellbookmanager.config;
 
-import javassist.ClassPath;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;

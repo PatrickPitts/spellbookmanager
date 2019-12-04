@@ -181,24 +181,6 @@ public class Spell {
 
     }
 
-    public JSONObject getJSONObject(){
-        JSONObject obj = new JSONObject();
-        obj.put("name", this.name);
-        obj.put("school", this.school);
-        obj.put("range", this.range);
-        obj.put("spellLevel", this.spellLevel);
-        obj.put("castingTime", this.castingTime);
-        obj.put("verbalComponent", this.verbalComponent);
-        obj.put("somaticComponent", this.somaticComponent);
-        obj.put("materialComponents", this.materialComponents);
-        obj.put("duration", this.duration);
-        obj.put("description", this.description);
-        obj.put("source", this.source);
-        obj.put("ritualCasting", this.ritualCasting);
-        obj.put("concentration", this.concentration);
-        return obj;
-    }
-
     public Spell(JSONObject obj) {
         this.name = (String) obj.get("name");
         this.school = (String) obj.get("school");

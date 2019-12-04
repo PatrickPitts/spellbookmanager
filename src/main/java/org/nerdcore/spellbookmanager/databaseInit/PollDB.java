@@ -13,6 +13,8 @@ import java.util.Map;
 public class PollDB {
 
     public static void main(String[] args) throws SQLException{
+
+        //clearUsers();
         genericSQLCheck();
 
         //getTablesAndColumns();
@@ -36,6 +38,16 @@ public class PollDB {
 
     }
 
+    public static void clearUsers() throws SQLException {
+        Connection conn = connect();
+        Statement st = conn.createStatement();
+        String sql;
+
+        sql = "DELETE FROM users WHERE username NOT IN ('admin', 'spugneemo');";
+        st.execute(sql);
+        conn.close();
+    }
+
     public static void genericSQLCheck() throws SQLException{
         Connection conn = connect();
         Statement st = conn.createStatement();
@@ -50,19 +62,12 @@ public class PollDB {
 
         ResultSet rs = st.executeQuery(sql);
         while(rs.next()){
+
+
             System.out.print(rs.getString(1)+" ");
             System.out.print(rs.getString(2)+ " ");
             System.out.println(rs.getString(3));
 
-        }
-
-        sql = "SELECT * FROM spellbooks";
-        rs = st.executeQuery(sql);
-        while(rs.next()){
-            System.out.print(rs.getString(1)+" ");
-            System.out.print(rs.getString(2)+ " ");
-            System.out.print(rs.getString(3)+ " ");
-            System.out.println(rs.getString(4));
         }
 
 
@@ -125,12 +130,6 @@ public class PollDB {
 
         conn.close();
     }
-
-
-    public static void JSONStorageToDatabase(){
-        //SpellDatabaseManager.addSpellListToDatabase(SpellJSONProcesser.getAllSpellsAsListAlphabetized());
-    }
-
 
     public static void dropSpellTable(){
         Connection conn = connect();
