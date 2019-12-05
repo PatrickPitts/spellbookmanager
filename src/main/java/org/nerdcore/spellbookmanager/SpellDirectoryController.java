@@ -1,10 +1,8 @@
 package org.nerdcore.spellbookmanager;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.nerdcore.spellbookmanager.models.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -20,12 +18,7 @@ import java.util.ArrayList;
 @Controller
 public class SpellDirectoryController {
 
-    @Autowired
-    private SpellRepository repository;
-
-    private ObjectMapper objMapper = new ObjectMapper();
-
-    ArrayList<String> schoolList = new ArrayList<String>() {
+    private ArrayList<String> schoolList = new ArrayList<String>() {
         {
             add("Abjuration");
             add("Conjuration");
@@ -99,8 +92,6 @@ public class SpellDirectoryController {
                                          ModelMap model) throws SQLException {
 
         //TODO: Handle when too many parameters are passed through URL
-
-        //ModelAndView model = new ModelAndView("displayspellbook");
         model.addAttribute("spellbook", SpellDatabaseManager.getSpellbookBySpellbookID(spellbookID));
 
         return "displayspellbook";
@@ -108,7 +99,6 @@ public class SpellDirectoryController {
 
     @RequestMapping("/add-spellbook")
     public String addNewSpellBook(HttpServletRequest request, ModelMap model) throws SQLException {
-        //ModelAndView model = new ModelAndView("addspellbook");
         model.addAttribute("casterList", SpellDatabaseManager.getAllCastersAsList());
         model.addAttribute("spellBook", new SpellBook());
         return "addspellbook";
@@ -163,13 +153,12 @@ public class SpellDirectoryController {
 
         SpellDatabaseManager.addSpellsToCasterTable(spellNames);
 
-        return "redirect:spell-directory";
+        return "redirect:/";
     }
 
 
     @RequestMapping("/")
     public String showDirectory(HttpServletRequest request, ModelMap model) throws SQLException {
-        //ModelAndView model = new ModelAndView("spelldirectory");
         model.addAttribute("casterList", SpellDatabaseManager.getAllCastersAsList());
         model.addAttribute("schoolList", schoolList);
         model.addAttribute("spells", SpellDatabaseManager.getAllSpellsAsListAlphabetized());
@@ -191,7 +180,7 @@ public class SpellDirectoryController {
                 Jsoup.isValid(newSpell.getDuration(), Whitelist.relaxed())) {
 
             SpellDatabaseManager.addSingleSpellToSpellCollection(newSpell);
-            return "redirect:spell-directory";
+            return "redirect:/";
         } else {
             //TODO: Update use of error message. Implement a single method to populate several error messages at once,
             //TODO: passing error boolean
@@ -215,7 +204,7 @@ public class SpellDirectoryController {
                 Jsoup.isValid(spellToEdit.getDuration(), Whitelist.relaxed())) {
 
             SpellDatabaseManager.editSpell(spellToEdit);
-            return "redirect:spell-directory";
+            return "redirect:/";
         } else {
             //TODO: Update use of error message. Implement a single method to populate several error messages at once,
             //TODO: passing error boolean
@@ -270,7 +259,6 @@ public class SpellDirectoryController {
 
     @RequestMapping("/add-spell")
     public String addSpellPage(HttpServletRequest request, ModelMap model) {
-        //ModelAndView model = new ModelAndView("addspell");
 
         Spell spellToPass = new Spell();
         spellToPass.setSource("Custom");
@@ -289,7 +277,7 @@ public class SpellDirectoryController {
     @RequestMapping("/delete-spell")
     public String deleteSpell(@RequestParam("spellname") String spellToDelete, HttpServletRequest request, ModelMap model) throws SQLException {
         SpellDatabaseManager.deleteSpellByName(spellToDelete);
-        return "redirect:spell-directory";
+        return "redirect:/";
     }
 
     @RequestMapping(value="/drop-spell-from-spellbook", params={"spellname", "spellbookID"})
