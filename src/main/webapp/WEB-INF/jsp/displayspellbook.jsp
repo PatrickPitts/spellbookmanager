@@ -7,7 +7,7 @@
 <nav>
     <a href="/spellbook-directory">< Back to Spell Books</a>
 
-    <a href="/spell-directory"><<< Back to Spell Directory</a>
+    <a href="/"><<< Back to Spell Directory</a>
     <hr>
     <a th:href="@{/delete-spellbook(spellbookID=${spellbook.spellbookID})}"
        onclick="return confirm('Are you sure you want to delete this Spellbook? All your data will be lost (Not that you couldn\'t make it again, it\'s not that hard.)')">

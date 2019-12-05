@@ -21,7 +21,7 @@
 <div class="main">
     <div name="spell-directory-actions" class="spell-directory-actions">
         <h2>Welcome <span sec:authentication="name"></span></h2>
-        <h2><a th:href="@{/spell-directory}">Spell Directory</a></h2>
+        <h2><a th:href="@{/}">Spell Directory</a></h2>
         <div style="border:solid black;">
             <strong>Search Options:</strong><br>
             <th:block th:if="${spellbook != null}">

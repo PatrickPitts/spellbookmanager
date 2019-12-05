@@ -5,7 +5,7 @@
 </head>
 <body>
 <nav>
-    <a href="/spell-directory">Spell Directory</a>
+    <a href="/">Spell Directory</a>
 </nav>
 <div class="main">
     <h2>Your Spell Books</h2>

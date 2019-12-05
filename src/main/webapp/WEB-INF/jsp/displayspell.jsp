@@ -5,7 +5,7 @@
 
 </head>
 <nav>
-    <a href="/spell-directory">Back to Directory</a>
+    <a href="/">Back to Directory</a>
     <hr th:if="${spellbook != null}">
     <a th:if="${spellbook != null}" th:href="@{/drop-spell-from-spellbook(spellname=${spell.name},spellbookID=${spellbook.spellbookID})}">Drop this spell from [[${spellbook.spellbookName}]]</a>
     <a th:if="${spellbook != null}" th:href="@{/view-spellbook(spellbookID=${spellbook.spellbookID})}">Back to Spellbook [[${spellbook.spellbookName}]]</a>

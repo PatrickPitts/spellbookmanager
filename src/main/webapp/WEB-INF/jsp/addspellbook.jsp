@@ -6,7 +6,7 @@
 <body>
 <nav>
     <a href="/spellbook-directory">Back to Spell Books</a>
-    <a href="/spell-directory">Back to Spell Directory</a>
+    <a href="/">Back to Spell Directory</a>
 </nav>
 <div class="main">
 

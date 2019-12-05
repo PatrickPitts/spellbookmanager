@@ -8,7 +8,7 @@
 </head>
 <body style="display: flex;">
 <nav>
-    <a href="/spell-directory">Back to Directory</a>
+    <a href="/">Back to Directory</a>
 </nav>
 <div class="main">
     <div style="float:left;flex:2;">
