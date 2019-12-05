@@ -16,13 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class LoginController {
 
     private final InMemoryUserDetailsManager inMemoryUserDetailsManager;
 
-    public LoginController(InMemoryUserDetailsManager inMemoryUserDetailsManager){
+    public LoginController(InMemoryUserDetailsManager inMemoryUserDetailsManager) throws Exception{
         this.inMemoryUserDetailsManager = inMemoryUserDetailsManager;
     }
 

@@ -32,6 +32,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
         auth.userDetailsService(inMemoryUserDetailsManager());
+        for(UserDetails u : LoginDatabaseManager.getUsersAsList()){
+            auth.inMemoryAuthentication().withUser(u.getUsername()).password(u.getPassword()).roles(u.getAuthorities().toString());
+        }
     }
 
 

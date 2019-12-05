@@ -37,7 +37,7 @@ public class LoginDatabaseManager {
         while (rs.next()) {
             userDetails.add(User.withDefaultPasswordEncoder()
                     .username(rs.getString(1))
-                    .password("{noop}"+rs.getString(2))
+                    .password(rs.getString(2))
                     .roles(rs.getString(3))
                     .build());
         }
