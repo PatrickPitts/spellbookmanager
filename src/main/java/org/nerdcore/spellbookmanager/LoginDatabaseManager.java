@@ -14,8 +14,6 @@ public class LoginDatabaseManager {
 
     public static Connection connect() {
         String url = "jdbc:sqlite:src/main/resources/static/spellbookDatabase.db";
-        //String url = "jdbc:sqlite:" + System.getProperty("user.dir") + "src/main/resources/static/spellbookDatabase.db";
-
         try {
             Connection conn = DriverManager.getConnection(url);
             return conn;

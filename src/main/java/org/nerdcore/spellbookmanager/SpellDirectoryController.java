@@ -286,7 +286,7 @@ public class SpellDirectoryController {
                                          HttpServletRequest request,
                                          ModelMap model) throws SQLException{
 
-        SpellDatabaseManager.removeSpellFromSpellbook(spellname);
+        SpellDatabaseManager.removeSpellFromSpellbook(spellname, spellbookID);
         model.addAttribute("spellbook", SpellDatabaseManager.getSpellbookBySpellbookID(spellbookID));
         return "redirect:view-spellbook?spellbookID=" + spellbookID;
     }

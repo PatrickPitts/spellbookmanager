@@ -245,17 +245,29 @@ public class SpellDatabaseManager {
         conn.close();
     }
 
-    public static void removeSpellFromSpellbook(String spellName) throws SQLException {
+    /**
+     * Removes a spell associated with a particular spellbook from that association
+     * @param spellName
+     * @throws SQLException
+     */
+    public static void removeSpellFromSpellbook(String spellName, int spellbookID) throws SQLException {
         Connection conn = connect();
         String sql;
 
-        sql = "DELETE FROM spellBookStorage where spellName is ?";
+        sql = "DELETE FROM spellBookStorage where spellName is ? AND spellbookID is ?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, spellName);
+        ps.setInt(2, spellbookID);
         ps.executeUpdate();
         conn.close();
     }
 
+    /**
+     * Takes in a Spell object that was originally instantiated from a previous spell's data, and updates
+     * that entity in the database with changed spell data.
+     * @param spellToEdit
+     * @throws SQLException
+     */
     public static void editSpell(Spell spellToEdit) throws SQLException {
 
         Connection conn = connect();
@@ -293,6 +305,15 @@ public class SpellDatabaseManager {
         conn.close();
     }
 
+    /**
+     * Creates a new Spellbook associated with the user logged in to the web service, checking to see if that
+     * Spellbook name is already associated with the logged in user. If not, the spellbook is created and returns true.
+     * Otherwise, the function returns false. Meant to avoid repeating Spellbook names and problems involving normalization.
+     * @param spellbook
+     * @param username
+     * @return
+     * @throws SQLException
+     */
     public static boolean addSpellbookToDatabase(SpellBook spellbook, String username) throws SQLException {
 
         //TODO: Name sanitization; this should fail if the name is already present in the spellBooks table
@@ -302,9 +323,10 @@ public class SpellDatabaseManager {
         String sql;
         PreparedStatement ps;
 
-        sql = "SELECT * FROM spellBooks WHERE spellbookName IS ?;";
+        sql = "SELECT * FROM spellBooks WHERE spellbookName IS ? and username is ?;";
         ps = conn.prepareStatement(sql);
         ps.setString(1, spellbook.getSpellbookName());
+        ps.setString(2, username);
         ResultSet rs = ps.executeQuery();
         if (!rs.next()) {
 
@@ -323,6 +345,11 @@ public class SpellDatabaseManager {
         return false;
     }
 
+    /**
+     * Gets a list of all stored Caster Classes
+     * @return Java List object storing all Strings associated with Caster Class
+     * @throws SQLException
+     */
     public static List<String> getAllCastersAsList() throws SQLException {
         List<String> casterList = new ArrayList<>();
         Connection conn = connect();
@@ -336,6 +363,12 @@ public class SpellDatabaseManager {
         return casterList;
     }
 
+    /**
+     * A method that searches for all Spellbook objects stored in the database associated with a specific user name
+     * @param username
+     * @return List of Spellbook objects associated with a single username
+     * @throws SQLException
+     */
     public static List<SpellBook> getSpellbookListByUsername(String username) throws SQLException{
         List<SpellBook> spellBooks = new ArrayList<>();
         Connection conn = connect();
@@ -356,6 +389,11 @@ public class SpellDatabaseManager {
         return spellBooks;
     }
 
+    /**
+     * A method to get all stored Spellbooks
+     * @return List of Spellbook objects
+     * @throws SQLException
+     */
     public static List<SpellBook> getAllSpellbooksAsList() throws SQLException {
         List<SpellBook> spellBooks = new ArrayList<>();
 
@@ -373,6 +411,12 @@ public class SpellDatabaseManager {
         return spellBooks;
     }
 
+    /**
+     * A method that searches for a single Spellbook by its name in the database
+     * @param spellbookName
+     * @return Spellbook associated with the passed spellbookName
+     * @throws SQLException
+     */
     public static SpellBook getSingleSpellbookBySpellbookName(String spellbookName) throws SQLException {
 
         Connection conn = connect();
@@ -388,6 +432,12 @@ public class SpellDatabaseManager {
         return bookToReturn;
     }
 
+    /**
+     * A method that deletes all data associated with a single Spellbook. Deletes from the spellBooks table and the
+     * spellBookStorage table.
+     * @param spellbookID
+     * @throws SQLException
+     */
     public static void deleteSpellbookBySpellbookID(int spellbookID) throws SQLException {
         Connection conn = connect();
         String sql = "DELETE FROM spellBooks where spellbookID IS ?;";
@@ -403,6 +453,11 @@ public class SpellDatabaseManager {
         conn.close();
     }
 
+    /**
+     * A method to get all Spellbook names from the database
+     * @return List of Strings storing all the stored Spellbook names
+     * @throws SQLException
+     */
     public static List<String> getSpellbookNames() throws SQLException {
         //TODO: Finish spellbook search
         List<String> spellbookNameList = new ArrayList<>();
@@ -421,6 +476,12 @@ public class SpellDatabaseManager {
 
     }
 
+    /**
+     * A method to get a single Spellbook object based on its spellbookID
+     * @param spellbookID
+     * @return  Spellbook object with the given spellbookID
+     * @throws SQLException
+     */
     public static SpellBook getSpellbookBySpellbookID(int spellbookID) throws SQLException {
         Connection conn = connect();
         PreparedStatement ps = conn.prepareStatement(String.format(
@@ -436,6 +497,12 @@ public class SpellDatabaseManager {
 
     }
 
+    /**
+     * A method to get all the Spell objects associated with a single Spellbook
+     * @param spellbookID
+     * @return List of Spell objects
+     * @throws SQLException
+     */
     public static List<Spell> getAllSpellsInSpellbookBySpellbookID(int spellbookID) throws SQLException {
 
         List<Spell> spellbookSpellList = new ArrayList<>();
@@ -459,6 +526,12 @@ public class SpellDatabaseManager {
         conn.close();
         return spellbookSpellList;
     }
+
+    /**
+     * A method to store many Spell objects associated with a single Caster Class string
+     * @param casterSpellList
+     * @throws SQLException
+     */
 
     public static void addSpellsToCasterTable(CasterSpellList casterSpellList) throws SQLException {
 
