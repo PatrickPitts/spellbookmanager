@@ -1,37 +1,61 @@
 package org.nerdcore.spellbookmanager.models;
 
+import org.hibernate.annotations.CollectionId;
 import org.json.simple.JSONObject;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Entity
+@Table(name = "spellCollection")
 public class Spell {
-
 
 
     @Id
     @GeneratedValue
+    @Column(name = "spellID")
     private int id;
-    @Column(unique = true)
+
+    @Column(name = "spellName", unique = true)
     private String name;
-    @Column(length=5000)
+
+    @Column(name = "description", length = 5000)
     private String description;
+
+    @Column(name = "spellLevel")
     private int spellLevel;
+
+    @Column(name = "school")
     private String school;
+
+    @Column(name = "castingTime")
     private String castingTime;
+
+    @Column(name = "range")
     private String range;
+
+    @Column(name = "verbalComponent")
     private boolean verbalComponent;
+
+    @Column(name = "somaticComponent")
     private boolean somaticComponent;
+
+    @Column(name = "materialComponents")
     private String materialComponents;
+
+    @Column(name = "duration")
     private String duration;
+
+    @Column(name = "source")
     private String source;
+
+    @Column(name = "ritualCasting")
     private boolean ritualCasting;
+
+    @Column(name = "concentration")
     private boolean concentration;
+
     private String abbreviatedDescription;
 
 
@@ -43,9 +67,13 @@ public class Spell {
         this.abbreviatedDescription = abbreviatedDescription;
     }
 
-    public int getId() {return id;}
+    public int getId() {
+        return id;
+    }
 
-    public void setId(int id) {this.id = id;}
+    public void setId(int id) {
+        this.id = id;
+    }
 
 
     public boolean isConcentration() {
@@ -172,9 +200,9 @@ public class Spell {
         return ret;
     }
 
-    public boolean equals(Spell spellToCheck){
+    public boolean equals(Spell spellToCheck) {
 
-        if(this.name.equals(spellToCheck.getName())){
+        if (this.name.equals(spellToCheck.getName())) {
             return true;
         }
         return false;
@@ -185,7 +213,7 @@ public class Spell {
         this.name = (String) obj.get("name");
         this.school = (String) obj.get("school");
         this.range = (String) obj.get("range");
-        this.spellLevel =  ((Long) obj.get("spellLevel")).intValue();
+        this.spellLevel = ((Long) obj.get("spellLevel")).intValue();
         this.castingTime = (String) obj.get("castingTime");
         this.verbalComponent = (Boolean) obj.get("verbalComponent");
         this.somaticComponent = (Boolean) obj.get("somaticComponent");
@@ -202,7 +230,7 @@ public class Spell {
     public Spell() {
     }
 
-    public Spell(ResultSet rs){
+    public Spell(ResultSet rs) {
         try {
             this.id = rs.getInt("spellID");
             this.name = rs.getString("spellName");
@@ -217,12 +245,12 @@ public class Spell {
             this.description = rs.getString("description");
             this.source = rs.getString("source");
             this.ritualCasting = rs.getBoolean("ritualCasting");
-            this.concentration =  rs.getBoolean("concentration");
+            this.concentration = rs.getBoolean("concentration");
 
-            if(this.description.length()<100){
-                this.abbreviatedDescription =this.description;
+            if (this.description.length() < 100) {
+                this.abbreviatedDescription = this.description;
             } else {
-                this.abbreviatedDescription =this.description.substring(0,100)+"...";
+                this.abbreviatedDescription = this.description.substring(0, 100) + "...";
             }
 
         } catch (SQLException e) {

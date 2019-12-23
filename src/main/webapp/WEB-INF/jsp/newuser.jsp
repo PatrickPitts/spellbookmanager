@@ -32,7 +32,7 @@
     pretty minimal around here.
 </p>
 <div th:if="${repeatUsername}">That username is already taken, try a different one!</div>
-<a href="/login"><--- Back to Login</a>
+<a href="/"><--- Back to Login</a>
 </body>
 </html>
 <style>

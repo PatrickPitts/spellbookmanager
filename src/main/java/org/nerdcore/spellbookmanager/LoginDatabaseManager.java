@@ -1,8 +1,8 @@
 package org.nerdcore.spellbookmanager;
 
 import org.nerdcore.spellbookmanager.models.BasicUser;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.userdetails.User;
+//import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
@@ -23,26 +23,44 @@ public class LoginDatabaseManager {
         return null;
     }
 
-    public static List<UserDetails> getUsersAsList() throws SQLException {
+//    public static List<UserDetails> getUsersAsList() throws SQLException {
+//
+//        List<UserDetails> userDetails = new ArrayList<>();
+//        Connection conn = connect();
+//        String sql;
+//
+//        sql = "SELECT * FROM users";
+//        ResultSet rs = conn.createStatement().executeQuery(sql);
+//
+//        while (rs.next()) {
+//            userDetails.add(User.withDefaultPasswordEncoder()
+//                    .username(rs.getString(1))
+//                    .password(rs.getString(2))
+//                    .roles(rs.getString(3))
+//                    .build());
+//        }
+//
+//        conn.close();
+//
+//        return userDetails;
+//    }
+    public static boolean checkUser(BasicUser user) throws SQLException {
 
-        List<UserDetails> userDetails = new ArrayList<>();
         Connection conn = connect();
         String sql;
+        PreparedStatement ps;
 
-        sql = "SELECT * FROM users";
-        ResultSet rs = conn.createStatement().executeQuery(sql);
-
-        while (rs.next()) {
-            userDetails.add(User.withDefaultPasswordEncoder()
-                    .username(rs.getString(1))
-                    .password(rs.getString(2))
-                    .roles(rs.getString(3))
-                    .build());
+        sql = "SELECT * FROM users WHERE username is ? AND password IS ?;";
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, user.getUsername());
+        ps.setString(2, user.getPassword());
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()){
+            conn.close();
+            return true;
         }
-
         conn.close();
-
-        return userDetails;
+        return false;
     }
 
     public static boolean addUser(BasicUser user) throws SQLException {

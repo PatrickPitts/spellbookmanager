@@ -4,15 +4,30 @@ import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.nerdcore.spellbookmanager.SpellDatabaseManager;
 import org.nerdcore.spellbookmanager.models.Spell;
+import org.nerdcore.spellbookmanager.repository.SpellRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("SqlDialectInspection")
 public class PollDB {
 
+    @Autowired
+    static SpellRepository spellRepository;
+
     public static void main(String[] args) throws SQLException{
+
+//         List<Spell> spells = spellRepository.findAll();
+//         for(Spell s : spells){
+//             System.out.println(s.getName());
+//         }
+
+//        for(Spell s : spellRepository.findBySchoolOrderBySpellLevel("Conjuration")){
+//            System.out.println(s.getName());
+//        }
 
         //clearUsers();
         //genericSQLCheck();

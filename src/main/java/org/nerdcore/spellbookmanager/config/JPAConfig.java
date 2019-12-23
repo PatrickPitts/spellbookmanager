@@ -8,14 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.init.Jackson2RepositoryPopulatorFactoryBean;
 
 @Configuration
-@EnableJpaRepositories("org.nerdcore.spellbookmanager")
+@EnableJpaRepositories("org.nerdcore.spellbookmanager.repository")
 public class JPAConfig {
 
-    @Bean
-    public Jackson2RepositoryPopulatorFactoryBean getRepositoryPopulator(){
-        Jackson2RepositoryPopulatorFactoryBean factory = new Jackson2RepositoryPopulatorFactoryBean();
-        factory.setResources(new Resource[]{new ClassPathResource("static/spellstore.json")});
-        return factory;
-    }
 
 }

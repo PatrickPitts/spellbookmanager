@@ -30,6 +30,23 @@ public class SpellDatabaseManager {
         return null;
     }
 
+    public static List<String> getAllSpellCasters(int spellID) throws SQLException {
+        Connection conn = connect();
+        String sql;
+        List<String> casters = new ArrayList<>();
+        sql = "SELECT casterClass FROM spellCasterAssignment WHERE spellID is ?;";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, spellID);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+            casters.add(rs.getString(1));
+        }
+
+        conn.close();
+        return casters;
+
+    }
+
     /**
      * Inserts all relevant data for a Spell object into the spellbookDatabase.db file
      * <p>

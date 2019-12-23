@@ -2,7 +2,7 @@
 <html>
 <head>
     <link href="css/spellstyles.css" rel="stylesheet" type="text/css">
-
+    <title>[[${spell.name}]]</title>
 </head>
 <nav>
     <a href="/">Back to Directory</a>
@@ -32,7 +32,7 @@
     <b>Duration: </b>
     <th:block th:if="${spell.concentration}">Concentration, up to </th:block>
     [[${spell.duration}]]<br>
-    <b>Casters: </b><!--#TODO Incorporate Casters List-->
+    <b>Casters: </b><th:block th:each="caster : ${casterList}" th:text="${caster} ">txt</th:block>
     <p th:utext="${spell.description}">Txt</p><br>
 </div>
 

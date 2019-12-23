@@ -5,6 +5,9 @@ body{
     font-family: Alegreya, sans-serif;
     background: #FBE28A;
 }
+nav{
+    padding:0.5em;
+}
 
 a{
     color:inherit;
@@ -46,7 +49,7 @@ table, th, td{
     border: solid black 4px;
 }
 .spell-display-list{
-    width:75%;
+    /*width:70%;*/
     float: right;
 }
 
@@ -54,7 +57,7 @@ table, th, td{
 .spell-directory-actions{
     margin: 2em;
     padding: 1em;
-    width:15%;
+    /*width:20%;*/
     position: fixed;
     float:left;
     display: inline-block;
