@@ -36,8 +36,7 @@
         </th:block>
 
         <h2><a th:href="@{/}">Spell Directory</a></h2>
-        <div style="border:solid black;">
-            <strong>Search Options:</strong><br>
+        <div>
             <th:block th:if="${spellbook != null}">
                 <form th:action="@{/spells-for-spellbook(spellbookID=${spellbook.spellbookID})}"
                       th:object="${spellSearchParams}" method="post">
@@ -51,14 +50,19 @@
 
             <form th:action="@{spellbook!=null ? '/spells-for-spellbook(spellbookID=${spellbook.spellbookID})' : '/search'}"
                   th:object="${spellSearchParams}" method="post">
-                <table>
+                <table style="border:solid black;">
+                    <tr>
+                        <th colspan="2"><strong>Search Options:</strong></th>
+                    </tr>
                     <tr>
                         <td style="text-align: right;"><label th:for="name">Name:</label></td>
-                        <td style="text-align: left;"><input type="text" id="name" name="name" th:field="*{spellName}"/></td>
+                        <td style="text-align: left;"><input type="text" id="name" name="name" th:field="*{spellName}"/>
+                        </td>
                     </tr>
                     <tr>
                         <td style="text-align: right;"><label th:for="spellLevel">Spell Level: </label></td>
-                        <td style="text-align: left;"><select name="spellLevel" id="spellLevel" th:field="*{spellLevel}">
+                        <td style="text-align: left;"><select name="spellLevel" id="spellLevel"
+                                                              th:field="*{spellLevel}">
                             <option th:value="N"></option>
                             <option th:each="val : ${#numbers.sequence(0,9)}" th:value="${val}"
                                     th:text="${val}"></option>
@@ -80,16 +84,23 @@
                     </tr>
                     <tr>
                         <td style="text-align: right;"><label for="ritual">Ritual Casting?</label></td>
-                        <td style="text-align: left;"><input type="checkbox" name="ritual" id="ritual" th:field="*{ritualCasting}"/></td>
+                        <td style="text-align: left;"><input type="checkbox" name="ritual" id="ritual"
+                                                             th:field="*{ritualCasting}"/></td>
                     </tr>
                     <tr>
                         <td style="text-align: right;"><label for="concentration">Concentration?</label></td>
-                        <td style="text-align: left;"><input type="checkbox" name="concentration" id="concentration" th:field="*{concentration}"/><br>
+                        <td style="text-align: left;"><input type="checkbox" name="concentration" id="concentration"
+                                                             th:field="*{concentration}"/><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="submit" value="Search!">
                         </td>
                     </tr>
                 </table>
 
-                <input type="submit" value="Search!">
             </form>
         </div>
     </div>
