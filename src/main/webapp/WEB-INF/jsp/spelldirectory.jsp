@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <link href="css/spellstyles.css" rel="stylesheet" type="text/css">
+    <link rel="icon" href="images/d20favicon.png">
     <title>Spell Directory</title>
 </head>
 <body>

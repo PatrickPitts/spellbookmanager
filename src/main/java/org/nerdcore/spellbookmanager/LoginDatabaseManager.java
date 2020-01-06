@@ -12,16 +12,6 @@ import java.util.List;
 @Service
 public class LoginDatabaseManager {
 
-    public static Connection connect() {
-        String url = "jdbc:sqlite:src/main/resources/static/spellbookDatabase.db";
-        try {
-            Connection conn = DriverManager.getConnection(url);
-            return conn;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
 //    public static List<UserDetails> getUsersAsList() throws SQLException {
 //
@@ -46,7 +36,7 @@ public class LoginDatabaseManager {
 //    }
     public static boolean checkUser(BasicUser user) throws SQLException {
 
-        Connection conn = connect();
+        Connection conn = DatabaseConnect.getConnection();
         String sql;
         PreparedStatement ps;
 
@@ -65,7 +55,7 @@ public class LoginDatabaseManager {
 
     public static boolean addUser(BasicUser user) throws SQLException {
 
-        Connection conn = connect();
+        Connection conn = DatabaseConnect.getConnection();
         String sql;
         PreparedStatement ps;
 

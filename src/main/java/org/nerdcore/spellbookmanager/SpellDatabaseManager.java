@@ -11,27 +11,9 @@ import java.util.List;
 
 public class SpellDatabaseManager {
 
-    /**
-     * Attempts to connect to the spellbookDatabase.db file using java.sql.DriverManager
-     * this connection to the spellbookDatabase.db is used for all spell focused operations for the spellbookmanager project
-     *
-     * @return Connection object, connecting to the spellbookDatabase.db file
-     */
-    private static Connection connect() {
-        String url = "jdbc:sqlite:src/main/resources/static/spellbookDatabase.db";
-        //String url = "jdbc:sqlite:" + System.getProperty("user.dir") + "src/main/resources/static/spellbookDatabase.db";
-
-        try {
-            Connection conn = DriverManager.getConnection(url);
-            return conn;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     public static List<String> getAllSpellCasters(int spellID) throws SQLException {
-        Connection conn = connect();
+        Connection conn = DatabaseConnect.getConnection();
         String sql;
         List<String> casters = new ArrayList<>();
         sql = "SELECT casterClass FROM spellCasterAssignment WHERE spellID is ?;";
@@ -58,7 +40,7 @@ public class SpellDatabaseManager {
      * @throws SQLException, if the connection to the database cannot be executed.
      */
     public static void addSingleSpellToSpellCollection(Spell spell) throws SQLException {
-        Connection conn = connect();
+        Connection conn = DatabaseConnect.getConnection();
         String preparedString = "INSERT INTO spellCollection " +
                 "(spellName, " +
                 "description, " +
@@ -111,7 +93,7 @@ public class SpellDatabaseManager {
      */
     public static void addSingleSpellToSpellBook(String spellName, int spellbookID) throws SQLException {
 
-        Connection conn = connect();
+        Connection conn = DatabaseConnect.getConnection();
         String sql;
 
         sql = "INSERT INTO spellBookStorage (spellbookID, spellName) VALUES" +
@@ -139,7 +121,7 @@ public class SpellDatabaseManager {
      * @throws SQLException
      */
     public static Spell getSingleSpellBySpellName(String spellName) throws SQLException {
-        Connection conn = connect();
+        Connection conn = DatabaseConnect.getConnection();
         String prepString = "SELECT * FROM spellCollection WHERE spellName IS ?;";
 
         PreparedStatement sql = conn.prepareStatement(prepString);
@@ -152,7 +134,7 @@ public class SpellDatabaseManager {
     }
 
     /**
-     * Returns a list of all rows found in the spellbookDatabase.db spellCollection table, ordered by ascending spellName
+     * Returns a list of all rows found in the spellbookDatabase.db spellCollection table, ordered by ascending spellLevel, then spellName
      * <p>
      * Creates a connection to the spellbookDatabase.db file. Creates an String that is the appropriate SQL query to
      * get all data from the spellCollection table. Gets the ResultSet Object from executing the query, then iterates
@@ -164,7 +146,7 @@ public class SpellDatabaseManager {
      */
     public static List<Spell> getAllSpellsAsListAlphabetized() throws SQLException {
 
-        Connection conn = connect();
+        Connection conn = DatabaseConnect.getConnection();
         Statement st = conn.createStatement();
         List<Spell> spellList = new ArrayList<>();
         String sql;
@@ -191,18 +173,17 @@ public class SpellDatabaseManager {
      *
      * @param spellSearchParams
      * @return List of Spell objects matching the specified parameters in spellSearchParams
-     * @throws SQLException
+     * @throws SQLException if the database is not accessed properly
+     * @throws SQLException if the SQLite string is not processed properly
      */
     public static List<Spell> searchForSpells(SpellSearchParams spellSearchParams) throws SQLException {
 
-        Connection conn = connect();
+        Connection conn = DatabaseConnect.getConnection();
         Statement st = conn.createStatement();
         List<Spell> spellsToReturn = new ArrayList<>();
 
 
         String sql = "SELECT * FROM spellCollection";
-
-        String casterSql = "(SELECT * FROM spellCollection WHERE (SELECT ))";
 
         if (spellSearchParams.isEmpty()) {
             sql += ";";
@@ -228,7 +209,6 @@ public class SpellDatabaseManager {
             }
             //Truncates extra ' AND ' characters automatically added to each possible parameter.
             sql = sql.substring(0, sql.length() - 5);
-            //TODO: Needs 'ORDER BY spellName' incorporated, works as is.
             sql += " ORDER BY spellLevel, spellName;";
         }
         ResultSet rs = st.executeQuery(sql);
@@ -242,11 +222,11 @@ public class SpellDatabaseManager {
     /**
      * Removes all data associated with the spellName field
      *
-     * @param spellName
+     * @param spellName not null, the name the of the Spell to be accessed and deleted
      * @throws SQLException
      */
     public static void deleteSpellByName(String spellName) throws SQLException {
-        Connection conn = connect();
+        Connection conn = DatabaseConnect.getConnection();
         String sql;
 
         sql = "DELETE FROM spellCollection WHERE spellName IS ?;";
@@ -268,7 +248,7 @@ public class SpellDatabaseManager {
      * @throws SQLException
      */
     public static void removeSpellFromSpellbook(String spellName, int spellbookID) throws SQLException {
-        Connection conn = connect();
+        Connection conn = DatabaseConnect.getConnection();
         String sql;
 
         sql = "DELETE FROM spellBookStorage where spellName is ? AND spellbookID is ?";
@@ -287,7 +267,7 @@ public class SpellDatabaseManager {
      */
     public static void editSpell(Spell spellToEdit) throws SQLException {
 
-        Connection conn = connect();
+        Connection conn = DatabaseConnect.getConnection();
         String sql = "UPDATE spellCollection SET " +
                 "spellName = ?, " +
                 "description = ?, " +
@@ -335,7 +315,7 @@ public class SpellDatabaseManager {
 
         //TODO: Name sanitization; this should fail if the name is already present in the spellBooks table
 
-        Connection conn = connect();
+        Connection conn = DatabaseConnect.getConnection();
         Statement st = conn.createStatement();
         String sql;
         PreparedStatement ps;
@@ -369,7 +349,7 @@ public class SpellDatabaseManager {
      */
     public static List<String> getAllCastersAsList() throws SQLException {
         List<String> casterList = new ArrayList<>();
-        Connection conn = connect();
+        Connection conn = DatabaseConnect.getConnection();
         Statement st = conn.createStatement();
         String sql = "SELECT * FROM casterClasses;";
         ResultSet rs = st.executeQuery(sql);
@@ -388,7 +368,7 @@ public class SpellDatabaseManager {
      */
     public static List<SpellBook> getSpellbookListByUsername(String username) throws SQLException{
         List<SpellBook> spellBooks = new ArrayList<>();
-        Connection conn = connect();
+        Connection conn = DatabaseConnect.getConnection();
         Statement st = conn.createStatement();
         String sql = "SELECT * FROM spellBooks WHERE username is ?;";
         PreparedStatement ps = conn.prepareStatement(sql);
@@ -414,7 +394,7 @@ public class SpellDatabaseManager {
     public static List<SpellBook> getAllSpellbooksAsList() throws SQLException {
         List<SpellBook> spellBooks = new ArrayList<>();
 
-        Connection conn = connect();
+        Connection conn = DatabaseConnect.getConnection();
         Statement st = conn.createStatement();
         String sql = "SELECT * FROM spellBooks;";
 
@@ -436,7 +416,7 @@ public class SpellDatabaseManager {
      */
     public static SpellBook getSingleSpellbookBySpellbookName(String spellbookName) throws SQLException {
 
-        Connection conn = connect();
+        Connection conn = DatabaseConnect.getConnection();
 
 
         String sql = "SELECT * FROm spellBooks WHERE spellbookName IS ?;";
@@ -456,7 +436,7 @@ public class SpellDatabaseManager {
      * @throws SQLException
      */
     public static void deleteSpellbookBySpellbookID(int spellbookID) throws SQLException {
-        Connection conn = connect();
+        Connection conn = DatabaseConnect.getConnection();
         String sql = "DELETE FROM spellBooks where spellbookID IS ?;";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setInt(1, spellbookID);
@@ -479,7 +459,7 @@ public class SpellDatabaseManager {
         //TODO: Finish spellbook search
         List<String> spellbookNameList = new ArrayList<>();
 
-        Connection conn = connect();
+        Connection conn = DatabaseConnect.getConnection();
         String sql = "SELECT spellbookName from spellBooks;";
 
         Statement st = conn.createStatement();
@@ -500,7 +480,7 @@ public class SpellDatabaseManager {
      * @throws SQLException
      */
     public static SpellBook getSpellbookBySpellbookID(int spellbookID) throws SQLException {
-        Connection conn = connect();
+        Connection conn = DatabaseConnect.getConnection();
         PreparedStatement ps = conn.prepareStatement(String.format(
                 "SELECT * FROM spellBooks WHERE spellbookID IS ?"
         ));
@@ -524,7 +504,7 @@ public class SpellDatabaseManager {
 
         List<Spell> spellbookSpellList = new ArrayList<>();
         List<String> spellbookSpellNameList = new ArrayList<>();
-        Connection conn = connect();
+        Connection conn = DatabaseConnect.getConnection();
 
         PreparedStatement ps = conn.prepareStatement(String.format(
                 "SELECT * FROM spellCollection WHERE spellName IN " +
@@ -552,7 +532,7 @@ public class SpellDatabaseManager {
 
     public static void addSpellsToCasterTable(CasterSpellList casterSpellList) throws SQLException {
 
-        Connection conn = connect();
+        Connection conn = DatabaseConnect.getConnection();
         String sql;
         ResultSet rs;
         PreparedStatement ps;

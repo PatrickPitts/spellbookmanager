@@ -3,16 +3,10 @@ package org.nerdcore.spellbookmanager;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.nerdcore.spellbookmanager.models.*;
-//import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.boot.web.servlet.server.Session;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
