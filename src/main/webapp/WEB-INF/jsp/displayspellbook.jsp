@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <link href="css/spellstyles.css" rel="stylesheet" type="text/css">
+    <title>[[${spellbook.spellbookName}]]</title>
+    <link rel="icon" href="images/d20favicon.png">
 </head>
 <body>
 <nav>

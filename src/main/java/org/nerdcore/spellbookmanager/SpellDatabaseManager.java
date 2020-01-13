@@ -185,9 +185,7 @@ public class SpellDatabaseManager {
 
         String sql = "SELECT * FROM spellCollection";
 
-        if (spellSearchParams.isEmpty()) {
-            sql += ";";
-        } else {
+        if (!spellSearchParams.isEmpty()) {
             sql += " WHERE ";
             if (!spellSearchParams.getCaster().equals("")) {
                 sql += "spellID IN (SELECT spellID FROM spellCasterAssignment WHERE casterClass IS '" + spellSearchParams.getCaster() + "' ) AND ";
@@ -209,8 +207,8 @@ public class SpellDatabaseManager {
             }
             //Truncates extra ' AND ' characters automatically added to each possible parameter.
             sql = sql.substring(0, sql.length() - 5);
-            sql += " ORDER BY spellLevel, spellName;";
         }
+        sql += " ORDER BY spellLevel, spellName;";
         ResultSet rs = st.executeQuery(sql);
         while (rs.next()) {
             spellsToReturn.add(new Spell(rs));

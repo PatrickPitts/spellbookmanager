@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <link href="css/spellstyles.css" rel="stylesheet" type="text/css">
+    <link rel="icon" href="images/d20favicon.png">
+    <title>Your Saved Spellbooks</title>
 </head>
 <body>
 <nav>

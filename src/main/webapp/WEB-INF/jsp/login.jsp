@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Spring Security Example </title>
+    <title>Login</title>
+    <link rel="icon" href="images/d20favicon.png">
 </head>
 <body class="main">
 <h2>Welcome to Spellbook Manager! Please log in to continue.</h2><br>

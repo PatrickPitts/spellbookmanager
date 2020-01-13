@@ -4,6 +4,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link href="css/add-spell-form.css" rel="stylesheet" type="text/css">
+    <link rel="icon" href="images/d20favicon.png">
+    <title>Add a New Spell to the Database</title>
     <script src="js/add-spell-scripts.js"></script>
 </head>
 <body style="display: flex;">

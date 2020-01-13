@@ -1,16 +1,9 @@
 package org.nerdcore.spellbookmanager.databaseInit;
 
-import org.jsoup.Jsoup;
-import org.jsoup.safety.Whitelist;
-import org.nerdcore.spellbookmanager.SpellDatabaseManager;
-import org.nerdcore.spellbookmanager.models.Spell;
 import org.nerdcore.spellbookmanager.repository.SpellRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @SuppressWarnings("SqlDialectInspection")
 public class PollDB {
@@ -18,23 +11,14 @@ public class PollDB {
     @Autowired
     static SpellRepository spellRepository;
 
-    public static void main(String[] args) throws SQLException{
 
-//         List<Spell> spells = spellRepository.findAll();
-//         for(Spell s : spells){
-//             System.out.println(s.getName());
-//         }
+    public static void main(String[] args) throws SQLException {
 
-//        for(Spell s : spellRepository.findBySchoolOrderBySpellLevel("Conjuration")){
-//            System.out.println(s.getName());
-//        }
+        //getTablesAndColumns();
+        genericSQLCheck();
+
 
         //clearUsers();
-        //genericSQLCheck();
-
-        getTablesAndColumns();
-
-
         //getCasters();
         //checkSpellTableColumns();
         //addTestSpell();
@@ -53,6 +37,31 @@ public class PollDB {
 
     }
 
+    public static void genericSQLCheck() throws SQLException {
+        Connection conn = connect();
+        Statement st = conn.createStatement();
+        String sql;
+
+        Stopwatch s1 = new Stopwatch();
+
+        sql = "SELECT * FROM spellCollection WHERE spellName IS ?";
+        PreparedStatement ps1 = conn.prepareStatement(sql);
+
+        ps1.setString(1, "Fireball");
+        ps1.execute();
+        System.out.println(s1.getElapsedTime());
+
+
+        Stopwatch s2 = new Stopwatch();
+        sql = "SELECT * FROM spellCollection WHERE spellName LIKE ?";
+        PreparedStatement ps2 = conn.prepareStatement(sql);
+
+        ps2.setString(1, "Fireball");
+        ps2.execute();
+        System.out.println(s2.getElapsedTime());
+        conn.close();
+    }
+
     public static void clearUsers() throws SQLException {
         Connection conn = connect();
         Statement st = conn.createStatement();
@@ -63,34 +72,8 @@ public class PollDB {
         conn.close();
     }
 
-    public static void genericSQLCheck() throws SQLException{
-        Connection conn = connect();
-        Statement st = conn.createStatement();
-        String sql;
 
-        sql= "SELECT * FROM users;";
-
-//        PreparedStatement ps = conn.prepareStatement(sql);
-//        ps.setString(1, "USER");
-//        ps.setString(2, "spugneemo");
-//        ps.executeUpdate();
-
-        ResultSet rs = st.executeQuery(sql);
-        while(rs.next()){
-
-
-            System.out.print(rs.getString(1)+" ");
-            System.out.print(rs.getString(2)+ " ");
-            System.out.println(rs.getString(3));
-
-        }
-
-
-        conn.close();
-    }
-
-
-    public static void testSpellCollection() throws SQLException{
+    public static void testSpellCollection() throws SQLException {
         Connection conn = connect();
         assert conn != null;
         Statement st = conn.createStatement();
@@ -98,7 +81,7 @@ public class PollDB {
         String sql;
         sql = "SELECT * FROM spellCollection ORDER BY spellName;";
         rs = st.executeQuery(sql);
-        while(rs.next()){
+        while (rs.next()) {
             System.out.print(rs.getInt("spellID"));
             System.out.println(rs.getString("spellName"));
         }
@@ -106,38 +89,38 @@ public class PollDB {
 
         sql = "SELECT * FROM spellCollection ORDER BY school;";
         rs = st.executeQuery(sql);
-        while(rs.next()){
+        while (rs.next()) {
             System.out.print(rs.getInt("spellID"));
             System.out.println(rs.getString("spellName"));
         }
     }
 
 
-    public static void getCasters() throws SQLException{
+    public static void getCasters() throws SQLException {
         Connection conn = connect();
         Statement st = conn.createStatement();
         String sql = "SELECT * FROM casterClasses;";
         ResultSet rs = st.executeQuery(sql);
-        while(rs.next()){
+        while (rs.next()) {
             System.out.println(rs.getString("casterClass"));
         }
     }
 
 
-    public static void getTablesAndColumns() throws SQLException{
+    public static void getTablesAndColumns() throws SQLException {
         Connection conn = connect();
         Statement st = conn.createStatement();
-        ResultSet rs =  conn.getMetaData().getTables(null,null,null,null );
-        while(rs.next()){
+        ResultSet rs = conn.getMetaData().getTables(null, null, null, null);
+        while (rs.next()) {
             String tableName = rs.getString("TABLE_NAME");
 
-            ResultSet tableResults = conn.createStatement().executeQuery("Select * FROM "+tableName+";");
+            ResultSet tableResults = conn.createStatement().executeQuery("Select * FROM " + tableName + ";");
 
             ResultSetMetaData rsmd = tableResults.getMetaData();
             System.out.print("Table: ");
 
             System.out.println(tableName);
-            for(int i = 1; i <= rsmd.getColumnCount(); i++){
+            for (int i = 1; i <= rsmd.getColumnCount(); i++) {
                 System.out.println("- " + rsmd.getColumnName(i));
             }
             System.out.println("-------------");
@@ -146,7 +129,7 @@ public class PollDB {
         conn.close();
     }
 
-    public static void dropSpellTable(){
+    public static void dropSpellTable() {
         Connection conn = connect();
 
         try (Statement st = conn.createStatement()) {
@@ -160,9 +143,7 @@ public class PollDB {
     }
 
 
-
-
-    public static void addTestSpellsToSpellBooks() throws SQLException{
+    public static void addTestSpellsToSpellBooks() throws SQLException {
         Connection conn = connect();
         assert conn != null;
         Statement st = conn.createStatement();
@@ -173,25 +154,25 @@ public class PollDB {
 
     }
 
-    public static void printAllRowsOfSpellbookStorage() throws SQLException{
+    public static void printAllRowsOfSpellbookStorage() throws SQLException {
         Connection conn = connect();
         assert conn != null;
         Statement st = conn.createStatement();
         String sql = "SELECT * FROM spellBookStorage";
 
         ResultSet rs = st.executeQuery(sql);
-        while(rs.next()){
+        while (rs.next()) {
             System.out.print(rs.getInt("spellbookID"));
             System.out.println(rs.getString("spellName"));
         }
 
     }
 
-    private static Connection connect(){
+    private static Connection connect() {
         String url = "jdbc:sqlite:src/main/resources/static/spellbookDatabase.db";
-        try{
+        try {
             return DriverManager.getConnection(url);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

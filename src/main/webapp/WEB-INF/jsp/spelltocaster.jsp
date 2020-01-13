@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 
 
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.springframework.org/tags/form">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link href="css/spellstyles.css" rel="stylesheet" type="text/css">
     <script src="js/spells-to-caster-scripts.js"></script>
+    <link rel="icon" href="images/d20favicon.png">
+    <title>Assign Spells to a Caster Class</title>
 </head>
 <body>
 <form th:action="@{/spells-to-caster}" th:object="${casterSpellList}" method="post" id="spell-to-caster-form"
@@ -19,7 +21,7 @@
             </td>
             <td>
                 <select id="masterList" multiple ondblclick="sendSelectedFromMasterListToClassSpellList()"
-                        onkeydown="sendSelectedFromClassSpellListToMasterList()"  size="20">
+                        onkeydown="sendSelectedFromClassSpellListToMasterList()" size="20">
                     <th:block th:each="spellLevel : ${#numbers.sequence(0,9)}">
                         <th:block th:if="${spellLevel == 0}">
                             <option th:value="N" th:text="'------Cantrips------'"></option>
@@ -33,7 +35,6 @@
                             </th:block>
                         </th:block>
                     </th:block>
-
 
 
                 </select>
@@ -52,8 +53,8 @@
 </form>
 <script>
 
-    function keySendFromMasterToCasterList(e){
-        if(e.keyCode===32){
+    function keySendFromMasterToCasterList(e) {
+        if (e.keyCode === 32) {
             sendSelectedFromMasterListToClassSpellList();
         }
     }

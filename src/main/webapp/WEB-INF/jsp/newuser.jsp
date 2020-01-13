@@ -3,6 +3,8 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>Phylactory: New User</title>
+    <link rel="icon" href="images/d20favicon.png">
+
 </head>
 <body class="main">
 <div class="login-form-wrapper">

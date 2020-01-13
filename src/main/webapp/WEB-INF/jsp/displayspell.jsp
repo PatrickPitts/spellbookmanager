@@ -3,6 +3,8 @@
 <head>
     <link href="css/spellstyles.css" rel="stylesheet" type="text/css">
     <title>[[${spell.name}]]</title>
+    <link rel="icon" href="images/d20favicon.png">
+
 </head>
 <nav>
     <a href="/">Back to Directory</a>
