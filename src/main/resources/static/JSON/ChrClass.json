@@ -1,6 +1,43 @@
 {
+  "Barbarian": {
+    "Hit Die": 12,
+    "Saving Throws": ["Str", "Con"],
+    "Core Features": {
+      "1": ["Rage", "Unarmored Defense"],
+      "2": ["Reckless Attack", "Danger Sense"],
+      "4": ["Ability Score Improvement"],
+      "5": ["Extra Attack", "Fast Movement"],
+      "7": ["Feral Instinct"],
+      "8": ["Ability Score Improvement"],
+      "9": ["Brutal Critical"],
+      "11": ["Relentless Rage"],
+      "12": ["Ability Score Improvement"],
+      "13": ["Brutal Critical+"],
+      "15": ["Persistent Rage"],
+      "16": ["Ability Score Improvement"],
+      "17": ["Brutal Critical++"],
+      "18": ["Indomitable Might"],
+      "19": ["Ability Score Improvement"],
+      "20": ["Primal Champion"]
+    },
+    "Subclasses": {
+      "Path of the Berserker": {
+        "3": ["Frenzy"],
+        "6": ["Mindless Rage"],
+        "10": ["Intimidating Presence"],
+        "14": ["Retaliation"]
+      },
+      "Path of the Totem Warrior": {
+        "3": ["Spirit Seeker", "Totem Spirit"],
+        "6": ["Aspect of the Beast"],
+        "10": ["Spirit Walker"],
+        "14": ["Totemic Attunement"]
+      }
+    }
+  },
   "Bard": {
     "Hit Die": 8,
+    "Saving Throws": ["Dex", "Cha"],
     "Core Features": {
       "1": ["Bardic Inspiration", "Spellcasting"],
       "2": ["Jack of All Trades", "Song of Rest"],
@@ -55,6 +92,77 @@
       [4,4,3,3,3,2,2,1,1,1],
       [4,4,3,3,3,2,2,2,1,1]],
     "Spells Known": [4,5,6,7,8,9,10,11,12,14,15,15,16,18,19,19,20,22,22,22]
+  },
+  "Cleric": {
+    "Hit Die": 8,
+    "Saving Throws": ["Wis", "Cha"],
+    "Core Features": {
+      "3": [],
+      "4": ["Ability Score Improvement"],
+      "5": ["Destroy Undead(1/2)"],
+      "7": [],
+      "9": [],
+      "10": ["Divine Intervention"],
+      "11": ["Destroy Undead(2)"],
+      "12": ["Ability Score Improvement"],
+      "13": [],
+      "15": [],
+      "16": ["Ability Score Improvement"],
+      "18": ["Channel Divinity(3)"],
+      "19": ["Ability Score Improvement"],
+      "20": ["Divine Intervention+"]
+    },
+    "Subclasses":{
+      "Divine Domain of Knowledge":{
+        "1": ["Spellcasting", "Blessing of Knowledge"],
+        "2": ["Channel Divinity(1)", "CD: Knowledge of the Ages"],
+        "6": ["Channel Divinity(2)", "CD: Read Thoughts"],
+        "8": ["Ability Score Improvement", "Destroy Undead(1)", "Potent Spell Casting"],
+        "14": ["Destroy Undead(3)"],
+        "17": ["Destroy Undead(4)", "Visions of the Past"]
+      },
+      "Divine Domain of Life":{
+        "1": ["Spellcasting", "Disciple of Life", "Bonus Heavy Armor Proficiency"],
+        "2": ["Channel Divinity(1)", "CD: Preserve Life"],
+        "6": ["Channel Divinity(2)", "Blessed Healer"],
+        "8": ["Ability Score Improvement", "Destroy Undead(1)", "Divine Strike"],
+        "14": ["Destroy Undead(3)"],
+        "17": ["Destroy Undead(4)", "Supreme Healing"]
+      },
+      "Divine Domain of Light":{
+        "1": ["Spellcasting", "Warding Flare", "Bonus Cantrip: Light"],
+        "2": ["Channel Divinity(1)", "CD: Radiance of the Dawn"],
+        "6": ["Channel Divinity(2)", "Improved Flare"],
+        "8": ["Ability Score Improvement", "Destroy Undead(1)", "Potent Spell Casting"],
+        "14": ["Destroy Undead(3)"],
+        "17": ["Destroy Undead(4)", "Corona of Light"]
+      },
+      "Divine Domain of Nature":{
+        "1": ["Spellcasting", "Acolyte of Nature", "Bonus Cantrip: Druid"],
+        "2": ["Channel Divinity(1)", "CD: Charm Animals and Plants"],
+        "6": ["Channel Divinity(2)", "Dampen Elements"],
+        "8": ["Ability Score Improvement", "Destroy Undead(1)", "Divine Strike"],
+        "14": ["Destroy Undead(3)"],
+        "17": ["Destroy Undead(4)", "Master of Nature"]
+      },
+      "Divine Domain of Tempest":{
+        "1": ["Spellcasting", "Wrath of the Storm", "Bonus Heavy Armor Proficiency", "Bonus Martial Weapon Proficiency"],
+        "2": ["Channel Divinity(1)", "CD: Destructive Wrath"],
+        "6": ["Channel Divinity(2)", "Thunderbolt Strike"],
+        "8": ["Ability Score Improvement", "Destroy Undead(1)", "Divine Strike"],
+        "14": ["Destroy Undead(3)","Divine Strike+"],
+        "17": ["Destroy Undead(4)", "Stormborn"]
+      },
+      "Divine Domain of Trickery###############":{
+        "1": ["Spellcasting", "Wrath of the Storm", "Bonus Heavy Armor Proficiency", "Bonus Martial Weapon Proficiency"],
+        "2": ["Channel Divinity(1)", "CD: Destructive Wrath"],
+        "6": ["Channel Divinity(2)", "Thunderbolt Strike"],
+        "8": ["Ability Score Improvement", "Destroy Undead(1)", "Divine Strike"],
+        "14": ["Destroy Undead(3)","Divine Strike+"],
+        "17": ["Destroy Undead(4)", "Stormborn"]
+      }
+    }
+
   }
 
 
