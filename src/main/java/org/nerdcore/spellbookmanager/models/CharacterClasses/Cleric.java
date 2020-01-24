@@ -90,12 +90,12 @@ public class Cleric extends CharacterClass {
                 break;
             case "Divine Domain of War":
                 this.setSubclassName("Divine Domain of War");
-                classFeatures.put(1, new ArrayList<>(Arrays.asList("Spellcasting", "Disciple of Life", "Bonus Heavy Armor Proficiency", "Bonus Martial Weapon Proficiency", "War Priest")));
+                classFeatures.put(1, new ArrayList<>(Arrays.asList("Spellcasting", "Bonus Heavy Armor Proficiency", "Bonus Martial Weapon Proficiency", "War Priest")));
                 classFeatures.put(2, new ArrayList<>(Arrays.asList("Channel Divinity(1)", "CD: Guided Strike")));
                 classFeatures.put(6, new ArrayList<>(Arrays.asList("Channel Divinity(2)", "CD: War God's Blessing")));
                 classFeatures.put(8, new ArrayList<>(Arrays.asList("Ability Score Improvement", "Destroy Undead(1)", "Divine Strike")));
                 classFeatures.get(14).add("Divine Strike+");
-                classFeatures.put(17, new ArrayList<>(Arrays.asList("Destroy Undead(4)", "Supreme Healing")));
+                classFeatures.put(17, new ArrayList<>(Arrays.asList("Destroy Undead(4)", "Avatar of Battle")));
                 break;
         }
     }
