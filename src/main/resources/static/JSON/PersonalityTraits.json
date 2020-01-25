@@ -1,9 +1,22 @@
 {
   "Acolyte": {
-    "Skill Proficiencies": ["Insight", "Religion"],
-    "Languages": ["Any", "Any"],
-    "Equipment": ["A holy symbol (a gift to you whe you entered the priesthood)",
-    "A prayer book or prayer wheel", "5 Sticks of incense", "Vestiments", "Set of common clothes", "Belt pouch with 15 gp"],
+    "Source": "PHB",
+    "Skill Proficiencies": [
+      "Insight",
+      "Religion"
+    ],
+    "Languages": [
+      "Any",
+      "Any"
+    ],
+    "Equipment": [
+      "A holy symbol (a gift to you whe you entered the priesthood)",
+      "A prayer book or prayer wheel",
+      "5 Sticks of incense",
+      "Vestiments",
+      "Set of common clothes",
+      "Belt pouch with 15 gp"
+    ],
     "Extra Features": {
       "Shelter of the Faithful": "Shelter of the Faithful"
     },
@@ -44,10 +57,86 @@
       ]
     }
   },
+  "Criminal": {
+    "Source": "PHB",
+    "Skill Proficiencies": [
+      "Deception",
+      "Stealth"
+    ],
+    "Tool Proficiencies": [
+      "Gaming Set (Of your choice)",
+      "Thieves' Tools"
+    ],
+    "Equipment": [
+      "Crowbar",
+      "Set of dark Common Clothes including a hood",
+      "Belt Pouch containing 15 gp"
+    ],
+    "Extra Features": {
+      "Criminal Speciality": [
+        "Blackmailer",
+        "Burglar",
+        "Enforcer",
+        "Fence",
+        "Highway robber",
+        "Hired Killer",
+        "Pickpocket",
+        "Smuggler"
+      ],
+      "Criminal Contact": "Criminal Contact"
+    },
+    "Characteristics": {
+      "Personality Trait": [
+        "I always have a plan for what to do when things go wrong.",
+        "I am always calm, no matter what the situation. I never raise my voice or let my emotions control me.",
+        "The first thing I do in a new place is note the locations of everything valuable - or where such things could be hidden.",
+        "I would rather make a new friend than a new enemy.",
+        "I am incredibly slow to trust. Those who seem fairest often have the most to hide.",
+        "I don't pay attention to the risks in a situation. Never tell me the odds.",
+        "The best way to get me to do something is to tell me I can't do it.",
+        "I blow up at the slightest insult."
+      ],
+      "Ideal": [
+        "<strong>Honor.</strong> I don't steal from others in the trade. (Lawful)",
+        "<strong>Freedom.</strong> Chains are meant to be broken, as ar those who would forge them. (Chaotic)",
+        "<strong>Charity.</strong> I steal from the wealthy so that I can help people in need. (Good)",
+        "<strong>Greed.</strong> I will do whatever it takes to become wealthy. (Evil)",
+        "<strong>People.</strong> I'm loyal to my friends, not to any ideals, and everyone else can take a trip down the Styx for all I care. (Neutral)",
+        "<strong>Redemption.</strong> There's a spark of good in everyone. (Good)"
+      ],
+      "Bond": [
+        "I'm trying to pay off an old debt I owe to a generous benefactor.",
+        "My ill-gotten gains go to support my family.",
+        "Something important was taken from me, and I aim to steal it back.",
+        "I will be the greatest thief who ever lived.",
+        "I'm guilty of a terrible crime. I hope I can redeem myself for it.",
+        "Someone I loved died because of a mistake I made. That will never happen again."
+      ],
+      "Flaw": [
+        "When I see something valuable, I can't thing about anything but how to steal it.",
+        "When faced with a choice between my money and my friends, I usually choose the money.",
+        "If there's a plan, I'll forget it. If I don't forget it, I ignore it.",
+        "I have a 'tell' that reveals when I'm lying.",
+        "I turn tail and run when things look bad.",
+        "An innocent person is in prison for a crime that I committed. I'm okay with that."
+      ]
+    }
+  },
   "Charlatan": {
-    "Skill Proficiencies": ["Deception", "Sleight of Hand"],
-    "Tool Proficiencies": ["Disguise Kit", "Forgery Kit"],
-    "Equipment" : ["Set of fine clothes","Disguise Kit", "Tools of the con of your choice"],
+    "Source": "PHB",
+    "Skill Proficiencies": [
+      "Deception",
+      "Sleight of Hand"
+    ],
+    "Tool Proficiencies": [
+      "Disguise Kit",
+      "Forgery Kit"
+    ],
+    "Equipment": [
+      "Set of fine clothes",
+      "Disguise Kit",
+      "Tools of the con of your choice"
+    ],
     "Extra Features": {
       "False Identity": "False Identity",
       "Favorite Schemes": [
@@ -59,7 +148,6 @@
         "I convince people that worthless junk is worth their hard-earned money."
       ]
     },
-
     "Characteristics": {
       "Personality Trait": [
         "I fall in and out of love easily, and am always pursuing someone.",
@@ -95,6 +183,440 @@
         "I can't resist swindling people who are more powerful than me.",
         "I hate to admit it and will hate myself for it, but I'll run and preserve my own hide if the going gets tough."
       ]
+    }
+  },
+  "Entertainer": {
+    "Source": "PHB",
+    "Skill Proficiencies": [
+      "Acrobatics",
+      "Performance"
+    ],
+    "Tool Proficiencies": [
+      "Disguise Kit",
+      "Musical Instrument (Of your choice)"
+    ],
+    "Equipment": [
+      "Musical Instrument (Of your choice)",
+      "The favor of an admirer (Of your choice)",
+      "Costume",
+      "Belt pouch containing 15 gp"
+    ],
+    "Extra Features": {
+      "Entertainer Routines": [
+        "Actor",
+        "Dancer",
+        "Fire-eater",
+        "Jester",
+        "Juggler",
+        "Instrumentalist",
+        "Poet",
+        "Singer",
+        "Storyteller",
+        "Tumbler"
+      ],
+      "By Popular Demand": "By Popular Demand"
+    },
+    "Characteristics": {
+      "Personality Trait": [
+        "I know a story relevant to almost every situation",
+        "Whenever I come to a new place, I collect local rumors and spread gossip",
+        "I'm a hopeless romantic, always searching for that 'special someone.'",
+        "Nobody stays angry at me or around me for long, since I can diffuse any amount of tension.",
+        "I love a good insult, even one directed at me.",
+        "I get bitter if I'm not the center of attention.",
+        "I'll settle for nothing less than perfection.",
+        "I change my mood or mind as quickly as I change key in a song."
+      ],
+      "Ideal": [
+        "<strong>Beauty.</strong> When I perform, I make the world better than it was. (Good)",
+        "<strong>Tradition.</strong> The stories, legends, and songs of the past must never be forgotten, for they teach us who we are. (Lawful)",
+        "<strong>Creativity.</strong> The world is in need of new ideas and bold action. (Chaotic)",
+        "<strong>Greed.</strong> I'm only in it for the money and fame. (Evil)",
+        "<strong>People.</strong> I like seeing hte smiles on people's faces when I perform. That's all that matters. (Neutral)",
+        "<strong>Honesty.</strong> Art should reflect the soul; it should come from within and reveal who we really are. (Any)"
+      ],
+      "Bond": [
+        "My instrument is my most treasured possession, and it reminds me of someone I love.",
+        "Someone stole my precious instrument, and someday I'll get it back.",
+        "I want to be famous, whatever it takes.",
+        "I idolize a hero of the old tales and measure my deeds against that person's.",
+        "I will do anything to prove myself superior to my hated rival.",
+        "I would do anything for the other members of my old troupe."
+      ],
+      "Flaw": [
+        "I'll do anything to win fame and renown",
+        "I'm a sucker for a pretty face.",
+        "A scandal prevents me from ever going home again. That kind of trouble seems to follow me around.",
+        "I once satirized a noble who still wants my head. It was a mistake that I will likely repeat.",
+        "I have trouble keeping my true feelings hidden. My sharp tongue lands me in trouble.",
+        "Despite my best efforts, I am unreliable to my friends."
+      ]
+    }
+  },
+  "Folk Hero": {
+    "Source": "PHB",
+    "Skill Proficiencies": [
+      "Animal Handling",
+      "Survival"
+    ],
+    "Tool Proficiencies": [
+      "Set of Artisan's Tools (Of your choice)",
+      "Vehicles (land)"
+    ],
+    "Equipment": [
+      "Set of Artisan's Tools (Of your choice)",
+      "Shovel",
+      "Iron pot",
+      "Set of common clothes",
+      "Belt pouch containing 10 gp"
+    ],
+    "Extra Features": {
+      "Defining Event": [
+        "I stood up to a tyrant's agents.",
+        "I saved people during a natural disaster",
+        "I stood alone against a terrible monster",
+        "I stole from a corrupt merchant to help the poor",
+        "I led a militia to fight off an invading army",
+        "I broke into a tyrant's castle and stole weapons to arm the people.",
+        "I trained the peasantry to use farm implements as weapons against a tyrant's soldiers.",
+        "A lord rescinded an unpopular decree after I led a symbolic act of protest against it.",
+        "A celestial, fey, or similar creature gave me a blessing or revealed my secret origin.",
+        "Recruited into a lord's army, I rose to leadership and was commended for my heroism."
+      ],
+      "Rustic Hospitality": "Rustic Hospitality"
+    },
+    "Characteristics": {
+      "Personality Trait": [
+        "I judge people by their actions, not their words.",
+        "If someone is in trouble, I'm always ready to lend help",
+        "When I set my mind to something, I follow through no matter what gets in my way.",
+        "I have a strong sense of fair play and always try to find the most equitable solution to arguments.",
+        "I'm confident in my own abilities and do what I can to instill confidence in others.",
+        "Thinking is for other people. I prefer action.",
+        "I misuse long words in an attempt to sound smarter.",
+        "I get bored easily. When am I going to get on with my destiny?"
+      ],
+      "Ideal": [
+        "<strong>Respect.</strong> People deserve to be treated with dignity and respect. (Good)",
+        "<strong>Fairness.</strong> No one should get preferential treatment before the law, and no one is above the law. (Lawful)",
+        "<strong>Freedom.</strong> Tyrants must not be allowed to oppress the people. (Chaotic)",
+        "<strong>Might.</strong> If I become strong, I take what I want - what I deserve (Evil)",
+        "<strong>Sincerity.</strong> There's no good in pretending to be something I'm not. (Neutral)",
+        "<strong>Destiny.</strong> Nothing and no one can steer me away from my higher calling. (Any)"
+      ],
+      "Bond": [
+        "I have a family, but I have no idea where they are. One day, I hope to see them again.",
+        "I worked the land, I love the land, and I will protect the land.",
+        "A proud noble once game me a horrible beating, and I will take my revenge on any bully I encounter.",
+        "My tools are symbols of my past life, and I carry them so that I will never forget my roots.",
+        "I protect those who cannot protect themselves.",
+        "I wish my childhood sweetheart had come with me to pursue my destiny."
+      ],
+      "Flaw": [
+        "The tyrant who rules my land will stop at nothing to see me killed.",
+        "I'm convinced of the significance of my destiny, and blind to my shortcomings and the risk of failure.",
+        "The people who knew me when I was young know my shameful secret, so I can never go home again.",
+        "I have a weakness for the vices of the city, especially hard drink.",
+        "Secretly, I believe that things would be better if I were a tyrant lording over the lands.",
+        "I have trouble trusting in my allies."
+      ]
+    }
+  },
+  "Guild Artisan": {
+    "Source": "PHB",
+    "Skill Proficiencies": [
+      "Insight",
+      "Persuasion"
+    ],
+    "Tool Proficiencies": [
+      "Artisan's Tools (Of your choice)"
+    ],
+    "Languages": [
+      "Any"
+    ],
+    "Equipment": [
+      "Artisan's Tools (Of your choice)",
+      "Letter of Introduction from your guild",
+      "Set of traveler's clothes",
+      "Belt pouch containing 15 gp"
+    ],
+    "Extra Features": {
+      "Guild Business": [
+        "Alchemists and Apothecaries",
+        "Armorers, locksmiths, and finesmiths",
+        "Brewers, distillers, and vintners",
+        "Calligraphers, scribes, and scriveners",
+        "Carpenters, roofers, and plasterers",
+        "Cartographers, surveyors, and chart-makers",
+        "Cobblers and shoemakers",
+        "Cooks and bakers",
+        "Glassblowers and glaziers",
+        "Jewelers and gemcutters",
+        "Leatherworkers, skinners, and tanners",
+        "Masons and stonecutters",
+        "Painters, limners, and sign-makers",
+        "Potters and tile-makers",
+        "Shipwrights and sailmakers",
+        "Smiths and metal-forgers",
+        "Tinkers, pewterers, and casters",
+        "Wagon-makers and wheelwrights",
+        "Weavers and dyers",
+        "Woodcarvers, coopers, and bowyers"
+      ],
+      "Guild Membership": "Guild Membership"
+    },
+    "Characteristics": {
+      "Personality Trait": [
+        "I believe that anything worth doing is worth doing right. I can't help it - I'm a perfectionist.",
+        "I'm a snob who looks down on those who can't appreciate fine art.",
+        "I always want to know how things work and what makes people tick.",
+        "I'm full of witty aphorisms and have a proverb for every occasion.",
+        "I'm rude to people who lack my commitment to hard work and fair play.",
+        "I like to talk at length about my profession.",
+        "I don't part with my money easily and will haggle tirelessly to get the best deal possible.",
+        "I'm well known for my work, and I want to make sure everyone appreciates it. I'm always taken aback when people haven't heard of me."
+      ],
+      "Ideal": [
+        "<strong>Community.</strong> It is the duty of all civilized people to strengthen the bonds of community and the security of civilization. (Lawful)",
+        "<strong>Generosity.</strong> My talents were given to me so that I could use them to benefit the world. (Good)",
+        "<strong>Freedom.</strong> Everyone should be free to pursue his or her own livelihood. (Chaotic)",
+        "<strong>Greed.</strong> I'm only in it for the money. (Evil)",
+        "<strong>People.</strong> I'm committed to the people I care about, not to ideals. (Neutral)",
+        "<strong>Aspiration.</strong> I work hard to be teh best there is at my craft. (Any)"
+      ],
+      "Bond": [
+        "The workshop where I learned my trade is the most important place in the world to me.",
+        "I created a great work for someone, and then found them unworthy to receive it. I'm still looking for someone worthy",
+        "I owe my guild a great debt for forging me into the person I am today.",
+        "I pursue wealth to secure someone's love.",
+        "One day I will return to my guild and prove that I am the greatest artisan of them all.",
+        "I will get revenge on teh evil forces that destroyed my place of business and ruined my livelihood."
+      ],
+      "Flaw": [
+        "I'll do anything to get my hands on something rare or priceless.",
+        "I'm quick to assume that someone is trying to cheat me.",
+        "No one must ever learn that I once stole money from guild coffers.",
+        "I'm never satisfied with what I have - I always want more.",
+        "I would kill to acquire a noble title.",
+        "I'm horribly jealous of anyone who can outshine my handiwork. Everywhere I go, I'm surrounded by rivals."
+      ]
+    }
+  },
+  "Hermit": {
+    "Source": "PHB",
+    "Skill Proficiencies": [
+      "Medicine",
+      "Religion"
+    ],
+    "Tool Proficiencies": [
+      "Herbalism Kit"
+    ],
+    "Languages": [
+      "Any"
+    ],
+    "Equipment": [
+      "Scroll cass stuffed full of notes from your studies or prayers",
+      "Winter blanket",
+      "Set of Common clothes",
+      "Belt pouch containing 5 gp"
+    ],
+    "Extra Features": {
+      "Life of Seclusion": [
+        "I was searching for spiritual enlightenment.",
+        "I was partaking of communal living in accordance with the dictates of a religious order.",
+        "I was exiled for a crime I didn't commit.",
+        "I retreated from society after a life-altering event.",
+        "I needed a quiet place to work on my art, literature, music, or manifesto.",
+        "I needed to commune with nature, far from civilization.",
+        "I was the caretaker of an ancient ruin or relic.",
+        "I was a pilgrim in search of a person, place, or relic of spiritual significance."
+      ],
+      "Discovery": "Discovery"
+    },
+    "Characteristics": {
+      "Personality Trait": [
+        "I've been isolated for so long that I rarely speak, preferring gestures and the occasional grunt.",
+        "I am utterly serene, even in the face of disaster.",
+        "The leader of my community had something wise to say on every topic, and I am eager to share that wisdom.",
+        "I feel tremendous empathy for all who suffer.",
+        "I'm oblivious to etiquette and social expectation.",
+        "I connect everything that happens to me to a grand, cosmic plan.",
+        "I often get lost in my own thoughts and contemplation, becoming oblivious to my surroundings.",
+        "I am working on a grand philosophical theory and love sharing my ideas."
+      ],
+      "Ideal": [
+        "<strong>Greater Good.</strong> My gifts are meant to be shared with all, not used for my own benefit. (Good)",
+        "<strong>Logic.</strong> Emotions must not cloud our sense of what is right and true, or our logical thinking (Lawful)",
+        "<strong>Free Thinking.</strong> Inquiry and curiosity are the pillars of progress. (Chaotic)",
+        "<strong>Power.</strong> Solitude and contemplation are paths toward mystical or magical power. (Evil)",
+        "<strong>Live and Let Live.</strong> Meddling in the affairs of others can only cause trouble. (Neutral)",
+        "<strong>Self-Knowledge.</strong> If you know yourself, there's nothing left to know. (Any)"
+      ],
+      "Bond": [
+        "Nothing is more important than the other members of my hermitage, order, or association.",
+        "I entered seclusion to hide from the ones who might still be hunting me. I must someday confront them.",
+        "I'm still seeking the enlightenment I pursued in my seclusion, and it still eludes me.",
+        "I entered seclusion because I loved someone I could not have.",
+        "Should my discovery come to light, it could bring ruin to the world.",
+        "My isolation gave me great insight into the great evil that only I can destroy."
+      ],
+      "Flaw": [
+        "Now that I've returned to the world, I enjoy its delights a little too much.",
+        "I harbor dark, bloodthirsty thoughts that my isolation and mediation failed to quell.",
+        "I am dogmatic in my thoughts and philosophy.",
+        "I let my need to win arguments overshadow friendship and harmony.",
+        "I'd risk too much to uncover a lost bit of knowledge.",
+        "I like keeping secrets and won't share them with anyone."
+      ]
+    }
+  },
+  "Noble": {
+    "Source": "PHB",
+    "Skill Proficiencies": [
+      "History",
+      "Persuasion"
+    ],
+    "Tool Proficiencies": [
+      "Gaming set (Of your choice)"
+    ],
+    "Languages": [
+      "Any"
+    ],
+    "Equipment": [
+      "Set of fine clothes",
+      "Signet Ring",
+      "Scroll of pedigree",
+      "Purse containing 25 gp"
+    ],
+    "Extra Features": {
+      "Position of Privilege": "Position of Privilege"
+    },
+    "Characteristics": {
+      "Personality Trait": [
+        "My eloquent flattery makes everyone I talk to feel like the most wonderful and important person in the world.",
+        "The common folk love me for my kindness and generosity",
+        "No one could doubt by looking at my regal bearing that I am a cut above the unwashed masses.",
+        "I take great pains to always look my best and follow the latest fashions.",
+        "I don't like to get my hands dirty, and I won't be caught dead in unsuitable accommodations.",
+        "Despite my noble birth, I do not place myself above other folk. We all have the same blood.",
+        "My favor, once lost, is lost forever.",
+        "If you do me an injury, I will crush you, ruin your name, and salt your fields."
+      ],
+      "Ideal": [
+        "<strong>Respect.</strong> Respect is due to me because of my position, but all people regardless of station deserve to be treated with dignity. (Good)",
+        "<strong>Responsibility.</strong> It is my duty to respect the authority of those above me, just as those below me must respect mine. (Lawful)",
+        "<strong>Independence.</strong> I must prove that I can handle myself without the coddling of my family. (Chaotic)",
+        "<strong>Power.</strong> If I can attain more power, no one will tell me what to do. (Evil)",
+        "<strong>Family.</strong> Blood runs thicker than water. (Any)",
+        "<strong>Noble Obligation.</strong> It is my duty to protect and care for the people below me. (Good)"
+      ],
+      "Bond": [
+        "I will face any challenge to win the approval of my family.",
+        "My house's alliance with another noble family must be sustained at all cost.",
+        "Nothing is more important than the other members of my family.",
+        "I am in love with the heir of a family that my family despises.",
+        "My loyalty to my sovereign is unwavering.",
+        "The common folk see me as a hero of the people."
+      ],
+      "Flaw": [
+        "I secretly believe that everyone is beneath me.",
+        "I hide a truly scandalous secret that could ruin my family forever.",
+        "I too often hear veiled insults and threats in every word addressed to me, and I'm quick to anger.",
+        "I have an insatiable desire for carnal pleasures.",
+        "In fact, the world does revolve around me.",
+        "By my words and actions, I often bring shame to my family."
+      ]
+    }
+  },
+  "Outlander": {
+    "Source": "PHB",
+    "Skill Proficiencies": [
+      "Athletics",
+      "Survival"
+    ],
+    "Tool Proficiencies": [
+      "Musical Instrument (Of your choice)"
+    ],
+    "Languages": [
+      "Any"
+    ],
+    "Equipment": [
+      "Staff",
+      "Hunting Trap",
+      "Trophy from an animal you killed",
+      "Set of Traveler's Clothes",
+      "Belt pouch containing 10 gp"
+    ],
+    "Extra Features": {
+      "Origin": [
+        "Forester",
+        "Trapper",
+        "Homesteader",
+        "Guide",
+        "Exile or outcast",
+        "Bounty hunter",
+        "Pilgrim",
+        "Tribal nomad",
+        "Hunter-gatherer",
+        "Tribal marauder"
+      ],
+      "Wanderer": "Wanderer"
+    },
+    "Characteristics": {
+      "Personality Trait": [
+        "I'm driven by a wanderlust that led me away from home.",
+        "I watch over my friends as if they were a litter of newborn pups.",
+        "I once ran over twenty-five miles without stopping to war my clan of an approaching orc horde. I'd do it again if I had to.",
+        "I have lesson for every situation, drawn from observing nature.",
+        "I place no stock in wealthy or well-mannered folk. Money and manners won't save you from a hungry owlbear.",
+        "I'm always picking things up, absently fiddling with them, and sometimes accidentally breaking them.",
+        "I feel far more comfortable around animals than people.",
+        "I was, in fact, raised by wolves."
+      ],
+      "Ideal": [
+        "<strong>Change.</strong> Life is like the seasons, in constant change, and we must change with it. (Chaotic)",
+        "<strong>Greater Good.</strong> It is each person's responsibility to make the most happiness for the whole tribe. (Good)",
+        "<strong>Honor.</strong> If I dishonor myself, I dishonor my whole clan. (Lawful)",
+        "<strong>Might.</strong> The strongest are meant to rule. (Evil)",
+        "<strong>Nature.</strong> The natural world is more important than all the constructs of civilization. (Neutral)",
+        "<strong>Glory.</strong> I must earn glory in battle, for myself and my clan. (Any)"
+      ],
+      "Bond": [
+        "My family, clan, or tribe is the most important thing in my life, even when the are far from me.",
+        "An injury to the unspoiled wilderness of my home is an injury to me.",
+        "I will bring terrible wrath down on the evildoers who destroyed my homeland.",
+        "I am the last of my tribe, and it is up to me to ensure their names enter legend.",
+        "I suffer awful visions of a coming disaster and will do anything to prevent it.",
+        "I is my duty to provide children to sustain my tribe."
+      ],
+      "Flaw": [
+        "I am too enamored of ale, wine, and other intoxicants.",
+        "There's no room for caution in a life lived to the fullest.",
+        "I remember every insult I've received and nurse a silent resentment toward anyone who's ever wronged me.",
+        "I am slow to trust members of other races, tribes, and societies.",
+        "Violence is my answer to almost any challenge.",
+        "Don't expect me to save those who can't save themselves. It is nature's way that the strong thrive and the weak perish."
+      ]
+    }
+  },
+  "Name": {
+    "Source": "PHB",
+    "Skill Proficiencies": [],
+    "Tool Proficiencies": [],
+    "Equipment": [],
+    "Extra Features": {},
+    "Characteristics": {
+      "Personality Trait": [],
+      "Ideal": [
+        "<strong></strong>",
+        "<strong></strong>",
+        "<strong></strong>",
+        "<strong></strong>",
+        "<strong></strong>",
+        "<strong></strong>"
+      ],
+      "Bond": [],
+      "Flaw": []
     }
   }
 }
